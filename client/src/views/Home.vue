@@ -33,6 +33,13 @@
           <p class="text-center mt-4 text-gray-600">
             Double: {{ counterStore.doubleCount }}
           </p>
+
+          <AutoComplete
+            class="w-full mt-6 bg-gray-100 p-2 rounded"
+            v-model="value"
+            :suggestions="items"
+            @complete="search"
+          />
         </div>
 
         <div class="text-center">
@@ -45,11 +52,25 @@
         </div>
       </div>
     </div>
+    <GlobalLoading :show="loadingStore.globalLoading" text="Please wait..." />
   </div>
 </template>
 
 <script setup>
 import { useCounterStore } from "../stores/counter";
+import { useLoadingStore } from "../stores/globalLoading";
+import AutoComplete from "primevue/autocomplete";
+import GlobalLoading from "../components/Loading/GlobalLoading/GlobalLoading.vue";
+import { ref } from "vue";
 
 const counterStore = useCounterStore();
+const loadingStore = useLoadingStore();
+// loadingStore.mask();
+
+const value = ref(null);
+const items = ref([]);
+
+const search = (event) => {
+  items.value = [...Array(10).keys()].map((item) => event.query + "-" + item);
+};
 </script>
