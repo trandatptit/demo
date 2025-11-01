@@ -2,14 +2,24 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
     {
-        path: '/',
+        path: '/home',
         name: 'Home',
-        component: () => import('../views/Home.vue'),
+        component: () =>
+            import(/* webpackChunkName: "home" */ '../views/Home.vue'),
     },
     {
         path: '/about',
         name: 'About',
-        component: () => import('../views/About.vue'),
+        component: () =>
+            import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    },
+    {
+        path: '/',
+        name: 'HomePage',
+        component: () =>
+            import(
+                /* webpackChunkName: "homepage" */ '../views/HomePage/HomePage.vue'
+            ),
     },
     // Route cho 404 - phải đặt ở cuối cùng
     {

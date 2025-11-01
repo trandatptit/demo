@@ -1,4 +1,9 @@
+import Aura from '@primeuix/themes/aura';
+
 export const primeVueConfig = {
+    theme: {
+        preset: Aura,
+    },
     ripple: true,
     inputStyle: 'outlined',
     zIndex: {
