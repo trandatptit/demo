@@ -21,6 +21,12 @@ const routes = [
                 /* webpackChunkName: "homepage" */ '../views/HomePage/HomePage.vue'
             ),
     },
+    {
+        path: '/test',
+        name: 'Test',
+        component: () =>
+            import(/* webpackChunkName: "test" */ '../views/TestPopup.vue'),
+    },
     // Route cho 404 - phải đặt ở cuối cùng
     {
         path: '/:pathMatch(.*)*',
