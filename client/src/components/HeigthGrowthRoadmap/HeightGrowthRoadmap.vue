@@ -11,7 +11,7 @@
         </h2>
         <p class="text-base sm:text-lg text-gray-600 mx-auto max-w-3xl">
           Chỉ từ <span class="text-blue-600 font-bold">170.000đ/tháng</span> cho
-          một lộ trình phát triển toàn diện, được chuyên gia AI và ý khoa thiết
+          một lộ trình phát triển toàn diện, được chuyên gia AI và y khoa thiết
           kế riêng cho bạn.
         </p>
       </div>
