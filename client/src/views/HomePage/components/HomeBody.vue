@@ -296,7 +296,10 @@
       </Stepper>
 
       <!-- Right Section - Form Card (col-span-12 on mobile, col-span-5 on desktop) -->
-      <div class="col-span-12 lg:col-span-5"></div>
+      <!-- <div class="col-span-12 lg:col-span-5"></div> -->
+      <height-growth-roadmap class="col-span-12" />
+      <package-month class="col-span-12" />
+      <expert-and-partner class="col-span-12" />
     </div>
   </main>
 </template>
@@ -317,7 +320,9 @@ import Step from "primevue/step";
 import StepPanels from "primevue/steppanels";
 import StepPanel from "primevue/steppanel";
 import { useToast } from "primevue/usetoast";
-import { Form } from "@primevue/forms";
+import HeightGrowthRoadmap from "../../../components/HeigthGrowthRoadmap/HeightGrowthRoadmap.vue";
+import PackageMonth from "../../../components/PackageComponent/PackageMonth.vue";
+import ExpertAndPartner from "../../../components/ExpertAndPartnerComponent/ExpertAndPartner.vue";
 
 const router = useRouter();
 const toast = useToast();
