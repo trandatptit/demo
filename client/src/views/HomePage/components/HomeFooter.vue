@@ -1,120 +1,125 @@
 <template>
-  <footer class="bg-gray-900 text-white py-12 lg:py-16">
+  <footer class="bg-[#002855] text-white py-12 lg:py-16">
     <div class="mx-auto px-4 lg:px-8">
       <!-- Container 12 Grid -->
-      <div class="grid grid-cols-12 gap-8 mb-8">
-        <!-- Brand Section (col-span-12 md:col-span-4) -->
-        <div class="col-span-12 md:col-span-4">
-          <div class="flex items-center space-x-2 mb-4">
+      <div class="grid grid-cols-12 gap-8 lg:gap-12 mb-8">
+        <!-- Brand Section (col-span-12 lg:col-span-4) -->
+        <div class="col-span-12 lg:col-span-4">
+          <div class="logo flex items-center space-x-3 mb-6">
             <div
-              class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center"
+              class="w-14 h-14 bg-white rounded-lg flex items-center justify-center"
             >
-              <span class="text-white font-bold text-lg">E</span>
+              <span class="text-[#002855] font-bold text-2xl">E</span>
             </div>
-            <span class="font-bold text-xl text-blue-400">EVEREST</span>
           </div>
-          <p class="text-gray-400 text-sm leading-relaxed">
-            Nền tảng AI độc quyền giúp dự đoán và ưu hóa tiềm năng tăng trưởng
-            chiều cao.
+          <p class="text-gray-300 text-sm leading-relaxed max-w-xs">
+            Cùng bạn chinh phục đỉnh cao của bạn nâng. NO LIMITS!
           </p>
+          <div class="flex gap-4 mt-6">
+            <a
+              href="#"
+              class="w-10 h-10 bg-[#003D7A] rounded-md flex items-center justify-center hover:bg-[#0052A3] transition"
+            >
+              <i class="pi pi-facebook text-white"></i>
+            </a>
+            <a
+              href="#"
+              class="w-10 h-10 bg-[#003D7A] rounded-md flex items-center justify-center hover:bg-[#0052A3] transition"
+            >
+              <i class="pi pi-instagram text-white"></i>
+            </a>
+            <a
+              href="#"
+              class="w-10 h-10 bg-[#003D7A] rounded-md flex items-center justify-center hover:bg-[#0052A3] transition"
+            >
+              <i class="pi pi-youtube text-white"></i>
+            </a>
+          </div>
         </div>
 
-        <!-- Links Section 1 (col-span-6 md:col-span-2) -->
-        <div class="col-span-6 md:col-span-2">
-          <h3 class="font-bold text-lg mb-4 text-white">Sản Phẩm</h3>
-          <ul class="space-y-2">
+        <!-- Dịch Vụ Section (col-span-6 sm:col-span-4 lg:col-span-2) -->
+        <div class="col-span-6 sm:col-span-4 lg:col-span-2">
+          <h3 class="font-bold text-lg mb-4 text-white">Dịch Vụ</h3>
+          <ul class="space-y-3">
             <li>
-              <a href="#" class="text-gray-400 hover:text-blue-400 transition"
-                >Dự Đoán Chiều Cao</a
+              <a
+                href="#"
+                class="text-gray-300 hover:text-white transition text-sm"
+                >Tăng Trưởng Chiều Cao</a
               >
             </li>
             <li>
-              <a href="#" class="text-gray-400 hover:text-blue-400 transition"
-                >Lộ Trình Phát Triển</a
+              <a
+                href="#"
+                class="text-gray-300 hover:text-white transition text-sm"
+                >AI Timeline</a
               >
             </li>
             <li>
-              <a href="#" class="text-gray-400 hover:text-blue-400 transition"
-                >Tư Vấn Chuyên Gia</a
+              <a
+                href="#"
+                class="text-gray-300 hover:text-white transition text-sm"
+                >Sản Phẩm</a
               >
             </li>
           </ul>
         </div>
 
-        <!-- Links Section 2 (col-span-6 md:col-span-2) -->
-        <div class="col-span-6 md:col-span-2">
-          <h3 class="font-bold text-lg mb-4 text-white">Công Ty</h3>
-          <ul class="space-y-2">
+        <!-- Về Everest Section (col-span-6 sm:col-span-4 lg:col-span-2) -->
+        <div class="col-span-6 sm:col-span-4 lg:col-span-2">
+          <h3 class="font-bold text-lg mb-4 text-white">Về Everest</h3>
+          <ul class="space-y-3">
             <li>
-              <a href="#" class="text-gray-400 hover:text-blue-400 transition"
-                >Về Chúng Tôi</a
+              <a
+                href="#"
+                class="text-gray-300 hover:text-white transition text-sm"
+                >Câu Chuyện</a
               >
             </li>
             <li>
-              <a href="#" class="text-gray-400 hover:text-blue-400 transition"
-                >Blog</a
+              <a
+                href="#"
+                class="text-gray-300 hover:text-white transition text-sm"
+                >Khoa Học</a
               >
             </li>
             <li>
-              <a href="#" class="text-gray-400 hover:text-blue-400 transition"
-                >Liên Hệ</a
+              <a
+                href="#"
+                class="text-gray-300 hover:text-white transition text-sm"
+                >Cơ Hội</a
               >
             </li>
           </ul>
         </div>
 
-        <!-- Links Section 3 (col-span-12 md:col-span-2) -->
-        <div class="col-span-12 md:col-span-2">
-          <h3 class="font-bold text-lg mb-4 text-white">Hỗ Trợ</h3>
-          <ul class="space-y-2">
-            <li>
-              <a href="#" class="text-gray-400 hover:text-blue-400 transition"
-                >Điều Khoản Dịch Vụ</a
+        <!-- Liên Hệ Section (col-span-12 sm:col-span-4 lg:col-span-4) -->
+        <div class="col-span-12 sm:col-span-4 lg:col-span-4">
+          <h3 class="font-bold text-lg mb-4 text-white">Liên Hệ</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-2">
+              <i class="pi pi-map-marker text-gray-300 text-sm mt-1"></i>
+              <span class="text-gray-300 text-sm leading-relaxed"
+                >123 Đường ABC, Quận 1, TP.HCM</span
               >
             </li>
-            <li>
-              <a href="#" class="text-gray-400 hover:text-blue-400 transition"
-                >Chính Sách Bảo Mật</a
-              >
+            <li class="flex items-center gap-2">
+              <i class="pi pi-phone text-gray-300 text-sm"></i>
+              <span class="text-gray-300 text-sm">1900 xxxx</span>
             </li>
-            <li>
-              <a href="#" class="text-gray-400 hover:text-blue-400 transition"
-                >Hỗ Trợ Khách Hàng</a
-              >
+            <li class="flex items-center gap-2">
+              <i class="pi pi-envelope text-gray-300 text-sm"></i>
+              <span class="text-gray-300 text-sm">info@everestpharma.vn</span>
             </li>
           </ul>
         </div>
       </div>
 
       <!-- Divider -->
-      <div class="border-t border-gray-700 py-8">
-        <!-- Social & Copyright (col-span-12) -->
-        <div class="grid grid-cols-12 gap-4 items-center">
-          <!-- Copyright (col-span-12 md:col-span-6) -->
-          <div class="col-span-12 md:col-span-6">
-            <p class="text-gray-400 text-sm">
-              &copy; 2024 Everest Pharmo. Tất cả quyền được bảo lưu.
-            </p>
-          </div>
-
-          <!-- Social Links (col-span-12 md:col-span-6) -->
-          <div
-            class="col-span-12 md:col-span-6 flex justify-start md:justify-end gap-4"
-          >
-            <a href="#" class="text-gray-400 hover:text-blue-400 transition">
-              <i class="pi pi-facebook text-xl"></i>
-            </a>
-            <a href="#" class="text-gray-400 hover:text-blue-400 transition">
-              <i class="pi pi-twitter text-xl"></i>
-            </a>
-            <a href="#" class="text-gray-400 hover:text-blue-400 transition">
-              <i class="pi pi-linkedin text-xl"></i>
-            </a>
-            <a href="#" class="text-gray-400 hover:text-blue-400 transition">
-              <i class="pi pi-instagram text-xl"></i>
-            </a>
-          </div>
-        </div>
+      <div class="border-t border-[#003D7A] pt-8">
+        <p class="text-gray-400 text-sm text-center">
+          © 2026 Everest Pharma Vietnam. All Rights Reserved.
+        </p>
       </div>
     </div>
   </footer>
@@ -124,4 +129,6 @@
 </script>
 
 <style scoped>
+.logo {
+}
 </style>
