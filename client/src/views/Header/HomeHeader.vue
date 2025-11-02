@@ -134,8 +134,6 @@
 <script setup>
 import Menubar from "primevue/menubar";
 import Avatar from "primevue/avatar";
-import Badge from "primevue/badge";
-import router from "../../../router";
 import { ref } from "vue";
 
 const menuItemsFeatureOne = ref({

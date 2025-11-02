@@ -14,7 +14,7 @@
           <p
             class="text-base sm:text-lg text-gray-600 leading-relaxed max-w-xl"
           >
-            Nền tảng AI độc quyền từ Everest Pharmo giúp bạn dự đoán chính xác
+            Nền tảng AI độc quyền từ Everest Pharma giúp bạn dự đoán chính xác
             và với ưu hóa tiềm năng tăng trưởng chiều cao. NO LIMITS!
           </p>
         </div>
