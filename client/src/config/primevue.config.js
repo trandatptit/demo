@@ -1,4 +1,5 @@
 import Aura from '@primeuix/themes/aura';
+import Material from '@primeuix/themes/material';
 
 export const primeVueConfig = {
     theme: {
@@ -63,13 +64,13 @@ export const primeVueConfig = {
                 class: ['p-4 border-t', 'bg-gray-50 dark:bg-gray-700'],
             },
         },
-        toast: {
-            root: {
-                class: 'rounded-lg shadow-lg',
-            },
-            message: {
-                class: 'p-4',
-            },
-        },
+        // toast: {
+        //     root: {
+        //         class: 'rounded-lg shadow-lg',
+        //     },
+        //     message: {
+        //         class: 'p-4',
+        //     },
+        // },
     },
 };

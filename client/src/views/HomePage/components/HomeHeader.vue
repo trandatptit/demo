@@ -123,7 +123,7 @@
             icon="pi pi-user"
             class="mr-2 bg-[#ece9fc] text-[#2a1261] cursor-pointer"
             shape="circle"
-            size="xlarge"
+            size="large"
           />
         </div>
       </div>
