@@ -25,7 +25,7 @@
         </p>
 
         <!-- Stats or additional info if needed -->
-        <div
+        <!-- <div
           v-if="stats"
           class="flex items-center gap-4 pt-3 border-t border-gray-200"
         >
@@ -37,7 +37,7 @@
             <i :class="stat.icon" class="text-blue-600"></i>
             <span class="text-sm text-gray-600">{{ stat.value }}</span>
           </div>
-        </div>
+        </div> -->
       </div>
     </template>
     <template #footer>

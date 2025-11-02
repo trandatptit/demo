@@ -50,7 +50,7 @@ const packages = ref([
     features: [
       "Dự đoán chiều cao ban đầu",
       "Lộ trình dinh dưỡng 3 tháng",
-      "Phác đồ tuyên tâm 3 tháng",
+      "Phác đồ luyện tập 3 tháng",
       "Chương trình tăng trưởng toàn diện",
     ],
   },
@@ -63,7 +63,7 @@ const packages = ref([
     buttonLabel: "Chọn Gói Này",
     features: [
       "Tất cả quyền lợi của gói 3 tháng",
-      "Cập nhật tỷ trình mỗi 3 tháng",
+      "Cập nhật tiến trình mỗi 3 tháng",
       "Huy hiệu và phần thưởng đặc quyền",
       "Hỗ trợ chuyên gia liên tục",
     ],
