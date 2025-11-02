@@ -19,6 +19,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Dropdown from 'primevue/dropdown';
 import Calendar from 'primevue/calendar';
+import ConfirmDialog from 'primevue/confirmdialog'
 
 // Import Tailwind styles
 import './assets/css/main.css';
@@ -49,3 +50,4 @@ app.component('Dropdown', Dropdown);
 app.component('Calendar', Calendar);
 
 app.mount('#app');
+app.component('ConfirmDialog', ConfirmDialog)
