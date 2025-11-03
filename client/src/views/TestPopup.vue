@@ -9,6 +9,26 @@
 
     <!-- PopupNatriRoadmap -->
     <PopupNatriRoadmap v-model="showNatriRoadmap" />
+
+    <Button label="View HomeProduct" @click="showHomeProduct = true" />
+
+    <Button label="View HomeTool" @click="showHomeTool = true" />
+
+    <!-- HomeProduct Section -->
+    <div v-if="showHomeProduct" class="w-full">
+      <div class="flex justify-end px-4 mb-2">
+        <Button icon="pi pi-times" text rounded severity="danger" @click="showHomeProduct = false" />
+      </div>
+      <HomeProduct />
+    </div>
+
+    <!-- HomeTool Section -->
+    <div v-if="showHomeTool" class="w-full">
+      <div class="flex justify-end px-4 mb-2">
+        <Button icon="pi pi-times" text rounded severity="danger" @click="showHomeTool = false" />
+      </div>
+      <HomeTool />
+    </div>
   </div>
 </template>
 
@@ -17,7 +37,11 @@ import { ref } from "vue";
 import Button from "primevue/button";
 import PopupPackage from "../components/popup/PopupPackage.vue";
 import PopupNatriRoadmap from "../components/popup/PopupNatrilRoadmap.vue";
+import HomeProduct from "./HomePage/components/HomeProduct.vue";
+import HomeTool from "./HomePage/components/HomeTool.vue";
 
 const showPopup = ref(false);
 const showNatriRoadmap = ref(false);
+const showHomeProduct = ref(false);
+const showHomeTool = ref(false);
 </script>
