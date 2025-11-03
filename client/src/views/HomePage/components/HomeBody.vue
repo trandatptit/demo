@@ -300,6 +300,8 @@
       <height-growth-roadmap class="col-span-12" />
       <package-month class="col-span-12" />
       <expert-and-partner class="col-span-12" />
+      <home-product class="col-span-12" />
+      <home-tool class="col-span-12" />
     </div>
   </main>
 </template>
@@ -323,6 +325,8 @@ import { useToast } from "primevue/usetoast";
 import HeightGrowthRoadmap from "../../../components/HeigthGrowthRoadmap/HeightGrowthRoadmap.vue";
 import PackageMonth from "../../../components/PackageComponent/PackageMonth.vue";
 import ExpertAndPartner from "../../../components/ExpertAndPartnerComponent/ExpertAndPartner.vue";
+import HomeProduct from "./HomeProduct.vue";
+import HomeTool from "./HomeTool.vue";
 
 const router = useRouter();
 const toast = useToast();
