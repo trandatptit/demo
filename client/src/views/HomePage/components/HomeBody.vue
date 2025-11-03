@@ -407,10 +407,7 @@ const handleSubmitStepThree = (activateCallback) => {
   }
   console.log("Form submitted:", formData.value);
   valueFullFormRef.value.step3 = true;
-  router.push({
-    name: "ResultPage",
-    query: { data: JSON.stringify(formData.value) },
-  });
+  console.log("All form data:", formData.value);
 };
 
 const handleBack = () => {
