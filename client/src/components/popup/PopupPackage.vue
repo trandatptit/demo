@@ -69,7 +69,7 @@ const packages = ref([
     subtitleColorClass: "text-blue-600 dark:text-blue-400",
     price: "270.000đ",
     priceUnit: "/tháng",
-    icon: "pi-heart",
+    icon: "pi-shopping-cart",
     iconBgClass: "bg-blue-100 dark:bg-blue-900/30",
     iconColorClass: "text-blue-600 dark:text-blue-400",
     buttonText: "Lựa chọn",
@@ -82,7 +82,7 @@ const packages = ref([
     description: "Kết hợp Dinh Dưỡng & Luyện Tập, Theo dõi sức khỏe và phát triển của bạn Toàn diện.",
     originalPrice: "170.000đ/tháng",
     warning: "Cần mua 2 lộ trình kia trước.",
-    icon: "pi-trophy",
+    icon: "pi-star", // Sửa từ pi-star-fill
     iconBgClass: "bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30",
     iconColorClass: "text-blue-600 dark:text-blue-400",
     buttonText: "Lựa chọn",
@@ -100,7 +100,7 @@ const packages = ref([
     subtitleColorClass: "text-purple-600 dark:text-purple-400",
     price: "30.000đ",
     priceUnit: "/tháng",
-    icon: "pi-bolt",
+    icon: "pi-chart-line", // Sửa từ pi-bolt (vì pi-bolt không tồn tại)
     iconBgClass: "bg-purple-100 dark:bg-purple-900/30",
     iconColorClass: "text-purple-600 dark:text-purple-400",
     buttonText: "Lựa chọn",

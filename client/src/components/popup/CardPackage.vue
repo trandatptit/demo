@@ -13,10 +13,10 @@
         featured ? 'border-4 border-blue-500 dark:border-blue-600' : 'border-2 border-gray-200 dark:border-gray-700'
       ]"
     >
-      <!-- Icon Slot -->
-      <template #icon>
+      <!-- Header Slot - Thay thế icon slot -->
+      <template #header>
         <slot name="icon">
-          <div :class="{ 'mt-6': featured }">
+          <div :class="{ 'mt-6': featured }" class="pt-4">
             <div 
               :class="[
                 'w-24 h-24 rounded-full flex items-center justify-center mx-auto',
