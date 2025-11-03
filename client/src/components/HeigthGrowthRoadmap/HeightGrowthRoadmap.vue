@@ -26,16 +26,21 @@
         />
       </div>
     </div>
+    <!-- PopupPackage -->
+    <PopupPackage v-model="showPopup" />
   </section>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import Button from "primevue/button";
+import PopupPackage from "../Popup/PopupPackage.vue";
 
+const showPopup = ref(false);
 const handleLearnMore = () => {
   // Add your navigation or action logic here
   console.log("Learn more clicked");
+  showPopup.value = true;
   // For example: router.push({ name: 'Packages' });
 };
 </script>
