@@ -34,89 +34,13 @@
 
       <!-- Pricing Cards Grid -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8 pt-10">
-        <!-- Dynamic Package Cards -->
-        <div 
-          v-for="(pkg, index) in packages" 
+        <!-- Dynamic Package Cards using CardPackage Component -->
+        <CardPackage
+          v-for="(pkg, index) in packages"
           :key="index"
-          :class="[
-            'bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col',
-            pkg.featured ? 'border-4 border-blue-500 dark:border-blue-600 relative' : 'border-2 border-gray-200 dark:border-gray-700'
-          ]"
-        >
-          <!-- Featured Badge -->
-          <div v-if="pkg.featured" class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-            <span class="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-bold px-6 py-2 rounded-full shadow-lg">
-              {{ pkg.badge }}
-            </span>
-          </div>
-
-          <!-- Icon -->
-          <div class="flex justify-center mb-6" :class="{ 'mt-2': pkg.featured }">
-            <div 
-              :class="[
-                'w-24 h-24 rounded-full flex items-center justify-center',
-                pkg.iconBgClass
-              ]"
-            >
-              <i :class="`pi ${pkg.icon} text-5xl ${pkg.iconColorClass}`"></i>
-            </div>
-          </div>
-
-          <!-- Title -->
-          <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100 text-center mb-4">
-            {{ pkg.title }}
-          </h3>
-
-          <!-- Description -->
-          <div class="flex-grow">
-            <p class="text-gray-600 dark:text-gray-400 text-center text-base mb-3">
-              {{ pkg.description }}
-            </p>
-            <p 
-              v-if="pkg.subtitle" 
-              :class="`text-center text-base font-semibold mb-8 ${pkg.subtitleColorClass}`"
-            >
-              {{ pkg.subtitle }}
-            </p>
-          </div>
-
-          <!-- Original Price (for featured) -->
-          <div v-if="pkg.originalPrice" class="text-center mb-2">
-            <p class="text-gray-400 dark:text-gray-500 line-through text-xl">
-              {{ pkg.originalPrice }}
-            </p>
-          </div>
-
-          <!-- Warning Message (for featured) -->
-          <div v-if="pkg.warning" class="text-center mb-6">
-            <div class="inline-block bg-red-100 dark:bg-red-900/30 px-5 py-3 rounded-lg">
-              <p class="text-red-600 dark:text-red-300 font-bold text-sm">
-                {{ pkg.warning }}
-              </p>
-            </div>
-          </div>
-
-          <!-- Price -->
-          <div v-if="!pkg.comingSoon" class="text-center mb-6 pb-5">
-            <p class="text-4xl font-bold text-gray-800 dark:text-gray-100">
-              {{ pkg.price }}<span class="text-xl font-normal text-gray-600 dark:text-gray-400">{{ pkg.priceUnit }}</span>
-            </p>
-          </div>
-
-          <!-- Button -->
-          <button 
-            :disabled="pkg.comingSoon"
-            :class="[
-              'w-full font-semibold py-4 rounded-xl transition-all duration-200 text-lg',
-              pkg.comingSoon 
-                ? 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed opacity-60'
-                : 'bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl'
-            ]"
-            @click="!pkg.comingSoon && selectPackage(pkg)"
-          >
-            {{ pkg.buttonText }}
-          </button>
-        </div>
+          v-bind="pkg"
+          @select="selectPackage"
+        />
       </div>
     </div>
   </Dialog>
@@ -125,6 +49,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import Dialog from "primevue/dialog";
+import CardPackage from "../CardPackage.vue";
 
 const props = defineProps({
   modelValue: Boolean
@@ -163,7 +88,9 @@ const packages = ref([
     buttonText: "Lựa chọn",
     featured: true,
     badge: "TỐI ƯU",
-    comingSoon: true
+    comingSoon: true,
+    price: "", // Empty price for coming soon
+    priceUnit: ""
   },
   {
     id: 3,
