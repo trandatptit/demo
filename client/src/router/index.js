@@ -30,7 +30,7 @@ const routes = [
     // Route cho 404 - phải đặt ở cuối cùng
     {
         path: '/:pathMatch(.*)*',
-        redirect: { name: 'Home' },
+        redirect: { name: 'HomePage' },
     },
 ];
 
@@ -43,7 +43,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     // Nếu route không tồn tại
     if (!to.matched.length) {
-        next({ name: 'Home' });
+        next({ name: 'HomePage' });
         return;
     }
     next();
