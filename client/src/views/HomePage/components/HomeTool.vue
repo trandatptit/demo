@@ -1,39 +1,28 @@
 <template>
-  <section class="bg-gradient-to-b from-gray-50 to-white py-12 lg:py-16">
-    <div class="mx-auto px-4 lg:px-8">
-      <!-- Header Section -->
-      <div class="text-center mb-12">
-        <h2 class="text-3xl lg:text-4xl font-bold text-[#002855] mb-4">
+  <section class="mx-auto px-4 lg:px-8 py-12 lg:py-16 bg-gray-50">
+    <!-- Container 12 Grid Main -->
+    <div class="grid grid-cols-12 gap-8 lg:gap-12">
+      <!-- Title Section - Full Width -->
+      <div class="col-span-12 text-center mb-8">
+        <h2
+          class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-4"
+        >
           Dụng Cụ Nổi Bật
         </h2>
-        <p class="text-gray-600 text-base lg:text-lg max-w-2xl mx-auto">
+        <p class="text-base sm:text-lg text-gray-600 mx-auto max-w-3xl">
           Tối ưu hóa quá trình luyện tập của bạn với các dụng cụ được chuyên gia
           khuyên dùng.
         </p>
       </div>
 
-      <!-- Products Grid -->
+      <!-- Product Cards - 3 columns on desktop, full width on mobile -->
       <div
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-12 max-w-7xl mx-auto"
+        class="col-span-12 lg:col-span-4"
+        v-for="product in products"
+        :key="product.id"
       >
-        <CardProduct
-          v-for="product in products"
-          :key="product.id"
-          :product="product"
-          @add-to-cart="handleAddToCart"
-        />
+        <CardProduct :product="product" @add-to-cart="handleAddToCart" />
       </div>
-
-      <!-- View All Button -->
-      <!-- <div class="text-center mt-12">
-        <Button
-          label="Xem Tất Cả Sản Phẩm"
-          icon="pi pi-arrow-right"
-          iconPos="right"
-          class="bg-[#002855] text-white font-medium px-8 py-3 hover:bg-[#003D7A] transition"
-          @click="viewAllProducts"
-        />
-      </div> -->
     </div>
 
     <!-- Toast for notifications -->
