@@ -1,61 +1,81 @@
 <template>
-    <div class="min-h-screen bg-gray-100 py-8 px-4">
+    <section class="min-h-screen bg-gray-100 py-8 px-4">
+        <!-- Container 12 Grid Main -->
         <div class="max-w-6xl mx-auto">
-            <!-- Back Button -->
-            <div class="mb-6">
-                <Button label="Về trang chủ" icon="pi pi-arrow-left" text severity="secondary" @click="goBack"
-                    class="text-gray-600 hover:text-gray-800" />
-            </div>
+            <div class="grid grid-cols-12 gap-4 lg:gap-6">
+                <!-- Back Button Section - Full Width -->
+                <div class="col-span-12 mb-2">
+                    <Button 
+                        label="Về trang chủ" 
+                        icon="pi pi-arrow-left" 
+                        text 
+                        severity="secondary" 
+                        @click="goBack"
+                        class="text-gray-600 hover:text-gray-800" 
+                    />
+                </div>
 
-            <!-- Main Content Card -->
-            <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <!-- Left Side - Chart -->
-                    <div>
-                        <!-- Title -->
-                        <div class="text-center mb-8">
-                            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
-                                Kết Quả cho {{ userIdDisplay }}
-                            </h1>
-                            <p class="text-base text-gray-500">
-                                Hành trình vươn tới đỉnh cao của bạn bắt đầu từ đây.
-                            </p>
-                        </div>
+                <!-- Main Content Card - Full Width -->
+                <div class="col-span-12">
+                    <div class="bg-white rounded-3xl shadow-xl p-6 md:p-8 lg:p-12">
+                        <div class="grid grid-cols-12 gap-6 lg:gap-12">
+                            <!-- Left Side - Chart Section (6 columns on large screens) -->
+                            <div class="col-span-12 lg:col-span-6">
+                                <!-- Title -->
+                                <div class="text-center mb-6 lg:mb-8">
+                                    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
+                                        Kết Quả cho {{ userIdDisplay }}
+                                    </h1>
+                                    <p class="text-base text-gray-500">
+                                        Hành trình vươn tới đỉnh cao của bạn bắt đầu từ đây.
+                                    </p>
+                                </div>
 
-                        <!-- Chart with Icons -->
-                        <div class="card relative">
-                            <Chart type="bar" :data="chartData" :options="chartOptions" class="h-[400px]" />
-                            
-                            <!-- Stick Figure Icons Overlay -->
-                            <div class="absolute bottom-16 left-0 right-0 flex justify-around px-12">
-                                <i class="pi pi-user text-3xl text-white drop-shadow-lg"></i>
-                                <i class="pi pi-user text-3xl text-white drop-shadow-lg"></i>
-                                <i class="pi pi-user text-3xl text-gray-400 drop-shadow-lg"></i>
+                                <!-- Chart with Icons -->
+                                <div class="chart-wrapper relative">
+                                    <Chart 
+                                        type="bar" 
+                                        :data="chartData" 
+                                        :options="chartOptions" 
+                                        class="h-[400px]" 
+                                    />
+                                    
+                                    <!-- Stick Figure Icons Overlay -->
+                                    <div class="absolute bottom-16 left-0 right-0 flex justify-around px-12">
+                                        <i class="pi pi-user text-3xl text-white drop-shadow-lg"></i>
+                                        <i class="pi pi-user text-3xl text-white drop-shadow-lg"></i>
+                                        <i class="pi pi-user text-3xl text-gray-400 drop-shadow-lg"></i>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <!-- Right Side - Result & Button -->
-                    <div class="flex flex-col items-center justify-center space-y-8">
-                        <!-- Prediction Result -->
-                        <div class="text-center">
-                            <p class="text-sm text-gray-500 mb-2">
-                                Chiều cao dự kiến năng (All transfer)
-                            </p>
-                            <p class="text-7xl md:text-8xl font-bold text-gray-800 mb-1">
-                                {{ predictedHeightDisplay }}
-                                <span class="text-4xl">cm</span>
-                            </p>
-                        </div>
+                            <!-- Right Side - Result & Button Section (6 columns on large screens) -->
+                            <div class="col-span-12 lg:col-span-6">
+                                <div class="flex flex-col items-center justify-center h-full space-y-8">
+                                    <!-- Prediction Result -->
+                                    <div class="text-center">
+                                        <p class="text-sm text-gray-500 mb-2">
+                                            Chiều cao dự kiến năng (All transfer)
+                                        </p>
+                                        <p class="text-7xl md:text-8xl font-bold text-gray-800 mb-1">
+                                            {{ predictedHeightDisplay }}
+                                            <span class="text-4xl">cm</span>
+                                        </p>
+                                    </div>
 
-                        <!-- Unlock Section -->
-                        <div class="bg-gray-50 rounded-2xl p-8 text-center w-full">
-                            <p class="text-lg font-semibold text-gray-800 mb-4">
-                                Mở khóa tiềm năng thật sự!
-                            </p>
-                            <Button label="Chỉ với 30.000đ"
-                                class="bg-blue-800 hover:bg-blue-900 text-white font-bold text-base px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
-                                @click="unlockFeature" />
+                                    <!-- Unlock Section -->
+                                    <div class="bg-gray-50 rounded-2xl p-8 text-center w-full">
+                                        <p class="text-lg font-semibold text-gray-800 mb-4">
+                                            Mở khóa tiềm năng thật sự!
+                                        </p>
+                                        <Button 
+                                            label="Chỉ với 30.000đ"
+                                            class="bg-blue-800 hover:bg-blue-900 text-white font-bold text-base px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
+                                            @click="unlockFeature" 
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -64,7 +84,7 @@
 
         <!-- Toast for notifications -->
         <Toast />
-    </div>
+    </section>
 </template>
 
 <script setup>
@@ -96,7 +116,6 @@ const props = defineProps({
         type: Number,
         default: 171
     }
-    
 });
 
 // Display values
@@ -165,7 +184,7 @@ const setChartOptions = () => {
                 }
             },
             tooltip: {
-                enabled: true, // Bật tooltip
+                enabled: true,
                 backgroundColor: 'rgba(0, 0, 0, 0.8)',
                 titleColor: '#fff',
                 bodyColor: '#fff',
@@ -222,7 +241,7 @@ const setChartOptions = () => {
         },
         layout: {
             padding: {
-                top: 30, // Tăng padding top để có chỗ hiển thị số
+                top: 30,
                 bottom: 20
             }
         },
@@ -250,8 +269,8 @@ const unlockFeature = () => {
 </script>
 
 <style scoped>
-/* Card wrapper for chart */
-.card {
+/* Chart wrapper for positioning */
+.chart-wrapper {
     position: relative;
 }
 
@@ -262,5 +281,11 @@ const unlockFeature = () => {
 
 :deep(canvas) {
     position: relative;
+}
+
+/* Smooth transitions for grid layout changes */
+.col-span-12,
+.col-span-6 {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 </style>

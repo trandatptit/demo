@@ -1,84 +1,96 @@
 <template>
-    <div class="min-h-screen bg-gray-50 py-6 px-4">
+    <section class="min-h-screen bg-gray-50 py-6 px-4">
+        <!-- Container 12 Grid Main -->
         <div class="max-w-5xl mx-auto">
-            <!-- Back Button -->
-            <div class="mb-4">
-                <Button 
-                    label="Về trang chủ" 
-                    icon="pi pi-arrow-left" 
-                    text 
-                    severity="secondary" 
-                    @click="goBack"
-                    class="text-gray-600 hover:text-gray-800" 
-                />
-            </div>
-
-            <!-- Main Content Card -->
-            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
-                <!-- Title -->
-                <div class="mb-6">
-                    <h1 class="text-xl md:text-2xl font-bold text-gray-800 mb-2">
-                        Biểu Đồ Tăng Trưởng Dự Kiến (đến 20 tuổi)
-                    </h1>
-                </div>
-
-                <!-- Chart Section -->
-                <div class="card mb-6">
-                    <Chart 
-                        type="bar" 
-                        :data="chartData" 
-                        :options="chartOptions" 
-                        class="h-[350px]"
+            <div class="grid grid-cols-12 gap-4 lg:gap-6">
+                <!-- Back Button Section - Full Width -->
+                <div class="col-span-12 mb-2">
+                    <Button 
+                        label="Về trang chủ" 
+                        icon="pi pi-arrow-left" 
+                        text 
+                        severity="secondary" 
+                        @click="goBack"
+                        class="text-gray-600 hover:text-gray-800" 
                     />
                 </div>
 
-                <!-- Info Cards Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                    <!-- AI Recommendation Card -->
-                    <div class="bg-white border border-gray-200 rounded-2xl p-6">
-                        <div class="flex items-start gap-3 mb-3">
-                            <i class="pi pi-sparkles text-2xl text-blue-600"></i>
-                            <h3 class="text-lg font-semibold text-gray-800">
-                                Lời khuyên từ AI
-                            </h3>
-                        </div>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            {{ aiRecommendation }}
-                        </p>
-                    </div>
+                <!-- Main Content Card - Full Width -->
+                <div class="col-span-12">
+                    <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+                        <div class="grid grid-cols-12 gap-4 lg:gap-6">
+                            <!-- Title Section - Full Width -->
+                            <div class="col-span-12 mb-2">
+                                <h1 class="text-xl md:text-2xl font-bold text-gray-800">
+                                    Biểu Đồ Tăng Trưởng Dự Kiến (đến 20 tuổi)
+                                </h1>
+                            </div>
 
-                    <!-- Traditional Method Card -->
-                    <div class="bg-white border border-gray-200 rounded-2xl p-6">
-                        <div class="flex items-start gap-2 mb-2">
-                            <i class="pi pi-heart text-2xl text-blue-600"></i>
-                            <h3 class="text-lg font-semibold text-gray-800">
-                                Thông điệp truyền cảm hứng
-                            </h3>
-                        </div>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            {{ inspirationMessageDisplay }}
-                        </p>
-                    </div>
-                </div>
+                            <!-- Chart Section - Full Width -->
+                            <div class="col-span-12 mb-2">
+                                <div class="chart-wrapper">
+                                    <Chart 
+                                        type="bar" 
+                                        :data="chartData" 
+                                        :options="chartOptions" 
+                                        class="h-[350px]"
+                                    />
+                                </div>
+                            </div>
 
-                <!-- Download PDF Button -->
-                <div class="text-center">
-                    <Button
-                        label="Tải kết quả PDF"
-                        icon="pi pi-download"
-                        class="bg-blue-800 hover:bg-blue-900 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
-                    />
+                            <!-- Info Cards Grid - Two columns on desktop -->
+                            <div class="col-span-12 md:col-span-6">
+                                <!-- AI Recommendation Card -->
+                                <div class="bg-white border border-gray-200 rounded-2xl p-6 h-full">
+                                    <div class="flex items-start gap-3 mb-3">
+                                        <i class="pi pi-sparkles text-2xl text-blue-600"></i>
+                                        <h3 class="text-lg font-semibold text-gray-800">
+                                            Lời khuyên từ AI
+                                        </h3>
+                                    </div>
+                                    <p class="text-sm text-gray-600 leading-relaxed">
+                                        {{ aiRecommendation }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-span-12 md:col-span-6">
+                                <!-- Traditional Method Card -->
+                                <div class="bg-white border border-gray-200 rounded-2xl p-6 h-full">
+                                    <div class="flex items-start gap-2 mb-2">
+                                        <i class="pi pi-heart text-2xl text-blue-600"></i>
+                                        <h3 class="text-lg font-semibold text-gray-800">
+                                            Thông điệp truyền cảm hứng
+                                        </h3>
+                                    </div>
+                                    <p class="text-sm text-gray-600 leading-relaxed">
+                                        {{ inspirationMessageDisplay }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Download PDF Button - Full Width -->
+                            <div class="col-span-12 text-center mt-2">
+                                <Button
+                                    label="Tải kết quả PDF"
+                                    icon="pi pi-download"
+                                    @click="downloadPDF"
+                                    class="bg-blue-800 hover:bg-blue-900 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Toast for notifications -->
         <Toast />
-    </div>
+    </section>
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed } from 'vue'; // ✅ Thêm computed
+import { ref, onMounted, watch, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import Chart from 'primevue/chart';
 import Button from 'primevue/button';
@@ -122,7 +134,7 @@ const inspirationMessageDisplay = computed(() => {
     return `Cố lên ${props.userId}, tin vào bản thân và chăm chỉ chăm sóc sức khỏe của chính mình 💙`;
 });
 
-// Chart refs
+// Chart refs - theo pattern PrimeVue
 const chartData = ref();
 const chartOptions = ref();
 
@@ -137,7 +149,7 @@ watch(() => props.ageData, () => {
     chartData.value = setChartData();
 }, { deep: true });
 
-// Set chart data
+// Set chart data - theo pattern PrimeVue
 const setChartData = () => {
     const labels = props.ageData.map(item => item.age);
     const data = props.ageData.map(item => item.height);
@@ -164,7 +176,7 @@ const setChartData = () => {
     };
 };
 
-// Set chart options
+// Set chart options - theo pattern PrimeVue
 const setChartOptions = () => {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--p-text-color') || '#333';
@@ -257,7 +269,7 @@ const goBack = () => {
     router.push({ name: 'Home' });
 };
 
-// Download PDF
+// Download PDF function
 const downloadPDF = () => {
     toast.add({
         severity: 'success',
@@ -272,15 +284,23 @@ const downloadPDF = () => {
 </script>
 
 <style scoped>
-.card {
+/* Chart wrapper for positioning */
+.chart-wrapper {
     position: relative;
 }
 
+/* Custom styling for chart canvas */
 :deep(.p-chart) {
     position: relative;
 }
 
 :deep(canvas) {
     position: relative;
+}
+
+/* Smooth transitions for grid layout changes */
+.col-span-12,
+.col-span-6 {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 </style>
