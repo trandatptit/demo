@@ -7,7 +7,7 @@
         <div class="col-span-12 lg:col-span-4">
           <div class="logo flex items-center space-x-3 mb-6">
             <router-link
-              to="HomePage"
+              :to="{ name: 'HomePage' }"
               class="w-14 h-14 bg-white rounded-lg flex items-center justify-center"
             >
               <span class="text-[#002855] font-bold text-2xl">E</span>

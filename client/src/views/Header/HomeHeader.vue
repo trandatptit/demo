@@ -7,7 +7,10 @@
         <div class="col-span-6 md:col-span-3">
           <Menubar class="border-0 bg-transparent p-0">
             <template #start>
-              <router-link to="HomePage" class="flex items-center space-x-2">
+              <router-link
+                :to="{ name: 'HomePage' }"
+                class="flex items-center space-x-2"
+              >
                 <div
                   class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center"
                 >
