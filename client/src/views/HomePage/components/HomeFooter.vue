@@ -6,11 +6,12 @@
         <!-- Brand Section (col-span-12 lg:col-span-4) -->
         <div class="col-span-12 lg:col-span-4">
           <div class="logo flex items-center space-x-3 mb-6">
-            <div
+            <router-link
+              :to="{ name: 'HomePage' }"
               class="w-14 h-14 bg-white rounded-lg flex items-center justify-center"
             >
               <span class="text-[#002855] font-bold text-2xl">E</span>
-            </div>
+            </router-link>
           </div>
           <p class="text-gray-300 text-sm leading-relaxed max-w-xs">
             Cùng bạn chinh phục đỉnh cao của bạn nâng. NO LIMITS!

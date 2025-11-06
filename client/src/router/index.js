@@ -1,18 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
-    {
-        path: '/home',
-        name: 'Home',
-        component: () =>
-            import(/* webpackChunkName: "home" */ '../views/Home.vue'),
-    },
-    {
-        path: '/about',
-        name: 'About',
-        component: () =>
-            import(/* webpackChunkName: "about" */ '../views/About.vue'),
-    },
+    // {
+    //     path: '/home',
+    //     name: 'Home',
+    //     component: () =>
+    //         import(/* webpackChunkName: "home" */ '../views/Home.vue'),
+    // },
+    // {
+    //     path: '/about',
+    //     name: 'About',
+    //     component: () =>
+    //         import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    // },
     {
         path: '/',
         name: 'HomePage',
@@ -26,6 +26,36 @@ const routes = [
         name: 'Test',
         component: () =>
             import(/* webpackChunkName: "test" */ '../views/TestPopup.vue'),
+    },
+    {
+        path: '/test-screen',
+        name: 'TestScreen',
+        component: () =>
+            import(
+                /* webpackChunkName: "TestScreen" */ '../views/TestScreen.vue'
+            ),
+    },
+    {
+        path: '/account',
+        name: 'Account',
+        children: [
+            {
+                path: 'profile',
+                name: 'UserProfile',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "UserProfile" */ '../views/Account/UserProfile.vue'
+                    ),
+            },
+            {
+                path: 'manage-account',
+                name: 'ManageAccount',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "ManageAccount" */ '../views/Account/ManagerAccount.vue'
+                    ),
+            },
+        ],
     },
     // Route cho 404 - phải đặt ở cuối cùng
     {
