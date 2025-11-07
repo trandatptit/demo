@@ -57,6 +57,14 @@ const routes = [
             },
         ],
     },
+    {
+        path: '/height-prediction',
+        name: 'HeightPrediction',
+        component: () =>
+            import(
+                /* webpackChunkName: "HeightPrediction" */ '../views/HeightPrediction/HeightPrediction.vue'
+            ),
+    },
     // Route cho 404 - phải đặt ở cuối cùng
     {
         path: '/:pathMatch(.*)*',

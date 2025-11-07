@@ -322,14 +322,16 @@ import Step from "primevue/step";
 import StepPanels from "primevue/steppanels";
 import StepPanel from "primevue/steppanel";
 import { useToast } from "primevue/usetoast";
-import HeightGrowthRoadmap from "../../../components/HeigthGrowthRoadmap/HeightGrowthRoadmap.vue";
-import PackageMonth from "../../../components/PackageComponent/PackageMonth.vue";
-import ExpertAndPartner from "../../../components/ExpertAndPartnerComponent/ExpertAndPartner.vue";
+import HeightGrowthRoadmap from "@/components/HeigthGrowthRoadmap/HeightGrowthRoadmap.vue";
+import PackageMonth from "@/components/PackageComponent/PackageMonth.vue";
+import ExpertAndPartner from "@/components/ExpertAndPartnerComponent/ExpertAndPartner.vue";
 import HomeProduct from "./HomeProduct.vue";
 import HomeTool from "./HomeTool.vue";
+import { useUserInfoStore } from "@/stores/userInfo.js";
 
 const router = useRouter();
 const toast = useToast();
+const userInfoStore = useUserInfoStore();
 
 const formData = ref({
   name: "",
@@ -407,7 +409,8 @@ const handleSubmitStepThree = (activateCallback) => {
   }
   console.log("Form submitted:", formData.value);
   valueFullFormRef.value.step3 = true;
-  console.log("All form data:", formData.value);
+  userInfoStore.setUserInfo(formData.value);
+  router.push({ name: "HeightPrediction" });
 };
 
 const handleBack = () => {
