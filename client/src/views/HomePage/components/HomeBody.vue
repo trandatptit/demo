@@ -67,7 +67,7 @@
                       <RadioButton
                         v-model="formData.gender"
                         name="gender"
-                        value="1"
+                        :value="1"
                         input-id="male"
                       />
                       <label
@@ -80,7 +80,7 @@
                       <RadioButton
                         v-model="formData.gender"
                         name="gender"
-                        value="2"
+                        :value="2"
                         input-id="female"
                       />
                       <label
@@ -157,7 +157,7 @@
                 <IconField>
                   <InputIcon class="pi pi-user-plus" />
                   <InputNumber
-                    v-model="formData.parentHeight"
+                    v-model="formData.fatherHeight"
                     placeholder="Chiều cao của bố (cm)"
                     :use-grouping="false"
                     class="w-full"
@@ -341,7 +341,7 @@ const formData = ref({
   weight: null,
   birthday: null,
   pubertyDay: null,
-  parentHeight: null,
+  fatherHeight: null,
   motherHeight: null,
   mealsPerDay: null,
   timeSleep: null,
@@ -377,7 +377,7 @@ const handleSubmitStepOne = (activateCallback) => {
 };
 
 const handleSubmitStepTwo = (activateCallback) => {
-  if (!formData.value.parentHeight || !formData.value.motherHeight) {
+  if (!formData.value.fatherHeight || !formData.value.motherHeight) {
     toast.add({
       severity: "error",
       summary: "Cảnh báo",
@@ -409,6 +409,8 @@ const handleSubmitStepThree = (activateCallback) => {
   }
   console.log("Form submitted:", formData.value);
   valueFullFormRef.value.step3 = true;
+  formData.value.age =
+    new Date().getFullYear() - formData.value.birthday.getFullYear();
   userInfoStore.setUserInfo(formData.value);
   router.push({ name: "HeightPrediction" });
 };

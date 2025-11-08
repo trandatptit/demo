@@ -1,6 +1,18 @@
 <template>
   <!-- Toast for notifications -->
   <Toast />
+
+  <!-- Payment QR Popup -->
+  <PaymentQRPopup
+    v-model="showPaymentPopup"
+    :amount="30000"
+    :orderId="orderId"
+    bank-code="970422"
+    bank-account="0123456789"
+    account-name="EVEREST HEIGHT GROWTH"
+    @confirm="handlePaymentConfirm"
+  />
+
   <section class="bg-gray-100 py-8 px-4">
     <!-- Container 12 Grid Main -->
     <div class="max-w-6xl mx-auto">
@@ -97,9 +109,9 @@
     </div>
   </section>
 
-  <section class="bg-gray-100 py-6 px-4">
+  <section class="bg-gray-100 py-8 px-4">
     <!-- Container 12 Grid Main -->
-    <div class="max-w-5xl mx-auto">
+    <div class="max-w-6xl mx-auto">
       <div class="grid grid-cols-12 gap-4 lg:gap-6">
         <!-- Main Content Card - Full Width -->
         <div class="col-span-12">
@@ -185,10 +197,20 @@ import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
 import { useUserInfoStore } from "@/stores/userInfo";
 import findHeightGen from "@/utilities/findHeightGen/findHeightGen.js";
+import PaymentQRPopup from "@/components/Popup/PaymentQRPopup/PaymentQRPopup.vue";
+import randomElement from "@/utilities/randomElement/randomeElement.js";
+import { adviceAIMessages, inspirationMessages } from "@/config/content.js";
+import formatStr from "@/utilities/formatString/formatString.js";
 
 const router = useRouter();
 const toast = useToast();
 const userInfoStore = useUserInfoStore();
+
+// Payment popup state
+const showPaymentPopup = ref(false);
+const orderId = ref("");
+const aiRecommendation = ref("");
+const inspirationMessageDisplay = ref("");
 
 // Accept props
 // const props = defineProps({
@@ -232,6 +254,15 @@ onBeforeMount(() => {
     const inheritedHeight = findHeightGen(userInfo);
     heightUser.value.inherited = inheritedHeight;
   }
+
+  aiRecommendation.value = formatStr(
+    randomElement(adviceAIMessages),
+    userInfo?.gender === 1 ? "Nam" : "Nữ",
+    userInfo?.age
+  );
+  inspirationMessageDisplay.value = formatStr(
+    randomElement(inspirationMessages)
+  );
 });
 
 // Chart refs - theo pattern PrimeVue
@@ -378,16 +409,27 @@ const goBack = () => {
 
 // Unlock feature
 const unlockFeature = () => {
+  // Generate order ID
+  orderId.value = `EP${Date.now().toString().slice(-5)}`;
+  showPaymentPopup.value = true;
+};
+
+const isShowPotentialHeight = ref(false);
+// Handle payment confirmation
+const handlePaymentConfirm = (paymentData) => {
+  showPaymentPopup.value = false;
+
   toast.add({
-    severity: "info",
-    summary: "Đang xử lý",
-    detail: "Đang chuyển đến trang thanh toán...",
-    life: 2000,
+    severity: "success",
+    summary: "Đã nhận thanh toán",
+    detail: "Chúng tôi đang xác nhận giao dịch của bạn...",
+    life: 3000,
   });
 
-  setTimeout(() => {
-    router.push({ name: "Payment", params: { feature: "30k" } });
-  }, 2000);
+  // TODO: Call API to verify payment
+  console.log("Payment data:", paymentData);
+  isShowPotentialHeight.value = true;
+  var userInfo = userInfoStore.getUserInfo();
 };
 </script>
 
