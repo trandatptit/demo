@@ -122,12 +122,34 @@
 
         <!-- Avatar Section (col-span-6 on mobile, col-span-3 on desktop) -->
         <div class="col-span-6 md:col-span-3 flex justify-end">
-          <Avatar
-            icon="pi pi-user"
-            class="mr-2 bg-[#ece9fc] text-[#2a1261] cursor-pointer"
-            shape="circle"
-            size="large"
-          />
+          <div class="tab-avatar-menu">
+            <Avatar
+              icon="pi pi-user"
+              class="mr-2 bg-[#ece9fc] text-[#2a1261] cursor-pointer"
+              shape="circle"
+              size="large"
+            />
+            <div
+              class="avatar-menu__droplist flex bg-white p-1 rounded-[6px] shadow-lg"
+            >
+              <ul class="avatar-menu__item-list">
+                <li
+                  class="avatar-menu__item-list-item flex items-center"
+                  v-for="item in avatarMenuItems"
+                  :key="item.label"
+                >
+                  <router-link :to="item.route || '#'">
+                    <div
+                      class="avatar-menu__item-list-title text-stone-900 flex items-center text-[16px]"
+                    >
+                      <i :class="item.icon" class="mr-2"></i>
+                      {{ item.label }}
+                    </div>
+                  </router-link>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -163,6 +185,24 @@ const menuItemsFeatureOne = ref({
     },
   ],
 });
+
+const avatarMenuItems = ref([
+  {
+    label: "Quản lý tài khoản",
+    icon: "pi pi-fw pi-user-edit",
+    route: { name: "ManageAccount" },
+  },
+  {
+    label: "Hồ sơ của tôi",
+    icon: "pi pi-fw pi-id-card",
+    route: { name: "UserProfile" },
+  },
+  {
+    label: "Đăng xuất",
+    icon: "pi pi-fw pi-sign-out",
+    route: "/logout",
+  },
+]);
 
 const menuItemsFeattureTwo = ref({
   label: "Về Everest",
@@ -365,5 +405,46 @@ const menuItemsFeattureTwo = ref({
 
 .feature-two {
   height: 100%;
+}
+
+/* Avatar Menu Styles */
+.tab-avatar-menu {
+  position: relative;
+}
+
+.avatar-menu__droplist {
+  display: none;
+  min-width: 220px;
+}
+
+.tab-avatar-menu:hover .avatar-menu__droplist {
+  display: flex;
+  position: absolute;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  right: 0;
+  top: 60px;
+}
+
+.avatar-menu__item-list {
+  width: 100%;
+}
+
+.avatar-menu__item-list-item {
+  padding: 10px 15px;
+  width: 100%;
+}
+
+.avatar-menu__item-list-item:hover {
+  background: #f1f5f9;
+  border-radius: 6px;
+}
+
+.avatar-menu__item-list-title {
+  font-weight: 500;
+  color: #374151;
+  display: flex;
+  align-items: center;
 }
 </style>

@@ -68,7 +68,7 @@
             </div>
 
             <!-- Clear Filters -->
-            <div class="col-span-12 lg:col-span-1">
+            <!-- <div class="col-span-12 lg:col-span-1">
               <Button
                 icon="pi pi-filter-slash"
                 text
@@ -77,7 +77,7 @@
                 v-tooltip="'Xóa Bộ Lọc'"
                 @click="clearFilters"
               />
-            </div>
+            </div> -->
           </div>
         </template>
       </Card>
@@ -614,22 +614,22 @@ const loadUsers = async () => {
     // const response = await userApi.getAll();
     // Mock data nếu API chưa có data
     users.value = generateMockUsers();
-    toast.add({
-      severity: "success",
-      summary: "Thành công",
-      detail: "Đã tải danh sách tài khoản",
-      life: 3000,
-    });
+    // toast.add({
+    //   severity: "success",
+    //   summary: "Thành công",
+    //   detail: "Đã tải danh sách tài khoản",
+    //   life: 3000,
+    // });
   } catch (error) {
     console.error("Error loading users:", error);
     // Use mock data for demo
     users.value = generateMockUsers();
-    toast.add({
-      severity: "info",
-      summary: "Thông báo",
-      detail: "Đang sử dụng dữ liệu mẫu",
-      life: 3000,
-    });
+    // toast.add({
+    //   severity: "info",
+    //   summary: "Thông báo",
+    //   detail: "Đang sử dụng dữ liệu mẫu",
+    //   life: 3000,
+    // });
   } finally {
     loading.value = false;
   }

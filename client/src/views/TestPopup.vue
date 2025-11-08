@@ -10,10 +10,13 @@
     <!-- PopupNatriRoadmap -->
     <PopupNatriRoadmap v-model="showNatriRoadmap" />
 
-    <Button label="Open PopupExerciseRoadMap" @click="showExerciseRoadMap = true" />
+    <Button
+      label="Open PopupExerciseRoadMap"
+      @click="showExerciseRoadMap = true"
+    />
 
     <!-- PopupExerciseRoadMap -->
-    <PopupExerciseRoadMap 
+    <PopupExerciseRoadMap
       v-model="showExerciseRoadMap"
       @submit="handleExerciseSubmit"
       @buyNow="handleExerciseBuyNow"
@@ -30,7 +33,13 @@
     <!-- HomeProduct Section -->
     <div v-if="showHomeProduct" class="w-full">
       <div class="flex justify-end px-4 mb-2">
-        <Button icon="pi pi-times" text rounded severity="danger" @click="showHomeProduct = false" />
+        <Button
+          icon="pi pi-times"
+          text
+          rounded
+          severity="danger"
+          @click="showHomeProduct = false"
+        />
       </div>
       <HomeProduct />
     </div>
@@ -38,7 +47,13 @@
     <!-- HomeTool Section -->
     <div v-if="showHomeTool" class="w-full">
       <div class="flex justify-end px-4 mb-2">
-        <Button icon="pi pi-times" text rounded severity="danger" @click="showHomeTool = false" />
+        <Button
+          icon="pi pi-times"
+          text
+          rounded
+          severity="danger"
+          @click="showHomeTool = false"
+        />
       </div>
       <HomeTool />
     </div>
@@ -46,9 +61,15 @@
     <!-- Feature30k Section - Truyền props -->
     <div v-if="showFeature30k" class="w-full">
       <div class="flex justify-end px-4 mb-2">
-        <Button icon="pi pi-times" text rounded severity="danger" @click="closeFeature30k" />
+        <Button
+          icon="pi pi-times"
+          text
+          rounded
+          severity="danger"
+          @click="closeFeature30k"
+        />
       </div>
-      <Feature30k 
+      <Feature30k
         :userId="customUserId"
         :currentHeight="customCurrentHeight"
         :inheritedHeight="customInheritedHeight"
@@ -59,9 +80,15 @@
     <!-- Feature30kFinal Section - Truyền props -->
     <div v-if="showFeature30kFinal" class="w-full">
       <div class="flex justify-end px-4 mb-2">
-        <Button icon="pi pi-times" text rounded severity="danger" @click="closeFeature30kFinal" />
+        <Button
+          icon="pi pi-times"
+          text
+          rounded
+          severity="danger"
+          @click="closeFeature30kFinal"
+        />
       </div>
-      <Feature30kFinal 
+      <Feature30kFinal
         :userId="finalUserId"
         :ageData="finalAgeData"
         :aiRecommendation="aiRecommendationData"
@@ -74,13 +101,13 @@
 <script setup>
 import { ref } from "vue";
 import Button from "primevue/button";
-import PopupPackage from "../components/popup/PopupPackage.vue";
-import PopupNatriRoadmap from "../components/popup/NutrilRoadMap/PopupNutrilRoadMap.vue";
-import PopupExerciseRoadMap from "../components/popup/ExerciseRoadMap/PopupExerciseRoadMap.vue";
-import HomeProduct from "./HomePage/components/HomeProduct.vue";
-import HomeTool from "./HomePage/components/HomeTool.vue";
-import Feature30k from "./Feature30k/Feature30k.vue";
-import Feature30kFinal from "./Feature30k/Feature30kFinal.vue";
+import PopupPackage from "@/components/Popup/PopupPackage.vue";
+import PopupNatriRoadmap from "@/components/Popup/NutrilRoadMap/PopupNutrilRoadMap.vue";
+import PopupExerciseRoadMap from "@/components/Popup/ExerciseRoadMap/PopupExerciseRoadMap.vue";
+import HomeProduct from "@/components/HomePage/components/HomeProduct.vue";
+import HomeTool from "@/components/HomePage/components/HomeTool.vue";
+import Feature30k from "@/components/Feature30k/Feature30k.vue";
+import Feature30kFinal from "@/components/Feature30k/Feature30kFinal.vue";
 
 const showPopup = ref(false);
 const showNatriRoadmap = ref(false);
@@ -91,28 +118,28 @@ const showFeature30k = ref(false);
 const showFeature30kFinal = ref(false);
 
 // Custom data for Feature30k
-const customUserId = ref('User123');
+const customUserId = ref("User123");
 const customCurrentHeight = ref(165);
 const customInheritedHeight = ref(169);
 const customPotentialHeight = ref(172);
 
 // Custom data for Feature30kFinal
-const finalUserId = ref('12121');
+const finalUserId = ref("12121");
 const finalAgeData = ref([
-  { age: '16t', height: 163 },
-  { age: '17t', height: 168 },
-  { age: '18t', height: 171, locked: true },
-  { age: '19t', height: 175 },
-  { age: '20t', height: 179 }
+  { age: "16t", height: 163 },
+  { age: "17t", height: 168 },
+  { age: "18t", height: 171, locked: true },
+  { age: "19t", height: 175 },
+  { age: "20t", height: 179 },
 ]);
 
 // AI Recommendation data
 const aiRecommendationData = ref(
-  'Nam, 17 tuổi - Nếu duy trì ngủ trước 10 giờ và bổ sung 40 Canxi, bạn có thể đạt 179.0cm 😊'
+  "Nam, 17 tuổi - Nếu duy trì ngủ trước 10 giờ và bổ sung 40 Canxi, bạn có thể đạt 179.0cm 😊"
 );
 
 // Inspiration message data
-const inspirationMessageData = ref('');
+const inspirationMessageData = ref("");
 
 // Open Feature30k with custom data
 const openFeature30k = () => {
@@ -136,13 +163,13 @@ const closeFeature30kFinal = () => {
 
 // Handle PopupExerciseRoadMap submit
 const handleExerciseSubmit = (selectedOptions) => {
-  console.log('Exercise options selected:', selectedOptions);
+  console.log("Exercise options selected:", selectedOptions);
   alert(`Bạn đã chọn ${selectedOptions.length} loại hình tập luyện`);
 };
 
 // Handle PopupExerciseRoadMap buy now
 const handleExerciseBuyNow = (optionId) => {
-  console.log('Buy now for exercise option:', optionId);
+  console.log("Buy now for exercise option:", optionId);
   alert(`Chuyển đến trang mua dụng cụ: ${optionId}`);
 };
 </script>

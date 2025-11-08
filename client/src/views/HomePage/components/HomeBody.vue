@@ -67,7 +67,7 @@
                       <RadioButton
                         v-model="formData.gender"
                         name="gender"
-                        value="1"
+                        :value="1"
                         input-id="male"
                       />
                       <label
@@ -80,7 +80,7 @@
                       <RadioButton
                         v-model="formData.gender"
                         name="gender"
-                        value="2"
+                        :value="2"
                         input-id="female"
                       />
                       <label
@@ -157,7 +157,7 @@
                 <IconField>
                   <InputIcon class="pi pi-user-plus" />
                   <InputNumber
-                    v-model="formData.parentHeight"
+                    v-model="formData.fatherHeight"
                     placeholder="Chiều cao của bố (cm)"
                     :use-grouping="false"
                     class="w-full"
@@ -322,14 +322,16 @@ import Step from "primevue/step";
 import StepPanels from "primevue/steppanels";
 import StepPanel from "primevue/steppanel";
 import { useToast } from "primevue/usetoast";
-import HeightGrowthRoadmap from "../../../components/HeigthGrowthRoadmap/HeightGrowthRoadmap.vue";
-import PackageMonth from "../../../components/PackageComponent/PackageMonth.vue";
-import ExpertAndPartner from "../../../components/ExpertAndPartnerComponent/ExpertAndPartner.vue";
+import HeightGrowthRoadmap from "@/components/HeigthGrowthRoadmap/HeightGrowthRoadmap.vue";
+import PackageMonth from "@/components/PackageComponent/PackageMonth.vue";
+import ExpertAndPartner from "@/components/ExpertAndPartnerComponent/ExpertAndPartner.vue";
 import HomeProduct from "./HomeProduct.vue";
 import HomeTool from "./HomeTool.vue";
+import { useUserInfoStore } from "@/stores/userInfo.js";
 
 const router = useRouter();
 const toast = useToast();
+const userInfoStore = useUserInfoStore();
 
 const formData = ref({
   name: "",
@@ -339,7 +341,7 @@ const formData = ref({
   weight: null,
   birthday: null,
   pubertyDay: null,
-  parentHeight: null,
+  fatherHeight: null,
   motherHeight: null,
   mealsPerDay: null,
   timeSleep: null,
@@ -375,7 +377,7 @@ const handleSubmitStepOne = (activateCallback) => {
 };
 
 const handleSubmitStepTwo = (activateCallback) => {
-  if (!formData.value.parentHeight || !formData.value.motherHeight) {
+  if (!formData.value.fatherHeight || !formData.value.motherHeight) {
     toast.add({
       severity: "error",
       summary: "Cảnh báo",
@@ -407,7 +409,10 @@ const handleSubmitStepThree = (activateCallback) => {
   }
   console.log("Form submitted:", formData.value);
   valueFullFormRef.value.step3 = true;
-  console.log("All form data:", formData.value);
+  formData.value.age =
+    new Date().getFullYear() - formData.value.birthday.getFullYear();
+  userInfoStore.setUserInfo(formData.value);
+  router.push({ name: "HeightPrediction" });
 };
 
 const handleBack = () => {
