@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { useLoadingStore } from '@/stores';
+import getKeyLocalStorage from '@/utilities/commons/getKeyLocalStorage.js';
+// import { useLoadingStore } from '@/stores';
 
 // Add a request interceptor
 axios.interceptors.request.use(
     function (config) {
-        let token = localStorage.getItem('token');
+        let token = localStorage.getItem(getKeyLocalStorage('Token'));
         config.headers.Authorization = '';
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
@@ -12,7 +13,7 @@ axios.interceptors.request.use(
         return config;
     },
     function (error) {
-        useLoadingStore().unmask();
+        // useLoadingStore().unmask();
         return Promise.reject(error);
     }
 );
@@ -23,7 +24,7 @@ axios.interceptors.response.use(
         return response;
     },
     function (error) {
-        useLoadingStore().unmask();
+        // useLoadingStore().unmask();
         return Promise.reject(error);
     }
 );
@@ -47,7 +48,7 @@ export default class BaseApi {
         let response = {};
         try {
             var res = await axios.get(url, this.config);
-            if (res?.status == 200) {
+            if (res?.status == 200 && res?.data) {
                 response = { ...res.data };
             }
         } catch (error) {
@@ -61,7 +62,7 @@ export default class BaseApi {
         let response = {};
         try {
             var res = await axios.post(url, param, this.config);
-            if (res?.status == 200) {
+            if (res?.status == 200 && res?.data) {
                 response = { ...res.data };
             }
         } catch (error) {
@@ -75,7 +76,7 @@ export default class BaseApi {
         let response = {};
         try {
             var res = await axios.put(url, param, this.config);
-            if (res?.status == 200) {
+            if (res?.status == 200 && res?.data) {
                 response = { ...res.data };
             }
         } catch (error) {
@@ -89,7 +90,7 @@ export default class BaseApi {
         let response = {};
         try {
             var res = await axios.delete(url, this.config);
-            if (res?.status == 200) {
+            if (res?.status == 200 && res?.data) {
                 response = { ...res.data };
             }
         } catch (error) {

@@ -21,12 +21,12 @@ const routes = [
                 /* webpackChunkName: "homepage" */ '../views/HomePage/HomePage.vue'
             ),
     },
-    {
-        path: '/test',
-        name: 'Test',
-        component: () =>
-            import(/* webpackChunkName: "test" */ '../views/TestPopup.vue'),
-    },
+    // {
+    //     path: '/test',
+    //     name: 'Test',
+    //     component: () =>
+    //         import(/* webpackChunkName: "test" */ '../views/TestPopup.vue'),
+    // },
     {
         path: '/test-screen',
         name: 'TestScreen',
@@ -64,6 +64,12 @@ const routes = [
             import(
                 /* webpackChunkName: "HeightPrediction" */ '../views/HeightPrediction/HeightPrediction.vue'
             ),
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: () =>
+            import(/* webpackChunkName: "Login" */ '../views/Login/Login.vue'),
     },
     // Route cho 404 - phải đặt ở cuối cùng
     {

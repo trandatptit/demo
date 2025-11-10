@@ -2,7 +2,7 @@ import BaseApi from './baseApi';
 
 class UserApi extends BaseApi {
     constructor() {
-        super('Users');
+        super('users');
     }
 
     async getAll() {
@@ -12,6 +12,28 @@ class UserApi extends BaseApi {
 
     async getUserById(userId) {
         let res = await this.get(this.ApiURL + `/${userId}`);
+        return res;
+    }
+
+    async getUserInfo() {
+        let res = await this.get(this.ApiURL + '/my-info');
+        return res;
+    }
+
+    async createSimpleUserInfo(userInfo) {
+        let res = await this.post(`${this.ApiURL}/create-basic`, userInfo);
+        return res;
+    }
+
+    async createFullUserInfo(userInfo) {
+        let res = await this.post(`${this.ApiURL}/create-detail`, userInfo);
+        return res;
+    }
+
+    async getAll(param, page = 0, size = 10) {
+        let res = await this.get(
+            `${this.ApiURL}/getAll?page=${page}&size=${size}`
+        );
         return res;
     }
 

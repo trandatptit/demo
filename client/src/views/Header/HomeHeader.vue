@@ -1,5 +1,6 @@
 <template>
   <div class="bg-white shadow-sm sticky top-0 z-50">
+    <Toast />
     <div class="mx-auto px-4 lg:px-8 py-4">
       <!-- Container 12 Grid -->
       <div class="grid grid-cols-12 gap-4 items-center">
@@ -138,7 +139,10 @@
                   v-for="item in avatarMenuItems"
                   :key="item.label"
                 >
-                  <router-link :to="item.route || '#'">
+                  <router-link
+                    :to="item.route"
+                    @click="item.handleClick && item.handleClick()"
+                  >
                     <div
                       class="avatar-menu__item-list-title text-stone-900 flex items-center text-[16px]"
                     >
@@ -160,6 +164,12 @@
 import Menubar from "primevue/menubar";
 import Avatar from "primevue/avatar";
 import { ref } from "vue";
+import { onMounted } from "vue";
+import { useAuthStore } from "@/stores/auth";
+import { useToast } from "primevue/usetoast";
+
+const authStore = useAuthStore();
+const toast = useToast();
 
 const menuItemsFeatureOne = ref({
   label: "Lộ Trình Của Bạn",
@@ -297,6 +307,64 @@ const menuItemsFeattureTwo = ref({
       ],
     },
   ],
+});
+
+async function showUserDroplist() {
+  // Logic to set user info from API or local storage
+  const userInfo = await authStore.getUserInfoCurrent();
+  if (userInfo) {
+    avatarMenuItems.value = [
+      {
+        label: "Quản lý tài khoản",
+        icon: "pi pi-fw pi-user-edit",
+        route: { name: "ManageAccount" },
+        handleClick: () => {
+          console.log("Manage Account clicked");
+        },
+      },
+      {
+        label: "Hồ sơ của tôi",
+        icon: "pi pi-fw pi-id-card",
+        route: { name: "UserProfile" },
+        handleClick: () => {
+          console.log("User Profile clicked");
+        },
+      },
+      {
+        label: "Đăng xuất",
+        icon: "pi pi-fw pi-sign-out",
+        route: "/logout",
+        handleClick: () => {
+          authStore.logout();
+          window.location.href = "/";
+          toast.add({
+            severity: "success",
+            summary: "Thành công",
+            detail: "Đăng xuất thành công",
+            life: 5000,
+          });
+        },
+      },
+    ];
+  } else {
+    avatarMenuItems.value = [
+      {
+        label: "Đăng nhập",
+        icon: "pi pi-fw pi-sign-in",
+        route: { name: "Login" },
+      },
+      // {
+      //   label: "Đăng ký",
+      //   icon: "pi pi-fw pi-user-plus",
+      //   route: { name: "Register" },
+      // },
+    ];
+  }
+}
+
+onMounted(async () => {
+  await showUserDroplist();
+  console.log("HomeHeader mounted");
 });
 </script>
 
