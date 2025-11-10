@@ -2,7 +2,7 @@ import BaseApi from './baseApi';
 
 class AuthApi extends BaseApi {
     constructor() {
-        super('Auth');
+        super('auth');
     }
 
     async login(userInfo) {
@@ -10,8 +10,8 @@ class AuthApi extends BaseApi {
         return res;
     }
 
-    async signUp(userInfo) {
-        let res = await this.post(this.ApiURL + '/signup', userInfo);
+    async introspect(paramToken) {
+        let res = await this.post(this.ApiURL + '/introspect', paramToken);
         return res;
     }
 
@@ -20,7 +20,8 @@ class AuthApi extends BaseApi {
         return res;
     }
 
-    async logout(userInfo) {
+    async logout(paramToken) {
+        let res = await this.post(this.ApiURL + '/logout', paramToken);
         return res;
     }
 }

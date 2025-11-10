@@ -33,10 +33,9 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import Button from "primevue/button";
 import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
-import CardProduct from "../../../components/CardProduct/CardProduct.vue";
+import CardProduct from "@/components/CardProduct/CardProduct.vue";
 
 const router = useRouter();
 const toast = useToast();
