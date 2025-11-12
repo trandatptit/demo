@@ -12,7 +12,9 @@ export const useAuthStore = defineStore('auth', () => {
         JSON.parse(localStorage.getItem(getKeyLocalStorage('UserInfo')))
     );
     const isAdmin = ref(
-        JSON.parse(localStorage.getItem(getKeyLocalStorage('IsAdmin')))
+        JSON.parse(
+            localStorage.getItem(getKeyLocalStorage('IsAdmin')) ?? 'false'
+        )
     );
 
     /**
@@ -42,10 +44,10 @@ export const useAuthStore = defineStore('auth', () => {
         );
         localStorage.setItem(
             getKeyLocalStorage('IsAdmin'),
-            userInfoResponse?.result?.admin
+            userInfoResponse?.result?.isAdmin ?? 'false'
         );
         userInfo.value = userInfoResponse.result;
-        isAdmin.value = userInfoResponse?.result?.admin;
+        isAdmin.value = userInfoResponse?.result?.isAdmin;
         loggedIn.value = true;
         return userInfoResponse;
     }
@@ -60,6 +62,22 @@ export const useAuthStore = defineStore('auth', () => {
         loggedIn.value = false;
         userInfo.value = {};
         isAdmin.value = null;
+    }
+
+    async function checkToken() {
+        var isValid = true;
+        var tokenLocal = localStorage.getItem(getKeyLocalStorage('Token'));
+        if (tokenLocal) {
+            var response = await authApi.introspect({
+                token: tokenLocal,
+            });
+            if (response?.status && response?.result?.val) {
+                isValid = true;
+            } else {
+                isValid = false;
+            }
+        }
+        return isValid;
     }
 
     /**
@@ -125,5 +143,6 @@ export const useAuthStore = defineStore('auth', () => {
         logout,
         getUserInfoCurrent,
         signUp,
+        checkToken,
     };
 });

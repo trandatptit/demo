@@ -363,8 +363,19 @@ async function showUserDroplist() {
 }
 
 onMounted(async () => {
+  var isValidToken = await authStore.checkToken();
+  if (!isValidToken) {
+    authStore.logout();
+    window.location.href = "/";
+    toast.add({
+      severity: "warn",
+      summary: "Phiên đăng nhập hết hạn",
+      detail: "Vui lòng đăng nhập lại để tiếp tục",
+      life: 5000,
+    });
+  }
   await showUserDroplist();
-  console.log("HomeHeader mounted");
+  // console.log("HomeHeader mounted");
 });
 </script>
 

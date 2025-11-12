@@ -30,15 +30,20 @@ class UserApi extends BaseApi {
         return res;
     }
 
-    async getAll(param, page = 0, size = 10) {
+    async getAll(page = 0, size = 100) {
         let res = await this.get(
             `${this.ApiURL}/getAll?page=${page}&size=${size}`
         );
         return res;
     }
 
-    async updateUserInfo(userId, userInfo) {
-        let res = await this.put(this.ApiURL + `/${userId}`, userInfo);
+    async updateUserInfo(userInfo) {
+        let res = await this.post(this.ApiURL + `/update`, userInfo);
+        return res;
+    }
+
+    async deleteUser(userId) {
+        let res = await this.delete(this.ApiURL + `/${userId}`);
         return res;
     }
 
