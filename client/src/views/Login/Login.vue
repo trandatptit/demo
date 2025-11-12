@@ -213,7 +213,7 @@ const handleLogin = async () => {
       });
       // Redirect to home page
       setTimeout(() => {
-        router.push({ name: "HomePage" });
+        // router.push({ name: "HomePage" });
         window.location.href = "/";
       }, 2000);
     } else {

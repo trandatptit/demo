@@ -29,14 +29,14 @@
         <template #content>
           <div class="grid grid-cols-12 gap-4 lg:gap-6">
             <!-- Search -->
-            <div class="col-span-12 lg:col-span-5">
+            <div class="col-span-12 lg:col-span-9">
               <IconField>
                 <InputIcon class="pi pi-search" />
                 <InputText
                   v-model="filters.global"
                   placeholder="Tìm kiếm theo tên, email, SĐT..."
                   class="w-full"
-                  @input="onFilterChange"
+                  @input="onFilterChange($event)"
                 />
               </IconField>
             </div>
@@ -55,7 +55,7 @@
             </div>
 
             <!-- Status Filter -->
-            <div class="col-span-12 lg:col-span-3">
+            <!-- <div class="col-span-12 lg:col-span-3">
               <Select
                 v-model="filters.status"
                 :options="statusOptions"
@@ -65,7 +65,7 @@
                 class="w-full"
                 @change="onFilterChange"
               />
-            </div>
+            </div> -->
 
             <!-- Clear Filters -->
             <!-- <div class="col-span-12 lg:col-span-1">
@@ -90,7 +90,7 @@
             :value="filteredUsers"
             :loading="loading"
             :paginator="true"
-            :rows="10"
+            :rows="5"
             :rows-per-page-options="[5, 10, 20, 50]"
             paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             current-page-report-template="Hiển thị {first} đến {last} trong tổng số {totalRecords} tài khoản"
@@ -114,8 +114,6 @@
               </div>
             </template>
 
-            <Column selection-mode="multiple" header-style="width: 3rem" />
-
             <Column field="id" header="ID" sortable style="min-width: 80px">
               <template #body="{ data }">
                 <span class="font-mono text-sm text-gray-600"
@@ -133,16 +131,16 @@
               <template #body="{ data }">
                 <div class="flex items-center gap-3">
                   <Avatar
-                    :label="data.name.charAt(0).toUpperCase()"
+                    :label="data.username.charAt(0).toUpperCase()"
                     :style="{
-                      backgroundColor: getAvatarColor(data.name),
+                      backgroundColor: getAvatarColor(data.username),
                       color: '#fff',
                     }"
                     shape="circle"
                   />
                   <div>
                     <div class="font-semibold text-gray-800">
-                      {{ data.name }}
+                      {{ data.username }}
                     </div>
                     <div class="text-sm text-gray-500">{{ data.email }}</div>
                   </div>
@@ -157,7 +155,9 @@
               style="min-width: 150px"
             >
               <template #body="{ data }">
-                <span class="text-gray-700">{{ data.phone || "N/A" }}</span>
+                <span class="text-gray-700">{{
+                  data.phoneNumber || "N/A"
+                }}</span>
               </template>
             </Column>
 
@@ -176,7 +176,7 @@
               </template>
             </Column>
 
-            <Column
+            <!-- <Column
               field="status"
               header="Trạng Thái"
               sortable
@@ -193,7 +193,7 @@
                   "
                 />
               </template>
-            </Column>
+            </Column> -->
 
             <Column
               field="createdAt"
@@ -227,7 +227,7 @@
                     v-tooltip="'Chỉnh sửa'"
                     @click="editUser(data)"
                   />
-                  <Button
+                  <!-- <Button
                     :icon="
                       data.status === 'active' ? 'pi pi-lock' : 'pi pi-unlock'
                     "
@@ -240,7 +240,7 @@
                       data.status === 'active' ? 'Khóa tài khoản' : 'Mở khóa'
                     "
                     @click="toggleUserStatus(data)"
-                  />
+                  /> -->
                   <Button
                     icon="pi pi-trash"
                     rounded
@@ -264,11 +264,30 @@
         dialogMode === 'create' ? 'Thêm Tài Khoản Mới' : 'Chỉnh Sửa Tài Khoản'
       "
       :modal="true"
-      :style="{ width: '600px' }"
+      :style="{ width: '600px', overflow: 'hidden' }"
       :closable="true"
-      class="p-fluid"
+      class="p-fluid dialog_viewuser"
     >
       <div class="space-y-4 py-4">
+        <!-- Full Name -->
+        <div>
+          <label
+            for="name"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
+            Tên đăng nhập <span class="text-red-500">*</span>
+          </label>
+          <InputText
+            id="username"
+            v-model="userForm.username"
+            placeholder="Nhập tên đăng nhập"
+            :class="{ 'p-invalid': submitted && !userForm.username }"
+          />
+          <small v-if="submitted && !userForm.username" class="p-error"
+            >Tên đăng nhập là bắt buộc.</small
+          >
+        </div>
+
         <!-- Full Name -->
         <div>
           <label
@@ -279,11 +298,11 @@
           </label>
           <InputText
             id="name"
-            v-model="userForm.name"
+            v-model="userForm.fullName"
             placeholder="Nhập họ và tên"
-            :class="{ 'p-invalid': submitted && !userForm.name }"
+            :class="{ 'p-invalid': submitted && !userForm.fullName }"
           />
-          <small v-if="submitted && !userForm.name" class="p-error"
+          <small v-if="submitted && !userForm.fullName" class="p-error"
             >Họ tên là bắt buộc.</small
           >
         </div>
@@ -318,7 +337,7 @@
           </label>
           <InputText
             id="phone"
-            v-model="userForm.phone"
+            v-model="userForm.phoneNumber"
             placeholder="0123456789"
           />
         </div>
@@ -341,46 +360,6 @@
           <small v-if="submitted && !userForm.password" class="p-error"
             >Mật khẩu là bắt buộc.</small
           >
-        </div>
-
-        <!-- Role -->
-        <div>
-          <label
-            for="role"
-            class="block text-sm font-semibold text-gray-700 mb-2"
-          >
-            Vai Trò <span class="text-red-500">*</span>
-          </label>
-          <Select
-            id="role"
-            v-model="userForm.role"
-            :options="roleOptions.filter((r) => r.value)"
-            option-label="label"
-            option-value="value"
-            placeholder="Chọn vai trò"
-            :class="{ 'p-invalid': submitted && !userForm.role }"
-          />
-          <small v-if="submitted && !userForm.role" class="p-error"
-            >Vai trò là bắt buộc.</small
-          >
-        </div>
-
-        <!-- Status -->
-        <div>
-          <label
-            for="status"
-            class="block text-sm font-semibold text-gray-700 mb-2"
-          >
-            Trạng Thái
-          </label>
-          <Select
-            id="status"
-            v-model="userForm.status"
-            :options="statusOptions.filter((s) => s.value)"
-            option-label="label"
-            option-value="value"
-            placeholder="Chọn trạng thái"
-          />
         </div>
       </div>
 
@@ -406,22 +385,23 @@
       v-model:visible="viewDialog"
       header="Chi Tiết Tài Khoản"
       :modal="true"
-      :style="{ width: '500px' }"
+      :style="{ width: '500px', overflow: 'hidden' }"
       :closable="true"
+      class="dialog_viewuser"
     >
       <div v-if="selectedUser" class="space-y-4 py-4">
         <div class="flex flex-col items-center mb-6">
           <Avatar
-            :label="selectedUser.name.charAt(0).toUpperCase()"
+            :label="selectedUser.fullName.charAt(0).toUpperCase()"
             :style="{
-              backgroundColor: getAvatarColor(selectedUser.name),
+              backgroundColor: getAvatarColor(selectedUser.fullName),
               color: '#fff',
             }"
             shape="circle"
             size="xlarge"
           />
           <h3 class="text-2xl font-bold text-gray-800 mt-4">
-            {{ selectedUser.name }}
+            {{ selectedUser.fullName }}
           </h3>
           <p class="text-gray-600">{{ selectedUser.email }}</p>
         </div>
@@ -437,7 +417,7 @@
             <label class="block text-sm font-semibold text-gray-600 mb-1"
               >Số Điện Thoại</label
             >
-            <p class="text-gray-800">{{ selectedUser.phone || "N/A" }}</p>
+            <p class="text-gray-800">{{ selectedUser.phoneNumber || "N/A" }}</p>
           </div>
           <div class="col-span-12 lg:col-span-6">
             <label class="block text-sm font-semibold text-gray-600 mb-1"
@@ -449,19 +429,6 @@
             />
           </div>
           <div class="col-span-12 lg:col-span-6">
-            <label class="block text-sm font-semibold text-gray-600 mb-1"
-              >Trạng Thái</label
-            >
-            <Tag
-              :value="
-                selectedUser.status === 'active' ? 'Hoạt động' : 'Tạm khóa'
-              "
-              :severity="
-                selectedUser.status === 'active' ? 'success' : 'danger'
-              "
-            />
-          </div>
-          <div class="col-span-12">
             <label class="block text-sm font-semibold text-gray-600 mb-1"
               >Ngày Tạo</label
             >
@@ -487,7 +454,8 @@
       v-model:visible="deleteDialog"
       header="Xác Nhận Xóa"
       :modal="true"
-      :style="{ width: '450px' }"
+      class="dialog_viewuser"
+      :style="{ width: '450px', overflow: 'hidden' }"
     >
       <div class="flex items-center gap-4">
         <i class="pi pi-exclamation-triangle text-red-500 text-4xl"></i>
@@ -533,6 +501,7 @@ import InputIcon from "primevue/inputicon";
 import Password from "primevue/password";
 import ProgressSpinner from "primevue/progressspinner";
 import Toast from "primevue/toast";
+import userApi from "@/apis/userApi";
 // import userApi from "../../apis/userApi";
 
 const toast = useToast();
@@ -557,12 +526,11 @@ const filters = ref({
 
 // Form
 const userForm = ref({
-  name: "",
+  username: "",
+  fullName: "",
   email: "",
-  phone: "",
+  phoneNumber: "",
   password: "",
-  role: null,
-  status: "active",
 });
 
 // Options
@@ -570,7 +538,7 @@ const roleOptions = [
   { label: "Tất cả vai trò", value: null },
   { label: "Admin", value: "admin" },
   { label: "User", value: "user" },
-  { label: "Manager", value: "manager" },
+  // { label: "Manager", value: "manager" },
 ];
 
 const statusOptions = [
@@ -580,40 +548,46 @@ const statusOptions = [
 ];
 
 // Computed
-const filteredUsers = computed(() => {
+const filteredUsers = ref([]);
+const handlefilteredUsers = () => {
   let result = [...users.value];
+  for (const userItem of result) {
+    if (userItem?.isAdmin) {
+      userItem.role = "Admin";
+    } else {
+      userItem.role = "User";
+    }
+  }
 
   // Global search
   if (filters.value.global) {
     const searchTerm = filters.value.global.toLowerCase();
     result = result.filter(
       (user) =>
-        user.name.toLowerCase().includes(searchTerm) ||
+        user.username.toLowerCase().includes(searchTerm) ||
         user.email.toLowerCase().includes(searchTerm) ||
-        (user.phone && user.phone.includes(searchTerm))
+        (user.phoneNumber && user.phoneNumber.includes(searchTerm))
     );
   }
 
   // Role filter
   if (filters.value.role) {
-    result = result.filter((user) => user.role === filters.value.role);
-  }
-
-  // Status filter
-  if (filters.value.status) {
-    result = result.filter((user) => user.status === filters.value.status);
+    result = result.filter(
+      (user) => user.role?.toLowerCase() === filters.value.role?.toLowerCase()
+    );
   }
 
   return result;
-});
+};
 
 // Methods
 const loadUsers = async () => {
   loading.value = true;
   try {
-    // const response = await userApi.getAll();
+    const response = await userApi.getAll();
     // Mock data nếu API chưa có data
-    users.value = generateMockUsers();
+    users.value = response?.result?.content ?? [];
+    filteredUsers.value = handlefilteredUsers() ?? [];
     // toast.add({
     //   severity: "success",
     //   summary: "Thành công",
@@ -687,12 +661,11 @@ const generateMockUsers = () => {
 
 const openCreateDialog = () => {
   userForm.value = {
-    name: "",
+    username: "",
+    fullName: "",
     email: "",
-    phone: "",
+    phoneNumber: "",
     password: "",
-    role: null,
-    status: "active",
   };
   dialogMode.value = "create";
   submitted.value = false;
@@ -721,7 +694,11 @@ const saveUser = async () => {
   submitted.value = true;
 
   // Validation
-  if (!userForm.value.name || !userForm.value.email || !userForm.value.role) {
+  if (
+    !userForm.value.username ||
+    !userForm.value.email ||
+    !userForm.value.fullName
+  ) {
     return;
   }
 
@@ -737,14 +714,25 @@ const saveUser = async () => {
         id: users.value.length + 1,
         createdAt: new Date(),
       };
-      users.value.push(newUser);
 
-      toast.add({
-        severity: "success",
-        summary: "Thành công",
-        detail: "Đã tạo tài khoản mới",
-        life: 3000,
-      });
+      var response = await userApi.createFullUserInfo(newUser);
+      if (response?.status) {
+        toast.add({
+          severity: "success",
+          summary: "Thành công",
+          detail: "Đã tạo tài khoản mới",
+          life: 3000,
+        });
+        await loadUsers();
+      } else {
+        toast.add({
+          severity: "error",
+          summary: "Lỗi",
+          detail: response?.message || "Có lỗi xảy ra khi tạo tài khoản",
+          life: 3000,
+        });
+        return;
+      }
     } else {
       // Update existing user
       const index = users.value.findIndex(
@@ -782,6 +770,16 @@ const confirmDelete = (user) => {
 const deleteUser = async () => {
   try {
     users.value = users.value.filter((u) => u.id !== selectedUser.value.id);
+    const response = await userApi.deleteUser(selectedUser.value.id);
+    if (!response?.status) {
+      toast.add({
+        severity: "error",
+        summary: "Lỗi",
+        detail: response?.message || "Có lỗi xảy ra khi xóa tài khoản",
+        life: 3000,
+      });
+      return;
+    }
 
     toast.add({
       severity: "success",
@@ -789,6 +787,7 @@ const deleteUser = async () => {
       detail: "Đã xóa tài khoản",
       life: 3000,
     });
+    await loadUsers();
 
     deleteDialog.value = false;
     selectedUser.value = null;
@@ -829,7 +828,9 @@ const toggleUserStatus = async (user) => {
   }
 };
 
-const onFilterChange = () => {
+const onFilterChange = ($event) => {
+  console.log($event);
+  filteredUsers.value = handlefilteredUsers() ?? [];
   // Trigger computed property re-evaluation
 };
 
@@ -907,8 +908,20 @@ onMounted(() => {
   border: none;
 }
 
+.delete_dialog {
+  overflow: hidden;
+}
+
 :deep(.p-datatable .p-datatable-tbody > tr:hover) {
   background-color: #eff6ff;
+}
+
+.dialog_viewuser {
+  overflow: hidden;
+}
+
+:deep(.p-dialog .p-dialog-header) {
+  border: none;
 }
 
 :deep(.p-card) {

@@ -20,7 +20,7 @@
     <div class="container mx-auto px-4 lg:px-8 py-8">
       <Card class="shadow-lg">
         <template #content>
-          <form @submit.prevent="handleSubmit" class="space-y-6">
+          <div class="space-y-6">
             <!-- Tên đăng nhập (Read-only) -->
             <div class="grid grid-cols-12 gap-4 items-center">
               <label
@@ -51,13 +51,13 @@
               <div class="col-span-12 md:col-span-6">
                 <InputText
                   id="name"
-                  v-model="profileForm.name"
+                  v-model="profileForm.fullName"
                   placeholder="Nhập tên của bạn"
                   class="w-full"
-                  :class="{ 'p-invalid': submitted && !profileForm.name }"
+                  :class="{ 'p-invalid': submitted && !profileForm.fullName }"
                 />
                 <small
-                  v-if="submitted && !profileForm.name"
+                  v-if="submitted && !profileForm.fullName"
                   class="p-error block mt-1"
                 >
                   Tên là bắt buộc
@@ -102,7 +102,7 @@
               <div class="col-span-12 md:col-span-6">
                 <InputText
                   id="phone"
-                  v-model="profileForm.phone"
+                  v-model="profileForm.phoneNumber"
                   placeholder="Nhập số điện thoại"
                   class="w-full"
                   :class="{ 'p-invalid': submitted && !isValidPhone }"
@@ -130,7 +130,7 @@
                       id="male"
                       v-model="profileForm.gender"
                       name="gender"
-                      value="male"
+                      :value="1"
                     />
                     <label for="male" class="ml-2 text-gray-700">Nam</label>
                   </div>
@@ -139,18 +139,9 @@
                       id="female"
                       v-model="profileForm.gender"
                       name="gender"
-                      value="female"
+                      :value="2"
                     />
                     <label for="female" class="ml-2 text-gray-700">Nữ</label>
-                  </div>
-                  <div class="flex items-center">
-                    <RadioButton
-                      id="other"
-                      v-model="profileForm.gender"
-                      name="gender"
-                      value="other"
-                    />
-                    <label for="other" class="ml-2 text-gray-700">Khác</label>
                   </div>
                 </div>
               </div>
@@ -159,24 +150,27 @@
             <!-- Ngày sinh -->
             <div class="grid grid-cols-12 gap-4 items-start">
               <label
-                for="birthDate"
+                for="birthday"
                 class="col-span-12 md:col-span-3 text-right text-gray-700 font-medium pt-2"
               >
                 Ngày sinh
               </label>
               <div class="col-span-12 md:col-span-6">
-                <DatePicker
-                  id="birthDate"
-                  v-model="profileForm.birthDate"
-                  date-format="dd/mm/yy"
-                  placeholder="Chọn ngày sinh"
-                  show-icon
-                  :max-date="maxDate"
-                  class="w-full"
-                  :class="{ 'p-invalid': submitted && !profileForm.birthDate }"
-                />
+                <IconField>
+                  <DatePicker
+                    id="birthday"
+                    v-model="profileForm.birthday"
+                    dateFormat="dd/mm/yy"
+                    placeholder="Chọn ngày sinh"
+                    iconDisplay="input"
+                    :maxDate="maxDate"
+                    showIcon
+                    fluid
+                    :class="{ 'p-invalid': submitted && !profileForm.birthday }"
+                  />
+                </IconField>
                 <small
-                  v-if="submitted && !profileForm.birthDate"
+                  v-if="submitted && !profileForm.birthday"
                   class="p-error block mt-1"
                 >
                   Ngày sinh là bắt buộc
@@ -193,10 +187,11 @@
                   icon="pi pi-save"
                   :loading="isSubmitting"
                   class="bg-blue-600 hover:bg-blue-700 text-white border-0 px-8"
+                  @click="handleSubmit"
                 />
               </div>
             </div>
-          </form>
+          </div>
         </template>
       </Card>
     </div>
@@ -211,7 +206,10 @@ import Button from "primevue/button";
 import InputText from "primevue/inputtext";
 import RadioButton from "primevue/radiobutton";
 import DatePicker from "primevue/datepicker";
+import IconField from "primevue/iconfield";
+import InputIcon from "primevue/inputicon";
 import Toast from "primevue/toast";
+import userApi from "@/apis/userApi";
 // import userApi from "../../apis/userApi";
 
 const toast = useToast();
@@ -224,14 +222,7 @@ const submitted = ref(false);
 const maxDate = ref(new Date());
 
 // Form data
-const profileForm = ref({
-  username: "everest_pharma",
-  name: "",
-  email: "",
-  phone: "",
-  gender: null,
-  birthDate: null,
-});
+const profileForm = ref({});
 
 // Validation
 const isValidEmail = computed(() => {
@@ -241,27 +232,27 @@ const isValidEmail = computed(() => {
 });
 
 const isValidPhone = computed(() => {
-  if (!profileForm.value.phone) return true; // Phone is optional
+  if (!profileForm.value.phoneNumber) return true; // Phone is optional
   const phoneRegex = /^[0-9]{10,11}$/;
-  return phoneRegex.test(profileForm.value.phone);
+  return phoneRegex.test(profileForm.value.phoneNumber);
 });
 
 // Methods
 const loadUserProfile = async () => {
   try {
     // Simulate API call
-    // const response = await userApi.getProfile();
-    // profileForm.value = response.data;
+    const response = await userApi.getUserInfo();
+    profileForm.value = response.result;
 
     // Mock data
-    profileForm.value = {
-      username: "tran_nhat_danh",
-      name: "",
-      email: "",
-      phone: "",
-      gender: null,
-      birthDate: null,
-    };
+    // profileForm.value = {
+    //   username: "tran_nhat_danh",
+    //   name: "",
+    //   email: "",
+    //   phone: "",
+    //   gender: null,
+    //   birthDate: null,
+    // };
   } catch (error) {
     console.error("Error loading user profile:", error);
     toast.add({
@@ -278,10 +269,10 @@ const handleSubmit = async () => {
 
   // Validate required fields
   if (
-    !profileForm.value.name ||
+    !profileForm.value.fullName ||
     !isValidEmail.value ||
-    !isValidPhone.value ||
-    !profileForm.value.birthDate
+    !isValidPhone.value
+    // || !profileForm.value.birthday
   ) {
     toast.add({
       severity: "warn",
@@ -297,17 +288,26 @@ const handleSubmit = async () => {
   try {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
+    const response = await userApi.updateUserInfo(profileForm.value);
+    if (response?.status) {
+      toast.add({
+        severity: "success",
+        summary: "Thành công",
+        detail: "Đã cập nhật thông tin hồ sơ",
+        life: 3000,
+      });
+
+      submitted.value = false;
+    } else {
+      toast.add({
+        severity: "error",
+        summary: "Lỗi",
+        detail: "Không thể cập nhật thông tin hồ sơ",
+        life: 3000,
+      });
+    }
 
     // const response = await userApi.updateProfile(profileForm.value);
-
-    toast.add({
-      severity: "success",
-      summary: "Thành công",
-      detail: "Đã cập nhật thông tin hồ sơ",
-      life: 3000,
-    });
-
-    submitted.value = false;
 
     // Reload profile to get updated data
     await loadUserProfile();
