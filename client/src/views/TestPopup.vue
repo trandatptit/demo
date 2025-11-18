@@ -1,98 +1,36 @@
 <template>
   <div class="min-h-screen flex flex-col items-center justify-center gap-4">
-    <Button label="Open PopupPackage" @click="showPopup = true" />
+    <Button label="Open ResultWeekPopup" @click="showResultWeek = true" />
 
-    <!-- PopupPackage -->
-    <PopupPackage v-model="showPopup" />
-
-    <Button label="Open PopupNatrilRoadmap" @click="showNatriRoadmap = true" />
-
-    <!-- PopupNatriRoadmap -->
-    <PopupNatriRoadmap v-model="showNatriRoadmap" />
-
-    <Button
-      label="Open PopupExerciseRoadMap"
-      @click="showExerciseRoadMap = true"
-    />
-
-    <!-- PopupExerciseRoadMap -->
-    <PopupExerciseRoadMap
-      v-model="showExerciseRoadMap"
-      @submit="handleExerciseSubmit"
-      @buyNow="handleExerciseBuyNow"
-    />
-
-    <Button label="View HomeProduct" @click="showHomeProduct = true" />
-
-    <Button label="View HomeTool" @click="showHomeTool = true" />
-
-    <Button label="View Feature30k" @click="openFeature30k" />
-
-    <Button label="View Feature30kFinal" @click="openFeature30kFinal" />
-
-    <!-- HomeProduct Section -->
-    <div v-if="showHomeProduct" class="w-full">
+    <!-- ResultWeekPopup Section -->
+    <div v-if="showResultWeek" class="w-full">
       <div class="flex justify-end px-4 mb-2">
         <Button
           icon="pi pi-times"
           text
           rounded
           severity="danger"
-          @click="showHomeProduct = false"
+          @click="closeResultWeek"
         />
       </div>
-      <HomeProduct />
-    </div>
-
-    <!-- HomeTool Section -->
-    <div v-if="showHomeTool" class="w-full">
-      <div class="flex justify-end px-4 mb-2">
-        <Button
-          icon="pi pi-times"
-          text
-          rounded
-          severity="danger"
-          @click="showHomeTool = false"
-        />
-      </div>
-      <HomeTool />
-    </div>
-
-    <!-- Feature30k Section - Truyền props -->
-    <div v-if="showFeature30k" class="w-full">
-      <div class="flex justify-end px-4 mb-2">
-        <Button
-          icon="pi pi-times"
-          text
-          rounded
-          severity="danger"
-          @click="closeFeature30k"
-        />
-      </div>
-      <Feature30k
-        :userId="customUserId"
-        :currentHeight="customCurrentHeight"
-        :inheritedHeight="customInheritedHeight"
-        :potentialHeight="customPotentialHeight"
-      />
-    </div>
-
-    <!-- Feature30kFinal Section - Truyền props -->
-    <div v-if="showFeature30kFinal" class="w-full">
-      <div class="flex justify-end px-4 mb-2">
-        <Button
-          icon="pi pi-times"
-          text
-          rounded
-          severity="danger"
-          @click="closeFeature30kFinal"
-        />
-      </div>
-      <Feature30kFinal
-        :userId="finalUserId"
-        :ageData="finalAgeData"
-        :aiRecommendation="aiRecommendationData"
-        :inspirationMessage="inspirationMessageData"
+      <ResultWeekPopup 
+        :title="testData.title"
+        :subtitle="testData.subtitle"
+        :badgeTitle="testData.badgeTitle"
+        :badgeDescription="testData.badgeDescription"
+        :badgeIcon="testData.badgeIcon"
+        :stats="testData.stats"
+        :achievementTitle="testData.achievementTitle"
+        :achievementLabel="testData.achievementLabel"
+        :starCount="testData.starCount"
+        :quoteText="testData.quoteText"
+        :shareButtonLabel="testData.shareButtonLabel"
+        :shareButtonIcon="testData.shareButtonIcon"
+        :homeButtonLabel="testData.homeButtonLabel"
+        :homeButtonIcon="testData.homeButtonIcon"
+        @close="closeResultWeek"
+        @goHome="handleGoHome"
+        @share="handleShare"
       />
     </div>
   </div>
@@ -101,75 +39,74 @@
 <script setup>
 import { ref } from "vue";
 import Button from "primevue/button";
-import PopupPackage from "@/components/Popup/PopupPackage.vue";
-import PopupNatriRoadmap from "@/components/Popup/NutrilRoadMap/PopupNutrilRoadMap.vue";
-import PopupExerciseRoadMap from "@/components/Popup/ExerciseRoadMap/PopupExerciseRoadMap.vue";
-import HomeProduct from "@/components/HomePage/components/HomeProduct.vue";
-import HomeTool from "@/components/HomePage/components/HomeTool.vue";
-import Feature30k from "@/components/Feature30k/Feature30k.vue";
-import Feature30kFinal from "@/components/Feature30k/Feature30kFinal.vue";
+import ResultWeekPopup from "@/components/popup/ResultWeekPopup/ResultWeekPopup.vue";
 
-const showPopup = ref(false);
-const showNatriRoadmap = ref(false);
-const showExerciseRoadMap = ref(false);
-const showHomeProduct = ref(false);
-const showHomeTool = ref(false);
-const showFeature30k = ref(false);
-const showFeature30kFinal = ref(false);
+const showResultWeek = ref(false);
 
-// Custom data for Feature30k
-const customUserId = ref("User123");
-const customCurrentHeight = ref(165);
-const customInheritedHeight = ref(169);
-const customPotentialHeight = ref(172);
+// Test data
+const testData = ref({
+  title: 'Chúc mừng bạn đã hoàn thành tuần!',
+  subtitle: 'Bạn đã xuất sắc giành được danh hiệu',
+  badgeTitle: 'Chiến binh Canxi',
+  badgeDescription: 'Danh hiệu đạt được tuần này',
+  badgeIcon: 'pi pi-trophy',
+  stats: [
+    {
+      id: 'calcium',
+      label: 'Canxi hấp thu<br>(mg)',
+      value: '8.500',
+      max: '10.000',
+      percentage: 85,
+      colorClass: 'blue'
+    },
+    {
+      id: 'cost',
+      label: 'Chi phí thực tế (đ)',
+      value: '450.000',
+      max: '1.928.571.429',
+      percentage: 45,
+      colorClass: 'orange'
+    },
+    {
+      id: 'growth',
+      label: 'Ước tính tăng<br>trưởng (cm)',
+      value: '0,5',
+      max: '15',
+      percentage: 3.33,
+      colorClass: 'gray'
+    },
+    {
+      id: 'completion',
+      label: 'Hoàn thành (%)',
+      value: '93',
+      max: '100',
+      percentage: 93,
+      colorClass: 'purple'
+    }
+  ],
+  achievementTitle: 'Mục đồ hoàn thành',
+  achievementLabel: 'Xuất sắc!',
+  starCount: 5,
+  quoteText: '"Một tuần thật tuyệt vời! Hãy giữ vững phong độ này nhé."',
+  shareButtonLabel: 'Chia sẻ',
+  shareButtonIcon: 'pi pi-share-alt',
+  homeButtonLabel: 'Trở về trang chủ',
+  homeButtonIcon: 'pi pi-arrow-right'
+});
 
-// Custom data for Feature30kFinal
-const finalUserId = ref("12121");
-const finalAgeData = ref([
-  { age: "16t", height: 163 },
-  { age: "17t", height: 168 },
-  { age: "18t", height: 171, locked: true },
-  { age: "19t", height: 175 },
-  { age: "20t", height: 179 },
-]);
-
-// AI Recommendation data
-const aiRecommendationData = ref(
-  "Nam, 17 tuổi - Nếu duy trì ngủ trước 10 giờ và bổ sung 40 Canxi, bạn có thể đạt 179.0cm 😊"
-);
-
-// Inspiration message data
-const inspirationMessageData = ref("");
-
-// Open Feature30k with custom data
-const openFeature30k = () => {
-  showFeature30k.value = true;
+// ResultWeekPopup handlers
+const closeResultWeek = () => {
+  showResultWeek.value = false;
 };
 
-// Close Feature30k
-const closeFeature30k = () => {
-  showFeature30k.value = false;
+const handleGoHome = () => {
+  console.log("Redirecting to home...");
+  showResultWeek.value = false;
+  alert("Chuyển về trang chủ!");
 };
 
-// Open Feature30kFinal with custom data
-const openFeature30kFinal = () => {
-  showFeature30kFinal.value = true;
-};
-
-// Close Feature30kFinal
-const closeFeature30kFinal = () => {
-  showFeature30kFinal.value = false;
-};
-
-// Handle PopupExerciseRoadMap submit
-const handleExerciseSubmit = (selectedOptions) => {
-  console.log("Exercise options selected:", selectedOptions);
-  alert(`Bạn đã chọn ${selectedOptions.length} loại hình tập luyện`);
-};
-
-// Handle PopupExerciseRoadMap buy now
-const handleExerciseBuyNow = (optionId) => {
-  console.log("Buy now for exercise option:", optionId);
-  alert(`Chuyển đến trang mua dụng cụ: ${optionId}`);
+const handleShare = () => {
+  console.log("Sharing result...");
+  alert("Chia sẻ kết quả tuần!");
 };
 </script>
