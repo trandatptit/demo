@@ -59,7 +59,7 @@
     </div>
 
     <!-- Feature30k Section - Truyền props -->
-    <div v-if="showFeature30k" class="w-full">
+    <!-- <div v-if="showFeature30k" class="w-full">
       <div class="flex justify-end px-4 mb-2">
         <Button
           icon="pi pi-times"
@@ -75,7 +75,7 @@
         :inheritedHeight="customInheritedHeight"
         :potentialHeight="customPotentialHeight"
       />
-    </div>
+    </div> -->
 
     <!-- Feature30kFinal Section - Truyền props -->
     <div v-if="showFeature30kFinal" class="w-full">
@@ -104,14 +104,13 @@ import Button from "primevue/button";
 import PopupPackage from "@/components/Popup/PopupPackage.vue";
 import PopupNatriRoadmap from "@/components/Popup/NutrilRoadMap/PopupNutrilRoadMap.vue";
 import PopupExerciseRoadMap from "@/components/Popup/ExerciseRoadMap/PopupExerciseRoadMap.vue";
-import HomeProduct from "@/components/HomePage/components/HomeProduct.vue";
-import HomeTool from "@/components/HomePage/components/HomeTool.vue";
-import Feature30k from "@/components/Feature30k/Feature30k.vue";
-import Feature30kFinal from "@/components/Feature30k/Feature30kFinal.vue";
+import HomeProduct from "@/views/HomePage/components/HomeProduct.vue";
+import HomeTool from "@/views/HomePage/components/HomeTool.vue";
+import Feature30kFinal from "@/views/HeightPrediction/Feature30kFinal.vue";
 
 const showPopup = ref(false);
 const showNatriRoadmap = ref(false);
-const showExerciseRoadMap = ref(false);
+const showExerciseRoadMap = ref(true);
 const showHomeProduct = ref(false);
 const showHomeTool = ref(false);
 const showFeature30k = ref(false);

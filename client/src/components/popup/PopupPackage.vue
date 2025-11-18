@@ -50,17 +50,21 @@
           v-for="(pkg, index) in packages"
           :key="index"
           v-bind="pkg"
-          @select="selectPackage"
+          @select="selectPackage(pkg)"
         />
       </div>
     </div>
   </Dialog>
+  <PopupNutrilRoadMap v-model="visibleNutrilRoadMap" />
+  <PopupExerciseRoadMap v-model="visibleExcerciseRoadMap" />
 </template>
 
 <script setup>
 import { ref, watch } from "vue";
 import Dialog from "primevue/dialog";
 import CardPackage from "./CardPackage.vue";
+import PopupNutrilRoadMap from "./NutrilRoadMap/PopupNutrilRoadMap.vue";
+import PopupExerciseRoadMap from "./ExerciseRoadMap/PopupExerciseRoadMap.vue";
 
 const props = defineProps({
   modelValue: Boolean,
@@ -124,8 +128,22 @@ const packages = ref([
   },
 ]);
 
+const visibleNutrilRoadMap = ref(false);
+const visibleExcerciseRoadMap = ref(false);
 const selectPackage = (pkg) => {
   console.log("Selected package:", pkg);
+  switch (pkg.id) {
+    case 1:
+      visibleNutrilRoadMap.value = true;
+      visibleExcerciseRoadMap.value = false;
+      break;
+    case 3:
+      visibleExcerciseRoadMap.value = true;
+      visibleNutrilRoadMap.value = false;
+      break;
+    default:
+      break;
+  }
   emit("select-package", pkg);
 };
 
