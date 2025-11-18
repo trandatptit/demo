@@ -21,12 +21,12 @@ const routes = [
                 /* webpackChunkName: "homepage" */ '../views/HomePage/HomePage.vue'
             ),
     },
-    // {
-    //     path: '/test',
-    //     name: 'Test',
-    //     component: () =>
-    //         import(/* webpackChunkName: "test" */ '../views/TestPopup.vue'),
-    // },
+    {
+        path: '/test',
+        name: 'Test',
+        component: () =>
+            import(/* webpackChunkName: "test" */ '../views/TestPopup.vue'),
+    },
     {
         path: '/test-screen',
         name: 'TestScreen',

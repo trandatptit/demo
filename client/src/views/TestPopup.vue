@@ -13,7 +13,7 @@
           @click="closeResultWeek"
         />
       </div>
-      <ResultWeekPopup 
+      <ResultWeekPopup
         :title="testData.title"
         :subtitle="testData.subtitle"
         :badgeTitle="testData.badgeTitle"
@@ -45,53 +45,53 @@ const showResultWeek = ref(false);
 
 // Test data
 const testData = ref({
-  title: 'Chúc mừng bạn đã hoàn thành tuần!',
-  subtitle: 'Bạn đã xuất sắc giành được danh hiệu',
-  badgeTitle: 'Chiến binh Canxi',
-  badgeDescription: 'Danh hiệu đạt được tuần này',
-  badgeIcon: 'pi pi-trophy',
+  title: "Chúc mừng bạn đã hoàn thành tuần!",
+  subtitle: "Bạn đã xuất sắc giành được danh hiệu",
+  badgeTitle: "Chiến binh Canxi",
+  badgeDescription: "Danh hiệu đạt được tuần này",
+  badgeIcon: "pi pi-trophy",
   stats: [
     {
-      id: 'calcium',
-      label: 'Canxi hấp thu<br>(mg)',
-      value: '8.500',
-      max: '10.000',
+      id: "calcium",
+      label: "Canxi hấp thu<br>(mg)",
+      value: "8.500",
+      max: "10.000",
       percentage: 85,
-      colorClass: 'blue'
+      colorClass: "blue",
     },
     {
-      id: 'cost',
-      label: 'Chi phí thực tế (đ)',
-      value: '450.000',
-      max: '1.928.571.429',
+      id: "cost",
+      label: "Chi phí thực tế (đ)",
+      value: "450.000",
+      max: "1.928.571.429",
       percentage: 45,
-      colorClass: 'orange'
+      colorClass: "orange",
     },
     {
-      id: 'growth',
-      label: 'Ước tính tăng<br>trưởng (cm)',
-      value: '0,5',
-      max: '15',
+      id: "growth",
+      label: "Ước tính tăng<br>trưởng (cm)",
+      value: "0,5",
+      max: "15",
       percentage: 3.33,
-      colorClass: 'gray'
+      colorClass: "gray",
     },
     {
-      id: 'completion',
-      label: 'Hoàn thành (%)',
-      value: '93',
-      max: '100',
+      id: "completion",
+      label: "Hoàn thành (%)",
+      value: "93",
+      max: "100",
       percentage: 93,
-      colorClass: 'purple'
-    }
+      colorClass: "purple",
+    },
   ],
-  achievementTitle: 'Mục đồ hoàn thành',
-  achievementLabel: 'Xuất sắc!',
+  achievementTitle: "Mục đồ hoàn thành",
+  achievementLabel: "Xuất sắc!",
   starCount: 5,
   quoteText: '"Một tuần thật tuyệt vời! Hãy giữ vững phong độ này nhé."',
-  shareButtonLabel: 'Chia sẻ',
-  shareButtonIcon: 'pi pi-share-alt',
-  homeButtonLabel: 'Trở về trang chủ',
-  homeButtonIcon: 'pi pi-arrow-right'
+  shareButtonLabel: "Chia sẻ",
+  shareButtonIcon: "pi pi-share-alt",
+  homeButtonLabel: "Trở về trang chủ",
+  homeButtonIcon: "pi pi-arrow-right",
 });
 
 // ResultWeekPopup handlers
