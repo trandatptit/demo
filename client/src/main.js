@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import { createHead } from '@vueuse/head';
 import router from './router';
 import App from './App.vue';
 import PrimeVue from 'primevue/config';
@@ -19,16 +20,18 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Dropdown from 'primevue/dropdown';
 import Calendar from 'primevue/calendar';
-import ConfirmDialog from 'primevue/confirmdialog'
+import ConfirmDialog from 'primevue/confirmdialog';
 
 // Import Tailwind styles
 import './assets/css/main.css';
 
 const app = createApp(App);
+const head = createHead();
 
 // Use Pinia and Router
 app.use(createPinia());
 app.use(router);
+app.use(head);
 
 // Import PrimeVue configuration
 import { primeVueConfig } from './config/primevue.config';
@@ -50,4 +53,4 @@ app.component('Dropdown', Dropdown);
 app.component('Calendar', Calendar);
 
 app.mount('#app');
-app.component('ConfirmDialog', ConfirmDialog)
+app.component('ConfirmDialog', ConfirmDialog);
