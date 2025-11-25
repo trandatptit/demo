@@ -71,6 +71,14 @@ const routes = [
         component: () =>
             import(/* webpackChunkName: "Login" */ '../views/Login/Login.vue'),
     },
+    {
+        path: '/register',
+        name: 'Register',
+        component: () =>
+            import(
+                /* webpackChunkName: "Signin" */ '../views/Signin/Signin.vue'
+            ),
+    },
     // Route cho 404 - phải đặt ở cuối cùng
     {
         path: '/:pathMatch(.*)*',
