@@ -353,11 +353,11 @@ async function showUserDroplist() {
         icon: "pi pi-fw pi-sign-in",
         route: { name: "Login" },
       },
-      // {
-      //   label: "Đăng ký",
-      //   icon: "pi pi-fw pi-user-plus",
-      //   route: { name: "Register" },
-      // },
+      {
+        label: "Đăng ký",
+        icon: "pi pi-fw pi-user-plus",
+        route: { name: "Register" },
+      },
     ];
   }
 }
