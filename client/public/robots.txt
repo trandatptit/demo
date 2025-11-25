@@ -1,0 +1,13 @@
+# Everest Pharma - Robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://everestpharma.vn/sitemap.xml
+
+# Block admin and API routes
+Disallow: /admin/
+Disallow: /api/
+
+# Crawl-delay for polite bots
+Crawl-delay: 1
