@@ -334,7 +334,9 @@ import DatePicker from "primevue/datepicker";
 import Checkbox from "primevue/checkbox";
 import genderType from "@/constants/genderType";
 import authApi from "@/apis/authApi";
+import { useAuthStore } from "@/stores/auth";
 
+const authStore = useAuthStore();
 const router = useRouter();
 const toast = useToast();
 
@@ -526,15 +528,15 @@ const handleSignin = async () => {
     const registrationData = {
       username: signinForm.value.username,
       fullName: signinForm.value.fullName,
-      email: signinForm.value.email,
-      phone: signinForm.value.phone,
-      gender: signinForm.value.gender,
-      dateOfBirth: formatDateForAPI(signinForm.value.dateOfBirth),
       password: signinForm.value.password,
+      email: signinForm.value.email,
+      phoneNumber: signinForm.value.phone,
+      gender: signinForm.value.gender,
+      birthday: new Date(signinForm.value.dateOfBirth),
     };
 
     // Call registration API
-    const response = await authApi.register(registrationData);
+    const response = await authStore.signUp(registrationData);
 
     if (response) {
       toast.add({
@@ -546,7 +548,7 @@ const handleSignin = async () => {
 
       // Redirect to login page after 2 seconds
       setTimeout(() => {
-        router.push({ path: "/login" });
+        router.push({ name: "Login" });
       }, 2000);
     } else {
       signinError.value = "Đăng ký không thành công. Vui lòng thử lại.";
