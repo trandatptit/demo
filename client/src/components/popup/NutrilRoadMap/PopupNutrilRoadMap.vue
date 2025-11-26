@@ -3,7 +3,7 @@
     v-model:visible="isVisible"
     modal
     :closable="false"
-    :style="{ width: '95vw', maxWidth: '800px' }"
+    :style="{ width: '1200px', maxWidth: '1200px' }"
     :draggable="false"
     :pt="{
       root: { class: 'rounded-3xl shadow-2xl border-0' },
@@ -34,6 +34,9 @@
       @close="handleClose"
       @submit="handleSurveySubmit"
     />
+
+    <!-- Schedule Screen -->
+    <NutrilRoadMapSchedule v-if="currentScreen === 'schedule'" />
 
     <!-- Optimal Screen -->
     <NutrilRoadMapOptimal
@@ -72,6 +75,7 @@ import Dialog from "primevue/dialog";
 import NutrilRoadMapOptimal from "./screen/NutrilRoadMapOptimal.vue";
 import NutrilRoadMapAnalyze from "@/components/Popup/NutrilRoadMap/screen/NutrilRoadMapAnalyze.vue";
 import NutrilRoadMapSurvey from "@/components/Popup/NutrilRoadMap/screen/NutrilRoadMapSurvey.vue";
+import NutrilRoadMapSchedule from "@/screen/PopupNutrilRoadMap_PhaseTwo/NutrilRoadMapSchedule.vue";
 import NutrilRoadMapOptimalPropose from "./screen/NutrilRoadMapOptimalPropose.vue";
 import PaymentQRPopup from "@/components/Popup/PaymentQRPopup/PaymentQRPopup.vue";
 
@@ -85,7 +89,7 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue", "action"]);
 
 const isVisible = ref(props.modelValue);
-const currentScreen = ref("analyze"); // 'analyze', 'survey', 'optimal', 'propose'
+const currentScreen = ref("analyze"); // 'analyze', 'survey', 'schedule', 'optimal', 'propose'
 
 // Survey data
 const surveyResults = ref(null);
@@ -124,8 +128,10 @@ const handleBack = () => {
   // Navigate back based on current screen
   if (currentScreen.value === "survey") {
     currentScreen.value = "analyze";
-  } else if (currentScreen.value === "optimal") {
+  } else if (currentScreen.value === "schedule") {
     currentScreen.value = "survey";
+  } else if (currentScreen.value === "optimal") {
+    currentScreen.value = "schedule";
   } else {
     currentScreen.value = "analyze";
   }
@@ -175,7 +181,7 @@ const handleAnalyze = (data) => {
 const handleSurveySubmit = (data) => {
   console.log("Survey submitted", data);
   surveyResults.value = data;
-  // Chuyển sang màn hình optimal sau khi hoàn thành survey
-  currentScreen.value = "optimal";
+  // Chuyển sang màn hình schedule sau khi hoàn thành survey
+  currentScreen.value = "schedule";
 };
 </script>
