@@ -3,7 +3,7 @@
     v-model:visible="isVisible"
     modal
     :closable="false"
-    :style="{ width: '95vw', maxWidth: '800px' }"
+    :style="{ width: '1200px', maxWidth: '1200px' }"
     :draggable="false"
     :pt="{
       root: { class: 'rounded-3xl shadow-2xl border-0' },
@@ -21,9 +21,26 @@
       <i class="pi pi-times text-gray-600 hover:text-gray-900 text-xl"></i>
     </button>
 
-    <NutrilRoadMapAnalyze @analyze="handleAnalyze" />
+    <!-- Analyze Screen -->
+    <NutrilRoadMapAnalyze
+      v-if="currentScreen === 'analyze'"
+      @analyze="handleAnalyze"
+    />
+
+    <!-- Survey Screen -->
+    <NutrilRoadMapSurvey
+      v-if="currentScreen === 'survey'"
+      @back="handleBack"
+      @close="handleClose"
+      @submit="handleSurveySubmit"
+    />
+
+    <!-- Schedule Screen -->
+    <NutrilRoadMapSchedule v-if="currentScreen === 'schedule'" />
+
     <!-- Optimal Screen -->
     <NutrilRoadMapOptimal
+      v-if="currentScreen === 'optimal'"
       :title="optimalTitle"
       :subtitle="optimalSubtitle"
       :targetHeight="optimalTargetHeight"
@@ -33,18 +50,34 @@
       :actionButtonLabel="optimalActionButtonLabel"
       @back="handleBack"
       @close="handleClose"
-      @action="handleOptimalAction"
+      @openPayment="handleOpenPayment"
     />
-    <NutrilRoadMapOptimalPropose />
+
+    <!-- Optimal Propose Screen -->
+    <NutrilRoadMapOptimalPropose v-if="currentScreen === 'propose'" />
   </Dialog>
+
+  <!-- Payment QR Popup -->
+  <PaymentQRPopup
+    v-model="showPaymentPopup"
+    :amount="paymentAmount"
+    :orderId="paymentOrderId"
+    bank-code="970422"
+    bank-account="0123456789"
+    account-name="EVEREST HEIGHT GROWTH"
+    @confirm="handlePaymentConfirm"
+  />
 </template>
 
 <script setup>
 import { ref, watch } from "vue";
 import Dialog from "primevue/dialog";
 import NutrilRoadMapOptimal from "./screen/NutrilRoadMapOptimal.vue";
-import NutrilRoadMapAnalyze from "./screen/NutrilRoadMapAnalyze.vue";
+import NutrilRoadMapAnalyze from "@/components/Popup/NutrilRoadMap/screen/NutrilRoadMapAnalyze.vue";
+import NutrilRoadMapSurvey from "@/components/Popup/NutrilRoadMap/screen/NutrilRoadMapSurvey.vue";
+import NutrilRoadMapSchedule from "@/screen/PopupNutrilRoadMap_PhaseTwo/NutrilRoadMapSchedule.vue";
 import NutrilRoadMapOptimalPropose from "./screen/NutrilRoadMapOptimalPropose.vue";
+import PaymentQRPopup from "@/components/Popup/PaymentQRPopup/PaymentQRPopup.vue";
 
 const props = defineProps({
   modelValue: {
@@ -56,6 +89,15 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue", "action"]);
 
 const isVisible = ref(props.modelValue);
+const currentScreen = ref("analyze"); // 'analyze', 'survey', 'schedule', 'optimal', 'propose'
+
+// Survey data
+const surveyResults = ref(null);
+
+// Payment popup state
+const showPaymentPopup = ref(false);
+const paymentOrderId = ref("");
+const paymentAmount = ref(30000);
 
 // Optimal Screen data
 const optimalTitle = ref("Lộ Trình Dinh Dưỡng Tối Ưu");
@@ -83,22 +125,63 @@ watch(isVisible, (newVal) => {
 
 const handleBack = () => {
   console.log("Back clicked");
-  handleClose();
+  // Navigate back based on current screen
+  if (currentScreen.value === "survey") {
+    currentScreen.value = "analyze";
+  } else if (currentScreen.value === "schedule") {
+    currentScreen.value = "survey";
+  } else if (currentScreen.value === "optimal") {
+    currentScreen.value = "schedule";
+  } else {
+    currentScreen.value = "analyze";
+  }
 };
 
 const handleClose = () => {
   isVisible.value = false;
+  // Reset về màn hình đầu tiên khi đóng popup
+  setTimeout(() => {
+    currentScreen.value = "analyze";
+  }, 300);
 };
 
-const handleOptimalAction = () => {
-  console.log("Optimal action clicked");
-  emit("action");
-  // Có thể thêm logic chuyển sang màn hình khác hoặc xử lý thanh toán ở đây
-  alert("Bạn đã chọn thanh toán & nhận lộ trình!");
+const handleOpenPayment = () => {
+  console.log("Opening payment popup");
+  // Generate order ID
+  paymentOrderId.value = `NR${Date.now().toString().slice(-8)}`;
+  showPaymentPopup.value = true;
 };
 
-const handleAnalyze = () => {
-  console.log("Analyze completed");
-  // Logic chuyển
+const handlePaymentConfirm = (paymentData) => {
+  console.log("Payment confirmed", paymentData);
+  showPaymentPopup.value = false;
+
+  // Emit action sau khi thanh toán thành công
+  emit("action", {
+    paymentData,
+    targetHeight: optimalTargetHeight.value,
+    orderId: paymentOrderId.value,
+  });
+
+  // Chuyển sang màn hình propose hoặc đóng popup
+  currentScreen.value = "propose";
+};
+
+const handleAnalyze = (data) => {
+  console.log("Analyze completed", data);
+  // Cập nhật dữ liệu từ analyze
+  if (data) {
+    optimalTargetHeight.value = data.targetHeight;
+    // Có thể cập nhật thêm các dữ liệu khác nếu cần
+  }
+  // Chuyển sang màn hình survey
+  currentScreen.value = "survey";
+};
+
+const handleSurveySubmit = (data) => {
+  console.log("Survey submitted", data);
+  surveyResults.value = data;
+  // Chuyển sang màn hình schedule sau khi hoàn thành survey
+  currentScreen.value = "schedule";
 };
 </script>

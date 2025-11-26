@@ -1,39 +1,19 @@
 <template>
-  <section class="nutril-roadmap-optimal mx-auto px-4 lg:px-8 py-8 lg:py-12 bg-white dark:bg-gray-900">
+  <section
+    class="nutril-roadmap-optimal mx-auto px-4 lg:px-8 py-8 lg:py-12 bg-white dark:bg-gray-900"
+  >
     <!-- Container 12 Grid Main -->
     <div class="grid grid-cols-12 gap-4 lg:gap-6">
       <!-- Header Section - Full Width -->
-      <div class="col-span-12">
-        <div class="flex justify-between items-center mb-6">
-          <!-- Back Button -->
-          <Button
-            @click="$emit('back')"
-            label="Quay Lại"
-            icon="pi pi-arrow-left"
-            text
-            severity="secondary"
-            size="small"
-            class="!p-0"
-          />
-
-          <!-- Close Button -->
-          <Button
-            @click="$emit('close')"
-            icon="pi pi-times"
-            rounded
-            text
-            severity="secondary"
-            size="small"
-          />
-        </div>
-      </div>
 
       <!-- Title Section - Full Width -->
       <div class="col-span-12 text-center mb-2">
-        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white">
+        <h2
+          class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white"
+        >
           {{ title }}
         </h2>
-        
+
         <!-- Subtitle -->
         <div class="subtitle mt-3">
           <i class="pi pi-sparkles subtitle-icon"></i>
@@ -51,9 +31,9 @@
           </div>
 
           <div class="chart-container">
-            <Chart 
-              type="line" 
-              :data="chartData" 
+            <Chart
+              type="line"
+              :data="chartData"
               :options="chartOptions"
               class="h-[20rem]"
             />
@@ -67,18 +47,19 @@
           <div class="action-header">
             <span class="action-title">{{ actionTitle }}</span>
           </div>
-          
+
           <p class="action-description">{{ actionDescription }}</p>
 
-          <Button 
+          <Button
             :label="actionButtonLabel"
             icon="pi pi-shopping-cart"
             class="action-btn w-full"
             @click="handleAction"
             :pt="{
-              root: { 
-                class: 'bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 dark:from-orange-600 dark:to-red-600 border-0 py-4 text-base md:text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200'
-              }
+              root: {
+                class:
+                  'bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 dark:from-orange-600 dark:to-red-600 border-0 py-4 text-base md:text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200',
+              },
             }"
           />
 
@@ -90,46 +71,50 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue';
-import Button from 'primevue/button';
-import Chart from 'primevue/chart';
+import { ref, watch, onMounted } from "vue";
+import Button from "primevue/button";
+import Chart from "primevue/chart";
 
 const props = defineProps({
   title: {
     type: String,
-    default: 'Lộ Trình Dinh Dưỡng Tối Ưu'
+    default: "Lộ Trình Dinh Dưỡng Tối Ưu",
   },
   subtitle: {
     type: String,
-    default: 'AI Đề Xuất Dành Riêng Cho Bạn'
+    default: "AI Đề Xuất Dành Riêng Cho Bạn",
   },
   targetHeight: {
     type: Number,
-    default: 165
+    default: 165,
   },
   monthlyData: {
     type: Array,
-    default: () => [160, 160.5, 161, 161.5, 162, 162.5, 163, 163.5, 164, 164.5, 165, 165.5, 166]
+    default: () => [
+      160, 160.5, 161, 161.5, 162, 162.5, 163, 163.5, 164, 164.5, 165, 165.5,
+      166,
+    ],
   },
   actionTitle: {
     type: String,
-    default: 'Để xuất BẤT BUỘC cho ngân sách của bạn:'
+    default: "Để xuất BẤT BUỘC cho ngân sách của bạn:",
   },
   actionDescription: {
     type: String,
-    default: 'Dễ dàng báo cáo Comsir, bạn cần kết hợp thực phẩm với sản phẩm bổ sung từ Everest nếu khỏe, dễ trình diễn khẳng định tiêu chuẩn.'
+    default:
+      "Dễ dàng báo cáo Comsir, bạn cần kết hợp thực phẩm với sản phẩm bổ sung từ Everest nếu khỏe, dễ trình diễn khẳng định tiêu chuẩn.",
   },
   actionButtonLabel: {
     type: String,
-    default: 'Đặt mua Combi ngay'
+    default: "Đặt mua Combi ngay",
   },
   actionFooter: {
     type: String,
-    default: 'Bạn sẽ được chuyển đến trang đặt hàng chi tiết!'
-  }
+    default: "Bạn sẽ được chuyển đến trang đặt hàng chi tiết!",
+  },
 });
 
-const emit = defineEmits(['back', 'close', 'action']);
+const emit = defineEmits(["back", "close", "action"]);
 
 const chartData = ref();
 const chartOptions = ref();
@@ -140,40 +125,60 @@ onMounted(() => {
 });
 
 // Watch props.monthlyData để update chart khi data thay đổi
-watch(() => props.monthlyData, () => {
-  chartData.value = setChartData();
-}, { deep: true });
+watch(
+  () => props.monthlyData,
+  () => {
+    chartData.value = setChartData();
+  },
+  { deep: true }
+);
 
 const setChartData = () => {
   return {
-    labels: ['Tháng 0', 'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 
-             'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+    labels: [
+      "Tháng 0",
+      "Tháng 1",
+      "Tháng 2",
+      "Tháng 3",
+      "Tháng 4",
+      "Tháng 5",
+      "Tháng 6",
+      "Tháng 7",
+      "Tháng 8",
+      "Tháng 9",
+      "Tháng 10",
+      "Tháng 11",
+      "Tháng 12",
+    ],
     datasets: [
       {
-        label: 'Chiều cao dự kiến',
+        label: "Chiều cao dự kiến",
         data: props.monthlyData,
         fill: true,
-        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-        borderColor: '#3b82f6',
+        backgroundColor: "rgba(59, 130, 246, 0.1)",
+        borderColor: "#3b82f6",
         tension: 0.4,
         pointRadius: 5,
         pointHoverRadius: 7,
-        pointBackgroundColor: '#3b82f6',
-        pointBorderColor: '#ffffff',
+        pointBackgroundColor: "#3b82f6",
+        pointBorderColor: "#ffffff",
         pointBorderWidth: 2,
-        pointHoverBackgroundColor: '#3b82f6',
-        pointHoverBorderColor: '#ffffff',
-        pointHoverBorderWidth: 3
-      }
-    ]
+        pointHoverBackgroundColor: "#3b82f6",
+        pointHoverBorderColor: "#ffffff",
+        pointHoverBorderWidth: 3,
+      },
+    ],
   };
 };
 
 const setChartOptions = () => {
   const documentStyle = getComputedStyle(document.documentElement);
-  const textColor = documentStyle.getPropertyValue('--p-text-color') || '#6b7280';
-  const textColorSecondary = documentStyle.getPropertyValue('--p-text-muted-color') || '#9ca3af';
-  const surfaceBorder = documentStyle.getPropertyValue('--p-content-border-color') || '#e5e7eb';
+  const textColor =
+    documentStyle.getPropertyValue("--p-text-color") || "#6b7280";
+  const textColorSecondary =
+    documentStyle.getPropertyValue("--p-text-muted-color") || "#9ca3af";
+  const surfaceBorder =
+    documentStyle.getPropertyValue("--p-content-border-color") || "#e5e7eb";
 
   return {
     maintainAspectRatio: false,
@@ -181,62 +186,62 @@ const setChartOptions = () => {
     responsive: true,
     plugins: {
       legend: {
-        display: false
+        display: false,
       },
       tooltip: {
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
         padding: 12,
         titleFont: {
           size: 13,
-          weight: '600'
+          weight: "600",
         },
         bodyFont: {
-          size: 12
+          size: 12,
         },
         callbacks: {
-          label: function(context) {
+          label: function (context) {
             return `Chiều cao: ${context.parsed.y}cm`;
-          }
-        }
-      }
+          },
+        },
+      },
     },
     scales: {
       x: {
         ticks: {
           color: textColorSecondary,
           font: {
-            size: 10
+            size: 10,
           },
           maxRotation: 45,
-          minRotation: 0
+          minRotation: 0,
         },
         grid: {
           display: false,
-          drawBorder: false
-        }
+          drawBorder: false,
+        },
       },
       y: {
         ticks: {
           color: textColorSecondary,
           font: {
-            size: 10
+            size: 10,
           },
           padding: 8,
-          callback: function(value) {
-            return value + 'cm';
-          }
+          callback: function (value) {
+            return value + "cm";
+          },
         },
         grid: {
           color: surfaceBorder,
-          drawBorder: false
-        }
-      }
-    }
+          drawBorder: false,
+        },
+      },
+    },
   };
 };
 
 const handleAction = () => {
-  emit('action');
+  emit("action");
 };
 </script>
 
@@ -350,7 +355,7 @@ const handleAction = () => {
 }
 
 .action-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -373,34 +378,34 @@ const handleAction = () => {
     background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
     border-color: #374151;
   }
-  
+
   .chart-container {
     background: #1f2937;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
-  
+
   .chart-description {
     color: #d1d5db;
   }
-  
+
   .highlight-height {
     color: #60a5fa;
   }
-  
+
   .action-section {
     background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
     border-color: #dc2626;
   }
-  
+
   .action-title {
     color: #fca5a5;
   }
-  
+
   .action-description {
     color: #d1d5db;
     background: rgba(59, 130, 246, 0.15);
   }
-  
+
   .action-footer {
     color: #9ca3af;
   }
@@ -411,32 +416,32 @@ const handleAction = () => {
   .chart-section {
     padding: 24px;
   }
-  
+
   .chart-container {
     padding: 24px 20px;
   }
-  
+
   .chart-description {
     font-size: 15px;
   }
-  
+
   .highlight-height {
     font-size: 20px;
   }
-  
+
   .action-section {
     padding: 24px;
   }
-  
+
   .action-title {
     font-size: 17px;
   }
-  
+
   .action-description {
     font-size: 14px;
     padding: 14px 20px;
   }
-  
+
   .action-footer {
     font-size: 13px;
   }
