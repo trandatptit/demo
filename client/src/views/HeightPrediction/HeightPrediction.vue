@@ -201,6 +201,8 @@ import PaymentQRPopup from "@/components/Popup/PaymentQRPopup/PaymentQRPopup.vue
 import randomElement from "@/utilities/randomElement/randomeElement.js";
 import { adviceAIMessages, inspirationMessages } from "@/config/content.js";
 import formatStr from "@/utilities/formatString/formatString.js";
+import GeneticsApi from "@/apis/geneticsApi.js";
+import getKeyLocalStorage from "@/utilities/commons/getKeyLocalStorage.js";
 
 const router = useRouter();
 const toast = useToast();
@@ -253,6 +255,7 @@ onBeforeMount(() => {
   if (userInfo?.fatherHeight && userInfo?.motherHeight && userInfo?.gender) {
     const inheritedHeight = findHeightGen(userInfo);
     heightUser.value.inherited = inheritedHeight;
+    predictedHeightDisplay.value = inheritedHeight;
   }
 
   aiRecommendation.value = formatStr(
@@ -416,7 +419,7 @@ const unlockFeature = () => {
 
 const isShowPotentialHeight = ref(false);
 // Handle payment confirmation
-const handlePaymentConfirm = (paymentData) => {
+const handlePaymentConfirm = async (paymentData) => {
   showPaymentPopup.value = false;
 
   toast.add({
@@ -429,7 +432,23 @@ const handlePaymentConfirm = (paymentData) => {
   // TODO: Call API to verify payment
   console.log("Payment data:", paymentData);
   isShowPotentialHeight.value = true;
-  var userInfo = userInfoStore.getUserInfo();
+  var userInfo = JSON.parse(
+    localStorage.getItem(getKeyLocalStorage("UserInfo"))
+  );
+
+  var responseResult30k = await GeneticsApi.geneticResult30k(userInfo.id);
+  console.log("Result 30k response:", responseResult30k);
+  if (responseResult30k?.result) {
+    heightUser.value.potential = responseResult30k?.result?.potentialHeight;
+  }
+  GeneticsApi.saveResult30k({
+    userId: userInfo.id,
+    currentHeight: heightUser.value.current,
+    hereditaryHeight: heightUser.value.inherited,
+    potentialHeight: heightUser.value.potential,
+  }).then((res) => {
+    console.log("Save result 30k response:", res);
+  });
 };
 </script>
 
