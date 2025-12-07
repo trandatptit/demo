@@ -496,8 +496,18 @@ onMounted(async () => {
   min-width: 220px;
 }
 
+.avatar-menu__droplist::before {
+  height: 20px;
+  position: absolute;
+  content: "";
+  width: 100%;
+  display: block;
+  background: transparent;
+  top: -8px;
+}
+
 .tab-avatar-menu:hover .avatar-menu__droplist {
-  display: flex;
+  display: block;
   position: absolute;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -2px rgba(0, 0, 0, 0.1);
