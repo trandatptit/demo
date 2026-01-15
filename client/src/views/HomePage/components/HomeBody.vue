@@ -52,13 +52,14 @@
                 >
                   <div class="w-full sm:flex-1">
                     <IconField>
-                      <InputIcon class="pi pi-calendar" />
-                      <DatePicker
-                        v-model="formData.birthday"
-                        fluid
-                        iconDisplay="input"
-                        showButtonBar
+                      <InputIcon class="pi pi-user" />
+                      <InputNumber
+                        v-model="formData.age"
                         placeholder="Tuổi"
+                        :min="1"
+                        :max="100"
+                        :useGrouping="false"
+                        class="w-full"
                       />
                     </IconField>
                   </div>
@@ -178,13 +179,14 @@
 
               <div class="w-full sm:flex-1">
                 <IconField>
-                  <InputIcon class="pi pi-calendar" />
-                  <DatePicker
-                    v-model="formData.pubertyDay"
-                    fluid
-                    iconDisplay="input"
-                    showButtonBar
+                  <InputIcon class="pi pi-user" />
+                  <InputNumber
+                    v-model="formData.pubertyAge"
                     placeholder="Tuổi dậy thì (nếu có)"
+                    :min="8"
+                    :max="18"
+                    :useGrouping="false"
+                    class="w-full"
                   />
                 </IconField>
               </div>
@@ -336,6 +338,7 @@ const userInfoStore = useUserInfoStore();
 const formData = ref({
   name: "",
   age: null,
+  pubertyAge: null,
   gender: null,
   height: null,
   weight: null,
@@ -358,7 +361,7 @@ const valueFullFormRef = ref({
 const handleSubmitStepOne = (activateCallback) => {
   if (
     !formData.value.name ||
-    !formData.value.birthday ||
+    !formData.value.age ||
     !formData.value.height ||
     !formData.value.weight
   ) {
@@ -409,8 +412,6 @@ const handleSubmitStepThree = (activateCallback) => {
   }
   console.log("Form submitted:", formData.value);
   valueFullFormRef.value.step3 = true;
-  formData.value.age =
-    new Date().getFullYear() - formData.value.birthday.getFullYear();
   userInfoStore.setUserInfo(formData.value);
   router.push({ name: "HeightPrediction" });
 };
