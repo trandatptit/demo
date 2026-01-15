@@ -1,11 +1,13 @@
 <template>
   <HomeHeader />
   <router-view :key="$route.fullPath" />
+  <AILoadingPopup />
 </template>
 
 <script setup>
 import { useHead } from "@vueuse/head";
 import HomeHeader from "./views/Header/HomeHeader.vue";
+import AILoadingPopup from "@/components/Loading/AILoadingPopup.vue";
 
 // SEO Configuration
 useHead({
