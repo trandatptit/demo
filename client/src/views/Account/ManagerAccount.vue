@@ -564,16 +564,16 @@ const handlefilteredUsers = () => {
     const searchTerm = filters.value.global.toLowerCase();
     result = result.filter(
       (user) =>
-        user.username.toLowerCase().includes(searchTerm) ||
-        user.email.toLowerCase().includes(searchTerm) ||
-        (user.phoneNumber && user.phoneNumber.includes(searchTerm))
+        user?.username?.toLowerCase().includes(searchTerm) ||
+        user?.email?.toLowerCase().includes(searchTerm) ||
+        (user?.phoneNumber && user?.phoneNumber.includes(searchTerm))
     );
   }
 
   // Role filter
   if (filters.value.role) {
     result = result.filter(
-      (user) => user.role?.toLowerCase() === filters.value.role?.toLowerCase()
+      (user) => user?.role?.toLowerCase() === filters.value.role?.toLowerCase()
     );
   }
 
