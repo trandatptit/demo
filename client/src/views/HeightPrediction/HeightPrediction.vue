@@ -494,9 +494,16 @@ const handlePaymentConfirm = async (paymentData) => {
   // Phần xử lý gọi AI
   loadingStore.mask("AI đang dự đoán chiều cao tiềm năng của bạn...");
   isShowPotentialHeight.value = true;
-  var userInfo = JSON.parse(
+
+  // Thông tin mặc định lấy từ form nhập thông tin cá nhân
+  let userInfo = userInfoStore.getUserInfo();
+  // Thông tin mặc định lấy từ local storage
+  var localStorageUserInfo = JSON.parse(
     localStorage.getItem(getKeyLocalStorage("UserInfo"))
   );
+  if (localStorageUserInfo) {
+    userInfo.age = calculateAge(localStorageUserInfo.birthday);
+  }
 
   if (!userInfo?.age) {
     userInfo.age = calculateAge(userInfo.birthday);
