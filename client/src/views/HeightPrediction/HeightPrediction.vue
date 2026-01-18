@@ -270,7 +270,7 @@ const heightUser = ref({
   potential: 0,
 });
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
   loadingStore.mask("AI đang dự đoán chiều cao di truyền của bạn...");
 
   var userInfo = userInfoStore.getUserInfo();
@@ -282,7 +282,22 @@ onBeforeMount(() => {
     heightUser.value.current = userInfo?.height || 0;
   }
   if (userInfo?.fatherHeight && userInfo?.motherHeight && userInfo?.gender) {
-    const inheritedHeight = findHeightGen(userInfo);
+    var responseAI = await AiApi.genHeightParental({
+      AGE: userInfo?.age,
+      CURRENT_HEIGHT_CM: userInfo?.height,
+      EXERCISE_PER_WEEK: userInfo?.exerciseFrequency,
+      FATHER_HEIGHT_CM: userInfo?.fatherHeight,
+      GENDER: userInfo?.gender === 1 ? "Nam" : "Nữ",
+      MEALS_PER_DAY: userInfo?.mealsPerDay,
+      MOTHER_HEIGHT_CM: userInfo?.motherHeight,
+      NAME: userInfo?.name,
+      PUBERTY_AGE: userInfo?.pubertyAge,
+      SLEEP_TIME: userInfo?.timeSleep?.getHours() || 8,
+      WEIGHT_KG: userInfo?.weight,
+    });
+    // responseAI
+    // const inheritedHeight = findHeightGen(userInfo);
+    const inheritedHeight = responseAI?.result?.predicted_genetic_height_cm;
     heightUser.value.inherited = inheritedHeight;
     predictedHeightDisplay.value = inheritedHeight;
   }
@@ -295,9 +310,8 @@ onBeforeMount(() => {
   inspirationMessageDisplay.value = formatStr(
     randomElement(inspirationMessages)
   );
-  setTimeout(() => {
-    loadingStore.unmask();
-  }, Math.random() * 5000);
+  chartData.value = setChartData();
+  loadingStore.unmask();
 });
 
 // Chart refs - theo pattern PrimeVue
@@ -502,6 +516,10 @@ const handlePaymentConfirm = async (paymentData) => {
     localStorage.getItem(getKeyLocalStorage("UserInfo"))
   );
   if (localStorageUserInfo) {
+    userInfo = {
+      ...userInfo,
+      ...localStorageUserInfo,
+    };
     userInfo.age = calculateAge(localStorageUserInfo.birthday);
   }
 
