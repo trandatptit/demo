@@ -131,7 +131,7 @@
               <template #body="{ data }">
                 <div class="flex items-center gap-3">
                   <Avatar
-                    :label="data.username.charAt(0).toUpperCase()"
+                    :label="data.username?.charAt(0)?.toUpperCase()"
                     :style="{
                       backgroundColor: getAvatarColor(data.username),
                       color: '#fff',
@@ -392,7 +392,7 @@
       <div v-if="selectedUser" class="space-y-4 py-4">
         <div class="flex flex-col items-center mb-6">
           <Avatar
-            :label="selectedUser.fullName.charAt(0).toUpperCase()"
+            :label="selectedUser.fullName?.charAt(0)?.toUpperCase()"
             :style="{
               backgroundColor: getAvatarColor(selectedUser.fullName),
               color: '#fff',
@@ -564,16 +564,16 @@ const handlefilteredUsers = () => {
     const searchTerm = filters.value.global.toLowerCase();
     result = result.filter(
       (user) =>
-        user.username.toLowerCase().includes(searchTerm) ||
-        user.email.toLowerCase().includes(searchTerm) ||
-        (user.phoneNumber && user.phoneNumber.includes(searchTerm))
+        user?.username?.toLowerCase().includes(searchTerm) ||
+        user?.email?.toLowerCase().includes(searchTerm) ||
+        (user?.phoneNumber && user?.phoneNumber.includes(searchTerm))
     );
   }
 
   // Role filter
   if (filters.value.role) {
     result = result.filter(
-      (user) => user.role?.toLowerCase() === filters.value.role?.toLowerCase()
+      (user) => user?.role?.toLowerCase() === filters.value.role?.toLowerCase()
     );
   }
 
@@ -863,7 +863,7 @@ const getAvatarColor = (name) => {
     "#8b5cf6",
     "#ec4899",
   ];
-  const index = name.charCodeAt(0) % colors.length;
+  const index = name?.charCodeAt(0) % colors.length;
   return colors[index];
 };
 
