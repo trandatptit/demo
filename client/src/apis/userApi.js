@@ -5,11 +5,6 @@ class UserApi extends BaseApi {
         super('users');
     }
 
-    async getAll() {
-        let res = await this.get(this.ApiURL);
-        return res;
-    }
-
     async getUserById(userId) {
         let res = await this.get(this.ApiURL + `/${userId}`);
         return res;
@@ -32,7 +27,7 @@ class UserApi extends BaseApi {
 
     async getAll(page = 0, size = 100) {
         let res = await this.get(
-            `${this.ApiURL}/getAll?page=${page}&size=${size}`
+            `${this.ApiURL}/getAll?page=${page}&size=${size}`,
         );
         return res;
     }
@@ -49,7 +44,7 @@ class UserApi extends BaseApi {
 
     async rateUser(userId, ratePoint) {
         let res = await this.put(
-            this.ApiURL + `/rate?userId=${userId}&ratePoint=${ratePoint}`
+            this.ApiURL + `/rate?userId=${userId}&ratePoint=${ratePoint}`,
         );
         return res;
     }
@@ -57,7 +52,7 @@ class UserApi extends BaseApi {
     async getSuggestFreelancer(workField, fieldTags) {
         let res = await this.get(
             this.ApiURL +
-                `/suggest-freelancer?workField=${workField}&fieldTags=${fieldTags}`
+                `/suggest-freelancer?workField=${workField}&fieldTags=${fieldTags}`,
         );
         return res;
     }
