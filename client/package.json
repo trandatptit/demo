@@ -7,7 +7,9 @@
         "start": "vite",
         "dev": "vite",
         "build": "vite build",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "test": "vitest",
+        "test:coverage": "vitest run --coverage"
     },
     "dependencies": {
         "@primeuix/themes": "^1.2.5",
@@ -26,9 +28,13 @@
     "devDependencies": {
         "@tailwindcss/postcss": "^4.1.15",
         "@vitejs/plugin-vue": "^6.0.1",
+        "@vitest/coverage-v8": "^4.0.18",
+        "@vue/test-utils": "^2.4.6",
         "autoprefixer": "^10.4.21",
+        "jsdom": "^27.4.0",
         "postcss": "^8.5.6",
         "tailwindcss": "^4.1.15",
-        "vite": "^7.1.7"
+        "vite": "^7.1.7",
+        "vitest": "^4.0.18"
     }
 }
