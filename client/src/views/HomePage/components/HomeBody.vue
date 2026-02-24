@@ -435,6 +435,7 @@ const handleBack = () => {
 }
 
 :deep(.p-inputtext:focus),
+:deep(.p-inputtext:enabled:focus),
 :deep(.p-inputnumber-input:focus) {
   border-bottom-color: #2563eb;
   box-shadow: none;
@@ -446,6 +447,23 @@ const handleBack = () => {
 
 :deep(.p-button-text:hover) {
   color: #2563eb;
+}
+
+:deep(.p-step-active .p-step-number) {
+  color: #2563eb !important;
+}
+
+:deep(button[type="submit"]) {
+  background-color: #2563eb;
+}
+
+:deep(.p-step:has(~ .p-step-active) .p-stepper-separator) {
+  background-color: #2563eb;
+}
+
+:deep(.p-radiobutton-checked .p-radiobutton-box) {
+  background-color: #2563eb !important;
+  border-color: #2563eb;
 }
 
 .title-popup {

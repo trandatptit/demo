@@ -439,4 +439,14 @@ const submitSurvey = () => {
 .col-span-12 {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+:deep(.p-button) {
+  background-color: #2563eb;
+}
+
+:deep(.p-radiobutton-checked .p-radiobutton-box),
+:deep(.p-checkbox-checked .p-checkbox-box) {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
 </style>

@@ -284,6 +284,10 @@ const handleLogin = async () => {
   animation: shake 0.3s ease;
 }
 
+:deep(.p-button) {
+  background-color: #2563eb;
+}
+
 @keyframes shake {
   0%,
   100% {

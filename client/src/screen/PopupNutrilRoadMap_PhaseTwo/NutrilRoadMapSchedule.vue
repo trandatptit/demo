@@ -252,13 +252,13 @@
                               label="Xem"
                               icon="pi pi-eye"
                               outlined
-                              class="flex-1"
+                              class="eye-button flex-1"
                               @click="viewMeal(meal)"
                             />
                             <Button
                               label="Cập nhật"
                               icon="pi pi-refresh"
-                              class="flex-1"
+                              class="update-button flex-1"
                               @click="updateMeal(meal)"
                             />
                           </div>
@@ -372,7 +372,7 @@
         <Button
           label="Tải về Lộ Trình Tuần"
           icon="pi pi-download"
-          class="bg-blue-600 hover:bg-blue-700 border-0 rounded-lg px-8 py-3 text-lg font-semibold"
+          class="pdf-download-button bg-blue-600 hover:bg-blue-700 border-0 rounded-lg px-8 py-3 text-lg font-semibold"
           @click="downloadWeeklyPlan"
         />
       </div>
@@ -828,6 +828,20 @@ onMounted(() => {
 /* Daily Report Content Styling */
 .daily-report-content {
   animation: fadeIn 0.3s ease-in;
+}
+
+:deep(.p-button.pdf-download-button) {
+  background-color: #2563eb;
+}
+
+:deep(.eye-button) {
+  color: #2563eb;
+  border-color: #aec3f0 !important;
+}
+
+:deep(.update-button) {
+  background-color: #2563eb;
+  border-color: #2563eb !important;
 }
 
 @keyframes fadeIn {

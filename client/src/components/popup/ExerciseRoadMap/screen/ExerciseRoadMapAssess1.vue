@@ -1,5 +1,7 @@
 <template>
-  <section class="exercise-roadmap-assess mx-auto px-4 lg:px-8 py-8 lg:py-12 bg-white dark:bg-gray-900">
+  <section
+    class="exercise-roadmap-assess mx-auto px-4 lg:px-8 py-8 lg:py-12 bg-white dark:bg-gray-900"
+  >
     <!-- Container 12 Grid Main -->
     <div class="grid grid-cols-12 gap-4 lg:gap-6">
       <!-- Header Section - Full Width -->
@@ -31,7 +33,9 @@
       <!-- Title Section - Full Width -->
       <div class="col-span-12 text-center mb-4">
         <i class="pi pi-heart-fill text-5xl text-blue-600 mb-4"></i>
-        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white">
+        <h2
+          class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white"
+        >
           {{ title }}
         </h2>
       </div>
@@ -57,74 +61,88 @@
           <div class="question-group">
             <label class="question-label">{{ questions.disease.label }}</label>
             <div class="checkbox-group">
-              <div 
-                v-for="option in questions.disease.options" 
+              <div
+                v-for="option in questions.disease.options"
                 :key="option.value"
                 class="checkbox-item"
               >
-                <Checkbox 
-                  v-model="formData.diseases" 
+                <Checkbox
+                  v-model="formData.diseases"
                   :value="option.value"
                   :inputId="option.value"
                 />
-                <label :for="option.value" class="checkbox-label">{{ option.label }}</label>
+                <label :for="option.value" class="checkbox-label">{{
+                  option.label
+                }}</label>
               </div>
             </div>
           </div>
 
           <!-- Question 2: Mục đô hiện tại -->
           <div class="question-group">
-            <label class="question-label">{{ questions.currentLevel.label }}</label>
+            <label class="question-label">{{
+              questions.currentLevel.label
+            }}</label>
             <div class="radio-group">
-              <div 
-                v-for="option in questions.currentLevel.options" 
+              <div
+                v-for="option in questions.currentLevel.options"
                 :key="option.value"
                 class="radio-item"
               >
-                <RadioButton 
-                  v-model="formData.currentLevel" 
+                <RadioButton
+                  v-model="formData.currentLevel"
                   :value="option.value"
                   :inputId="`level-${option.value}`"
                 />
-                <label :for="`level-${option.value}`" class="radio-label">{{ option.label }}</label>
+                <label :for="`level-${option.value}`" class="radio-label">{{
+                  option.label
+                }}</label>
               </div>
             </div>
           </div>
 
           <!-- Question 3: Điều kiện tập -->
           <div class="question-group">
-            <label class="question-label">{{ questions.trainingCondition.label }}</label>
+            <label class="question-label">{{
+              questions.trainingCondition.label
+            }}</label>
             <div class="radio-group">
-              <div 
-                v-for="option in questions.trainingCondition.options" 
+              <div
+                v-for="option in questions.trainingCondition.options"
                 :key="option.value"
                 class="radio-item"
               >
-                <RadioButton 
-                  v-model="formData.trainingCondition" 
+                <RadioButton
+                  v-model="formData.trainingCondition"
                   :value="option.value"
                   :inputId="`condition-${option.value}`"
                 />
-                <label :for="`condition-${option.value}`" class="radio-label">{{ option.label }}</label>
+                <label :for="`condition-${option.value}`" class="radio-label">{{
+                  option.label
+                }}</label>
               </div>
             </div>
           </div>
 
           <!-- Question 4: Thời gian tập -->
           <div class="question-group">
-            <label class="question-label">{{ questions.trainingTime.label }}</label>
+            <label class="question-label">{{
+              questions.trainingTime.label
+            }}</label>
             <div class="radio-group">
-              <div 
-                v-for="option in questions.trainingTime.options" 
+              <div
+                v-for="option in questions.trainingTime.options"
                 :key="option.value"
                 class="radio-item"
               >
-                <RadioButton 
-                  v-model="formData.trainingTime" 
+                <RadioButton
+                  v-model="formData.trainingTime"
                   :value="option.value"
                   :inputId="`time-${option.value}`"
                 />
-                <label :for="`time-${option.value}`" class="radio-label">{{ option.label }}</label>
+                <label :for="`time-${option.value}`" class="radio-label">{{
+                  option.label
+                }}</label>
               </div>
             </div>
           </div>
@@ -133,15 +151,16 @@
 
       <!-- Submit Button Section - Full Width -->
       <div class="col-span-12 mt-6">
-        <Button 
-          :label="submitButtonLabel" 
-          class="submit-btn w-full"
+        <Button
+          :label="submitButtonLabel"
+          class="setp1-button submit-btn w-full"
           :disabled="!isFormValid"
           @click="handleSubmit"
           :pt="{
-            root: { 
-              class: 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-700 dark:to-blue-800 border-0 py-4 text-base md:text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed'
-            }
+            root: {
+              class:
+                'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-700 dark:to-blue-800 border-0 py-4 text-base md:text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed',
+            },
           }"
         />
       </div>
@@ -150,93 +169,95 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import Button from 'primevue/button';
-import Checkbox from 'primevue/checkbox';
-import RadioButton from 'primevue/radiobutton';
+import { ref, computed } from "vue";
+import Button from "primevue/button";
+import Checkbox from "primevue/checkbox";
+import RadioButton from "primevue/radiobutton";
 
 const props = defineProps({
   title: {
     type: String,
-    default: 'Phác Đồ Luyện Tập Đột Phá'
+    default: "Phác Đồ Luyện Tập Đột Phá",
   },
   bmiValue: {
     type: [Number, String],
-    default: 19.5
+    default: 19.5,
   },
   bmiStatus: {
     type: String,
-    default: 'Bình thường'
+    default: "Bình thường",
   },
   surveyTitle: {
     type: String,
-    default: 'Khảo Sát Luyện Tập (Bước 1/2)'
+    default: "Khảo Sát Luyện Tập (Bước 1/2)",
   },
   submitButtonLabel: {
     type: String,
-    default: 'Tiếp Theo'
+    default: "Tiếp Theo",
   },
   questions: {
     type: Object,
     default: () => ({
       disease: {
-        label: 'Bệnh lý (nếu có)',
+        label: "Bệnh lý (nếu có)",
         options: [
-          { value: 'tim-mach', label: 'Tim mạch' },
-          { value: 'xuong-khop', label: 'Xương khớp' },
-          { value: 'cap-tinh', label: 'Cấp tính' }
-        ]
+          { value: "tim-mach", label: "Tim mạch" },
+          { value: "xuong-khop", label: "Xương khớp" },
+          { value: "cap-tinh", label: "Cấp tính" },
+        ],
       },
       currentLevel: {
-        label: 'Mức độ hiện tại',
+        label: "Mức độ hiện tại",
         options: [
-          { value: 'moi-bat-dau', label: 'Mới bắt đầu' },
-          { value: 'trung-binh', label: 'Trung bình' },
-          { value: 'nang-cao', label: 'Nâng cao' }
-        ]
+          { value: "moi-bat-dau", label: "Mới bắt đầu" },
+          { value: "trung-binh", label: "Trung bình" },
+          { value: "nang-cao", label: "Nâng cao" },
+        ],
       },
       trainingCondition: {
-        label: 'Điều kiện tập',
+        label: "Điều kiện tập",
         options: [
-          { value: 'tai-nha', label: 'Tại nhà' },
-          { value: 'phong-gym', label: 'Phòng gym' },
-          { value: 'ngoai-troi', label: 'Ngoài trời' }
-        ]
+          { value: "tai-nha", label: "Tại nhà" },
+          { value: "phong-gym", label: "Phòng gym" },
+          { value: "ngoai-troi", label: "Ngoài trời" },
+        ],
       },
       trainingTime: {
-        label: 'Thời gian có thể tập mỗi ngày',
+        label: "Thời gian có thể tập mỗi ngày",
         options: [
-          { value: '15', label: '15 phút' },
-          { value: '30', label: '30 phút' },
-          { value: '45', label: '45 phút' },
-          { value: '60', label: '60 phút' }
-        ]
-      }
-    })
-  }
+          { value: "15", label: "15 phút" },
+          { value: "30", label: "30 phút" },
+          { value: "45", label: "45 phút" },
+          { value: "60", label: "60 phút" },
+        ],
+      },
+    }),
+  },
 });
 
-const emit = defineEmits(['back', 'close', 'submit']);
+const emit = defineEmits(["back", "close", "submit"]);
 
 // Form data
 const formData = ref({
   diseases: [],
-  currentLevel: '',
-  trainingCondition: '',
-  trainingTime: ''
+  currentLevel: "",
+  trainingCondition: "",
+  trainingTime: "",
 });
 
 // Validate form
 const isFormValid = computed(() => {
-  return formData.value.currentLevel !== '' &&
-         formData.value.trainingCondition !== '' &&
-         formData.value.trainingTime !== '';
+  return (
+    formData.value.currentLevel !== "" &&
+    formData.value.trainingCondition !== "" &&
+    formData.value.trainingTime !== ""
+  );
 });
 
 // Handle submit
 const handleSubmit = () => {
   if (isFormValid.value) {
-    emit('submit', formData.value);
+    emit("submit", formData.value);
   }
 };
 </script>
@@ -449,47 +470,47 @@ const handleSubmit = () => {
     background: linear-gradient(135deg, #1e3a8a 0%, #1e293b 100%);
     border-color: #3b82f6;
   }
-  
+
   .bmi-label,
   .bmi-status {
     color: #d1d5db;
   }
-  
+
   .bmi-value {
     color: #93c5fd;
   }
-  
+
   .survey-title {
     background: #1f2937;
     color: #e5e7eb;
     border-color: #374151;
   }
-  
+
   .form-container {
     background: #1f2937;
     border-color: #374151;
   }
-  
+
   .question-label {
     color: #e5e7eb;
   }
-  
+
   .checkbox-item,
   .radio-item {
     background: #374151;
     border-color: #4b5563;
   }
-  
+
   .checkbox-item:hover,
   .radio-item:hover {
     background: #4b5563;
   }
-  
+
   .checkbox-label,
   .radio-label {
     color: #d1d5db;
   }
-  
+
   :deep(.p-checkbox .p-checkbox-box),
   :deep(.p-radiobutton .p-radiobutton-box) {
     background: #374151;
@@ -503,7 +524,7 @@ const handleSubmit = () => {
   .radio-group {
     flex-direction: column;
   }
-  
+
   .checkbox-item,
   .radio-item {
     width: 100%;
@@ -522,7 +543,7 @@ const handleSubmit = () => {
 }
 
 .submit-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -537,5 +558,9 @@ const handleSubmit = () => {
 .submit-btn:hover::before {
   width: 300px;
   height: 300px;
+}
+
+:deep(.setp1-button) {
+  background-color: #2563eb;
 }
 </style>
