@@ -39,7 +39,7 @@
 <script setup>
 import { ref } from "vue";
 import Button from "primevue/button";
-import ResultWeekPopup from "@/components/popup/ResultWeekPopup/ResultWeekPopup.vue";
+import ResultWeekPopup from "@/components/Popup/ResultWeekPopup/ResultWeekPopup.vue";
 
 const showResultWeek = ref(false);
 

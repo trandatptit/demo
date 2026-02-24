@@ -217,7 +217,7 @@ import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
 import { useUserInfoStore } from "@/stores/userInfo";
 import findHeightGen from "@/utilities/findHeightGen/findHeightGen.js";
-import PaymentQRPopup from "@/components/popup/PaymentQRPopup/PaymentQRPopup.vue";
+import PaymentQRPopup from "@/components/Popup/PaymentQRPopup/PaymentQRPopup.vue";
 import randomElement from "@/utilities/randomElement/randomeElement.js";
 import { adviceAIMessages, inspirationMessages } from "@/config/content.js";
 import formatStr from "@/utilities/formatString/formatString.js";
