@@ -73,7 +73,7 @@
 import { ref, watch } from "vue";
 import Dialog from "primevue/dialog";
 import NutrilRoadMapOptimal from "./screen/NutrilRoadMapOptimal.vue";
-import NutrilRoadMapAnalyze from "@/components/Popup/NutrilRoadMap/screen/NutrilRoadMapAnalyze.vue";
+import NutrilRoadMapAnalyze from "@/components/Popup/NutrilRoadMap/screen/NutrilRoadmapAnalyze.vue";
 import NutrilRoadMapSurvey from "@/components/Popup/NutrilRoadMap/screen/NutrilRoadMapSurvey.vue";
 import NutrilRoadMapSchedule from "@/screen/PopupNutrilRoadMap_PhaseTwo/NutrilRoadMapSchedule.vue";
 import NutrilRoadMapOptimalPropose from "./screen/NutrilRoadMapOptimalPropose.vue";
