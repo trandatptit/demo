@@ -1,5 +1,7 @@
 <template>
-  <section class="exercise-roadmap-assess mx-auto px-4 lg:px-8 py-8 lg:py-12 bg-white dark:bg-gray-900">
+  <section
+    class="exercise-roadmap-assess mx-auto px-4 lg:px-8 py-8 lg:py-12 bg-white dark:bg-gray-900"
+  >
     <!-- Container 12 Grid Main -->
     <div class="grid grid-cols-12 gap-4 lg:gap-6">
       <!-- Header Section - Full Width -->
@@ -31,7 +33,9 @@
       <!-- Title Section - Full Width -->
       <div class="col-span-12 text-center mb-4">
         <i class="pi pi-heart-fill text-5xl text-blue-600 mb-4"></i>
-        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white">
+        <h2
+          class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white"
+        >
           {{ title }}
         </h2>
       </div>
@@ -60,8 +64,8 @@
               {{ questionLabel }}
             </label>
             <div class="exercise-options">
-              <div 
-                v-for="option in exerciseOptions" 
+              <div
+                v-for="option in exerciseOptions"
                 :key="option.value"
                 class="exercise-option-item"
               >
@@ -69,8 +73,8 @@
                   <i :class="option.icon" class="exercise-icon"></i>
                   <span class="exercise-label">{{ option.label }}</span>
                 </div>
-                <Checkbox 
-                  v-model="selectedExercises" 
+                <Checkbox
+                  v-model="selectedExercises"
                   :value="option.value"
                   :inputId="`exercise-${option.value}`"
                   class="exercise-checkbox"
@@ -83,15 +87,16 @@
 
       <!-- Submit Button Section - Full Width -->
       <div class="col-span-12 mt-6">
-        <Button 
-          :label="submitButtonLabel" 
-          class="submit-btn w-full"
+        <Button
+          :label="submitButtonLabel"
+          class="setp2-button submit-btn w-full"
           :disabled="!isFormValid"
           @click="handleSubmit"
           :pt="{
-            root: { 
-              class: 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-700 dark:to-blue-800 border-0 py-4 text-base md:text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed'
-            }
+            root: {
+              class:
+                'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-700 dark:to-blue-800 border-0 py-4 text-base md:text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed',
+            },
           }"
         />
       </div>
@@ -100,58 +105,58 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import Button from 'primevue/button';
-import Checkbox from 'primevue/checkbox';
+import { ref, computed } from "vue";
+import Button from "primevue/button";
+import Checkbox from "primevue/checkbox";
 
 const props = defineProps({
   title: {
     type: String,
-    default: 'Phác Đồ Luyện Tập Đột Phá'
+    default: "Phác Đồ Luyện Tập Đột Phá",
   },
   bmiValue: {
     type: [Number, String],
-    default: 19.5
+    default: 19.5,
   },
   bmiStatus: {
     type: String,
-    default: 'Bình thường'
+    default: "Bình thường",
   },
   surveyTitle: {
     type: String,
-    default: 'Sở Thích Luyện Tập (Bước 2/2)'
+    default: "Sở Thích Luyện Tập (Bước 2/2)",
   },
   questionLabel: {
     type: String,
-    default: 'Các loại hình bài tập bạn yêu thích?'
+    default: "Các loại hình bài tập bạn yêu thích?",
   },
   submitButtonLabel: {
     type: String,
-    default: 'Xem Demo Phác Đồ'
+    default: "Xem Demo Phác Đồ",
   },
   exerciseOptions: {
     type: Array,
     default: () => [
-      { 
-        value: 'tap-ta', 
-        label: 'Tập tạ/Sức mạnh',
-        icon: 'pi pi-box'
+      {
+        value: "tap-ta",
+        label: "Tập tạ/Sức mạnh",
+        icon: "pi pi-box",
       },
-      { 
-        value: 'cardio', 
-        label: 'Cardio/Sức bền',
-        icon: 'pi pi-bolt'
+      {
+        value: "cardio",
+        label: "Cardio/Sức bền",
+        icon: "pi pi-bolt",
       },
-      { 
-        value: 'yoga', 
-        label: 'Yoga/Dẻo dai',
-        icon: 'pi pi-heart'
-      }
-    ]
-  }
+      {
+        value: "yoga",
+        label: "Yoga/Dẻo dai",
+        icon: "pi pi-heart",
+      },
+    ],
+  },
 });
 
-const emit = defineEmits(['back', 'close', 'submit']);
+const emit = defineEmits(["back", "close", "submit"]);
 
 // Form data
 const selectedExercises = ref([]);
@@ -164,8 +169,8 @@ const isFormValid = computed(() => {
 // Handle submit
 const handleSubmit = () => {
   if (isFormValid.value) {
-    emit('submit', {
-      exercises: selectedExercises.value
+    emit("submit", {
+      exercises: selectedExercises.value,
     });
   }
 };
@@ -335,48 +340,48 @@ const handleSubmit = () => {
     background: linear-gradient(135deg, #1e3a8a 0%, #1e293b 100%);
     border-color: #3b82f6;
   }
-  
+
   .bmi-label,
   .bmi-status {
     color: #d1d5db;
   }
-  
+
   .bmi-value {
     color: #93c5fd;
   }
-  
+
   .survey-title {
     background: #1f2937;
     color: #e5e7eb;
     border-color: #374151;
   }
-  
+
   .form-container {
     background: #1f2937;
     border-color: #374151;
   }
-  
+
   .question-label {
     color: #e5e7eb;
   }
-  
+
   .exercise-option-item {
     background: #374151;
     border-color: #4b5563;
   }
-  
+
   .exercise-option-item:hover {
     background: #4b5563;
   }
-  
+
   .exercise-icon {
     color: #9ca3af;
   }
-  
+
   .exercise-label {
     color: #d1d5db;
   }
-  
+
   :deep(.p-checkbox .p-checkbox-box) {
     background: #374151;
     border-color: #4b5563;
@@ -388,11 +393,11 @@ const handleSubmit = () => {
   .exercise-option-content {
     gap: 12px;
   }
-  
+
   .exercise-icon {
     font-size: 20px;
   }
-  
+
   .exercise-label {
     font-size: 14px;
   }
@@ -410,7 +415,7 @@ const handleSubmit = () => {
 }
 
 .submit-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -425,5 +430,9 @@ const handleSubmit = () => {
 .submit-btn:hover::before {
   width: 300px;
   height: 300px;
+}
+
+:deep(.setp2-button) {
+  background-color: #2563eb;
 }
 </style>

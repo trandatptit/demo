@@ -342,6 +342,10 @@ const analyzeAndPredict = () => {
   animation: gradient-shift 3s ease infinite;
 }
 
+:deep(.p-button) {
+  background-color: #2563eb;
+}
+
 @keyframes gradient-shift {
   0%,
   100% {

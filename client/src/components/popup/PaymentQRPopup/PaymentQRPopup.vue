@@ -164,4 +164,8 @@ watch(visible, (newVal) => {
 .payment-qr-popup {
   border-radius: 1rem;
 }
+
+:deep(.p-button) {
+  background-color: #2563eb;
+}
 </style>
