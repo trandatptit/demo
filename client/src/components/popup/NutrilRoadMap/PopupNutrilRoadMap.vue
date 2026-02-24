@@ -77,7 +77,7 @@ import NutrilRoadMapAnalyze from "@/components/Popup/NutrilRoadMap/screen/Nutril
 import NutrilRoadMapSurvey from "@/components/Popup/NutrilRoadMap/screen/NutrilRoadMapSurvey.vue";
 import NutrilRoadMapSchedule from "@/screen/PopupNutrilRoadMap_PhaseTwo/NutrilRoadMapSchedule.vue";
 import NutrilRoadMapOptimalPropose from "./screen/NutrilRoadMapOptimalPropose.vue";
-import PaymentQRPopup from "@/components/Popup/PaymentQRPopup/PaymentQRPopup.vue";
+import PaymentQRPopup from "@/components/popup/PaymentQRPopup/PaymentQRPopup.vue";
 
 const props = defineProps({
   modelValue: {
