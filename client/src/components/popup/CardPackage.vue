@@ -295,7 +295,7 @@ const handleClick = () => {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-:deep(.p-button .p-button-primary) {
+:deep(.primary-button) {
   background-color: #2563eb;
 }
 </style>
