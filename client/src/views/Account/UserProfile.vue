@@ -1,14 +1,16 @@
 <template>
-  <div class="min-h-screen bg-linear-to-br from-gray-50 to-gray-100">
+  <div class="user-profile-page">
     <Toast />
 
     <!-- Header -->
-    <div class="bg-white shadow-md">
+    <div class="page-header">
       <div class="container mx-auto px-4 lg:px-8 py-6">
         <div class="flex items-center justify-between">
           <div>
-            <h1 class="text-3xl font-bold text-blue-900">Hồ Sơ Của Tôi</h1>
-            <p class="text-gray-600 mt-1">
+            <div class="header-accent"></div>
+            <span class="header-badge"> <i class="pi pi-user"></i> Hồ Sơ </span>
+            <h1 class="header-title">Hồ Sơ Của Tôi</h1>
+            <p class="header-subtitle">
               Quản lý thông tin hồ sơ để bảo mật tài khoản
             </p>
           </div>
@@ -18,7 +20,7 @@
 
     <!-- Main Content -->
     <div class="container mx-auto px-4 lg:px-8 py-8">
-      <Card class="shadow-lg">
+      <Card class="profile-card">
         <template #content>
           <div class="space-y-6">
             <!-- Tên đăng nhập (Read-only) -->
@@ -186,7 +188,7 @@
                   label="Lưu"
                   icon="pi pi-save"
                   :loading="isSubmitting"
-                  class="bg-blue-600 hover:bg-blue-700 text-white border-0 px-8"
+                  class="save-btn"
                   @click="handleSubmit"
                 />
               </div>
@@ -331,75 +333,238 @@ onMounted(() => {
 </script>
 
 <style scoped>
-:deep(.p-card) {
-  border-radius: 12px;
+/* ─── Design Tokens ─── */
+.user-profile-page {
+  --primary: #2563eb;
+  --primary-light: #3b82f6;
+  --primary-dark: #1d4ed8;
+  --primary-bg: #eff6ff;
+  --primary-bg-deep: #dbeafe;
+  --primary-ring: rgba(37, 99, 235, 0.15);
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
+  --radius: 12px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--surface-alt) 0%, #eef2ff 100%);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
 }
 
-:deep(.p-card .p-card-content) {
+/* ─── Page Header ─── */
+.page-header {
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-accent {
+  width: 48px;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  margin-bottom: 12px;
+}
+
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: var(--primary-bg);
+  border: 1px solid var(--primary-bg-deep);
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+
+.header-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 4px;
+  line-height: 1.25;
+}
+
+.header-subtitle {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ─── Profile Card ─── */
+:deep(.profile-card.p-card) {
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  background: var(--surface);
+  position: relative;
+  overflow: hidden;
+}
+
+:deep(.profile-card.p-card)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--primary),
+    var(--primary-light),
+    #818cf8
+  );
+}
+
+:deep(.profile-card .p-card-content) {
   padding: 2rem;
 }
 
+/* ─── Form Inputs ─── */
 :deep(.p-inputtext),
 :deep(.p-datepicker) {
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-family: inherit;
+  transition: all 0.2s ease;
 }
 
 :deep(.p-inputtext:focus),
 :deep(.p-datepicker:focus-within) {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px var(--primary-ring);
 }
 
 :deep(.p-inputtext:disabled),
 :deep(.p-inputtext[readonly]) {
-  background-color: #f3f4f6;
-  color: #6b7280;
+  background-color: var(--surface-alt);
+  color: var(--text-muted);
   cursor: not-allowed;
 }
 
-:deep(.p-radiobutton) {
-  border-color: #d1d5db;
+/* ─── Radio Button ─── */
+:deep(.p-radiobutton .p-radiobutton-box) {
+  border-color: var(--border-hover);
+  transition: all 0.2s ease;
 }
 
-:deep(.p-radiobutton.p-highlight) {
-  border-color: #ef4444;
-  background-color: #ef4444;
+:deep(.p-radiobutton .p-radiobutton-box:hover) {
+  border-color: var(--primary-light);
 }
 
-:deep(.p-radiobutton:not(.p-disabled):not(.p-highlight):hover) {
-  border-color: #ef4444;
+:deep(.p-radiobutton.p-highlight .p-radiobutton-box) {
+  border-color: var(--primary) !important;
+  background: var(--primary) !important;
+  box-shadow: 0 0 0 3px var(--primary-ring);
 }
 
 :deep(.p-datepicker-input-icon-container) {
   cursor: pointer;
 }
 
-:deep(.p-button) {
-  font-weight: 600;
-  padding: 0.625rem 1.5rem;
-  border-radius: 6px;
-  transition: all 0.2s;
+/* ─── Save Button ─── */
+:deep(.save-btn.p-button) {
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--primary-light) 100%
+  );
+  border: none;
+  padding: 12px 28px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  transition: all 0.25s ease;
+  letter-spacing: 0.3px;
 }
 
-:deep(.p-button:hover) {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+:deep(.save-btn.p-button:not(:disabled):hover) {
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark) 0%,
+    var(--primary) 100%
+  );
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+  transform: translateY(-2px);
 }
 
-:deep(.p-button:active) {
+:deep(.save-btn.p-button:active) {
   transform: translateY(0);
 }
 
-/* Custom styles for masked fields */
-.bg-gray-100 {
-  background-color: #f3f4f6;
+/* ─── Animations ─── */
+.page-header,
+.profile-card {
+  animation: fadeInUp 0.4s ease-out both;
 }
 
-/* Responsive adjustments */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Dark Mode ─── */
+@media (prefers-color-scheme: dark) {
+  .user-profile-page {
+    --surface: #1e293b;
+    --surface-alt: #0f172a;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted: #64748b;
+    --border: #334155;
+    --border-hover: #475569;
+    --primary-bg: rgba(37, 99, 235, 0.12);
+    --primary-bg-deep: rgba(37, 99, 235, 0.2);
+  }
+
+  .page-header {
+    background: #1e293b;
+    border-bottom-color: #334155;
+  }
+
+  .header-badge {
+    color: var(--primary-light);
+    background: rgba(37, 99, 235, 0.15);
+    border-color: rgba(37, 99, 235, 0.25);
+  }
+
+  :deep(.p-inputtext),
+  :deep(.p-datepicker) {
+    background: #374151;
+    border-color: #4b5563;
+    color: var(--text-primary);
+  }
+
+  :deep(.p-radiobutton .p-radiobutton-box) {
+    background: #374151;
+    border-color: #4b5563;
+  }
+}
+
+/* ─── Responsive ─── */
 @media (max-width: 768px) {
-  :deep(.p-card .p-card-content) {
+  :deep(.profile-card .p-card-content) {
     padding: 1rem;
   }
 

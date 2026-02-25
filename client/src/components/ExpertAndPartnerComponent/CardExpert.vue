@@ -117,4 +117,8 @@ const handleViewDetail = () => {
 :deep(.p-card-footer) {
   padding: 0 1.5rem 1.5rem 1.5rem;
 }
+
+:deep(.p-button-text:not(:disabled):hover) {
+  color: #2563eb;
+}
 </style>
