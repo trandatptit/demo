@@ -1,35 +1,25 @@
 <template>
-  <section
-    class="nutril-roadmap-survey mx-auto px-4 lg:px-8 py-8 lg:py-12 bg-white dark:bg-gray-900"
-  >
+  <section class="nutril-roadmap-survey">
     <!-- Container 12 Grid Main -->
     <div class="grid grid-cols-12 gap-4 lg:gap-6">
-      <!-- Header Section - Full Width -->
-      <div class="col-span-12 text-center mb-6">
-        <!-- Title -->
-        <h2
-          class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white mb-3"
-        >
-          Lộ Trình Dinh Dưỡng Tối Ưu
-        </h2>
-
-        <!-- Subtitle -->
-        <p
-          class="text-base md:text-lg font-semibold text-gray-700 dark:text-gray-300"
-        >
-          Khảo Sát Dinh Dưỡng Thông Minh
-        </p>
+      <!-- Header Section -->
+      <div class="col-span-12 survey-header">
+        <div class="header-accent"></div>
+        <span class="header-badge">
+          <i class="pi pi-sparkles"></i> AI Nutrition
+        </span>
+        <h2 class="header-title">Lộ Trình Dinh Dưỡng Tối Ưu</h2>
+        <p class="header-subtitle">Khảo Sát Dinh Dưỡng Thông Minh</p>
       </div>
 
       <!-- Survey Form -->
       <div class="col-span-12">
-        <div
-          class="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 md:p-8 border border-gray-200 dark:border-gray-700"
-        >
+        <div class="survey-card">
           <!-- Question 1: Budget -->
           <div class="survey-question mb-8">
             <label class="question-label">
-              1. Mức tài chính hằng tháng cho dinh dưỡng?
+              <span class="question-number">1</span>
+              Mức tài chính hằng tháng cho dinh dưỡng?
             </label>
             <p class="question-hint">
               AI sẽ tối ưu thực đơn dựa trên ngân sách của bạn.
@@ -39,6 +29,7 @@
                 v-for="option in budgetOptions"
                 :key="option.value"
                 class="radio-item"
+                :class="{ 'is-selected': surveyData.budget === option.value }"
                 @click="surveyData.budget = option.value"
               >
                 <RadioButton
@@ -57,13 +48,17 @@
           <!-- Question 2: Calcium Supplement -->
           <div class="survey-question mb-8">
             <label class="question-label">
-              2. Bạn có đang dùng canxi không?
+              <span class="question-number">2</span>
+              Bạn có đang dùng canxi không?
             </label>
             <div class="radio-group">
               <div
                 v-for="option in yesNoOptions"
                 :key="option.value"
                 class="radio-item"
+                :class="{
+                  'is-selected': surveyData.useCalcium === option.value,
+                }"
                 @click="surveyData.useCalcium = option.value"
               >
                 <RadioButton
@@ -81,12 +76,20 @@
 
           <!-- Question 3: Food Preferences -->
           <div class="survey-question mb-8">
-            <label class="question-label"> 3. Sở thích món ăn của bạn? </label>
+            <label class="question-label">
+              <span class="question-number">3</span>
+              Sở thích món ăn của bạn?
+            </label>
             <div class="checkbox-grid">
               <div
                 v-for="food in foodPreferences"
                 :key="food.value"
                 class="checkbox-item"
+                :class="{
+                  'is-selected': surveyData.foodPreferences.includes(
+                    food.value
+                  ),
+                }"
               >
                 <Checkbox
                   v-model="surveyData.foodPreferences"
@@ -104,12 +107,18 @@
 
           <!-- Question 4: Allergies -->
           <div class="survey-question mb-8">
-            <label class="question-label"> 4. Bạn có dị ứng với? </label>
+            <label class="question-label">
+              <span class="question-number">4</span>
+              Bạn có dị ứng với?
+            </label>
             <div class="checkbox-grid">
               <div
                 v-for="allergy in allergyOptions"
                 :key="allergy.value"
                 class="checkbox-item"
+                :class="{
+                  'is-selected': surveyData.allergies.includes(allergy.value),
+                }"
               >
                 <Checkbox
                   v-model="surveyData.allergies"
@@ -128,13 +137,17 @@
           <!-- Question 5: Cooking Frequency -->
           <div class="survey-question mb-6">
             <label class="question-label">
-              5. Bạn có thường nấu ăn không?
+              <span class="question-number">5</span>
+              Bạn có thường nấu ăn không?
             </label>
             <div class="radio-group">
               <div
                 v-for="option in cookingFrequencyOptions"
                 :key="option.value"
                 class="radio-item"
+                :class="{
+                  'is-selected': surveyData.cookingFrequency === option.value,
+                }"
                 @click="surveyData.cookingFrequency = option.value"
               >
                 <RadioButton
@@ -152,21 +165,15 @@
         </div>
       </div>
 
-      <!-- Submit Button Section - Full Width -->
+      <!-- Submit Button Section -->
       <div class="col-span-12 mt-4">
         <Button
           @click="submitSurvey"
           label="Xem Gợi Ý Từ AI"
           icon="pi pi-arrow-right"
           iconPos="right"
-          class="w-full"
+          class="w-full submit-btn"
           :disabled="!isFormValid"
-          :pt="{
-            root: {
-              class:
-                'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-700 dark:to-blue-800 border-0 py-4 text-base md:text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed',
-            },
-          }"
         />
       </div>
     </div>
@@ -238,21 +245,127 @@ const submitSurvey = () => {
 </script>
 
 <style scoped>
-/* Base Section Styles */
+/* ─── Design Tokens ─── */
 .nutril-roadmap-survey {
+  --primary: #2563eb;
+  --primary-light: #3b82f6;
+  --primary-dark: #1d4ed8;
+  --primary-bg: #eff6ff;
+  --primary-bg-deep: #dbeafe;
+  --primary-ring: rgba(37, 99, 235, 0.15);
+  --primary-ring-strong: rgba(37, 99, 235, 0.25);
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
+  --radius: 12px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-focus: 0 0 0 3px var(--primary-ring);
+
   max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
   border-radius: 1.5rem;
 }
 
-/* Survey Question Styles */
+/* ─── Header ─── */
+.survey-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.header-accent {
+  width: 64px;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  margin: 0 auto 1rem;
+}
+
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: var(--primary-bg);
+  border: 1px solid var(--primary-bg-deep);
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.header-title {
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 6px;
+  line-height: 1.25;
+}
+
+.header-subtitle {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ─── Survey Card ─── */
+.survey-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.survey-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--primary),
+    var(--primary-light),
+    #818cf8
+  );
+}
+
+/* ─── Question ─── */
 .survey-question {
-  animation: fadeInUp 0.5s ease-out;
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+.survey-question:nth-child(2) {
+  animation-delay: 0.05s;
+}
+.survey-question:nth-child(3) {
+  animation-delay: 0.1s;
+}
+.survey-question:nth-child(4) {
+  animation-delay: 0.15s;
+}
+.survey-question:nth-child(5) {
+  animation-delay: 0.2s;
 }
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(14px);
   }
   to {
     opacity: 1;
@@ -263,159 +376,198 @@ const submitSurvey = () => {
 .question-label {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-size: 15px;
-  font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 8px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.question-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--primary);
+  border-radius: 8px;
+  flex-shrink: 0;
 }
 
 .question-hint {
   font-size: 13px;
-  color: #6b7280;
-  margin-bottom: 16px;
+  color: var(--text-muted);
+  margin: 0 0 14px 36px;
   font-style: italic;
 }
 
-/* Radio Group Styles */
+/* ─── Radio Group ─── */
 .radio-group {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
-.radio-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  background: white;
-  border: 2px solid #e5e7eb;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.radio-item:hover {
-  border-color: #3b82f6;
-  background: #eff6ff;
-}
-
-.radio-item:has(:checked) {
-  border-color: #3b82f6;
-  background: #eff6ff;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.radio-label {
-  flex: 1;
-  font-size: 14px;
-  font-weight: 500;
-  color: #374151;
-  cursor: pointer;
-  user-select: none;
-}
-
-/* Checkbox Grid Styles */
-.checkbox-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 12px;
-}
-
+.radio-item,
 .checkbox-item {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 12px 16px;
-  background: white;
-  border: 2px solid #e5e7eb;
-  border-radius: 10px;
+  background: var(--surface-alt);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
+.radio-item:hover,
 .checkbox-item:hover {
-  border-color: #3b82f6;
-  background: #eff6ff;
+  border-color: var(--primary-light);
+  background: var(--primary-bg);
 }
 
-.checkbox-item:has(:checked) {
-  border-color: #3b82f6;
-  background: #eff6ff;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+.radio-item.is-selected,
+.checkbox-item.is-selected {
+  border-color: var(--primary);
+  background: var(--primary-bg);
+  box-shadow: var(--shadow-focus);
 }
 
+.radio-label,
 .checkbox-label {
   flex: 1;
   display: flex;
   align-items: center;
   font-size: 14px;
   font-weight: 500;
-  color: #374151;
+  color: var(--text-secondary);
   cursor: pointer;
   user-select: none;
 }
 
-/* PrimeVue Component Overrides */
-:deep(.p-radiobutton) {
-  width: 20px;
-  height: 20px;
+.radio-item.is-selected .radio-label,
+.checkbox-item.is-selected .checkbox-label {
+  color: var(--primary-dark);
+  font-weight: 600;
 }
 
-:deep(.p-radiobutton .p-radiobutton-box) {
-  width: 20px;
-  height: 20px;
-  border-width: 2px;
+/* ─── Checkbox Grid ─── */
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+/* ─── PrimeVue Overrides (using design tokens) ─── */
+:deep(.p-radiobutton) {
+  --p-radiobutton-width: 20px;
+  --p-radiobutton-height: 20px;
+  --p-radiobutton-border-color: var(--border-hover);
+  --p-radiobutton-hover-border-color: var(--primary-light);
+  --p-radiobutton-checked-background: var(--primary);
+  --p-radiobutton-checked-border-color: var(--primary);
+  --p-radiobutton-checked-hover-background: var(--primary-dark);
+  --p-radiobutton-checked-hover-border-color: var(--primary-dark);
+  --p-radiobutton-focus-ring-color: var(--primary-ring);
+  --p-radiobutton-icon-checked-color: #ffffff;
+  --p-radiobutton-icon-checked-hover-color: #ffffff;
 }
 
 :deep(.p-checkbox) {
-  width: 20px;
-  height: 20px;
+  --p-checkbox-width: 20px;
+  --p-checkbox-height: 20px;
+  --p-checkbox-border-color: var(--border-hover);
+  --p-checkbox-hover-border-color: var(--primary-light);
+  --p-checkbox-checked-background: var(--primary);
+  --p-checkbox-checked-border-color: var(--primary);
+  --p-checkbox-checked-hover-background: var(--primary-dark);
+  --p-checkbox-checked-hover-border-color: var(--primary-dark);
+  --p-checkbox-focus-ring-color: var(--primary-ring);
+  --p-checkbox-icon-checked-color: #ffffff;
 }
 
-:deep(.p-checkbox .p-checkbox-box) {
-  width: 20px;
-  height: 20px;
-  border-width: 2px;
+/* ─── Submit Button ─── */
+:deep(.submit-btn.p-button) {
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--primary-light) 100%
+  );
+  border: none;
+  padding: 14px 24px;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  transition: all 0.25s ease;
+  letter-spacing: 0.3px;
 }
 
-/* Dark mode adjustments */
+:deep(.submit-btn.p-button:not(:disabled):hover) {
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark) 0%,
+    var(--primary) 100%
+  );
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+  transform: translateY(-1px);
+}
+
+:deep(.submit-btn.p-button:not(:disabled):active) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+:deep(.submit-btn.p-button:disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ─── Dark Mode ─── */
 @media (prefers-color-scheme: dark) {
-  .question-label {
-    color: #e5e7eb;
+  .nutril-roadmap-survey {
+    --surface: #1e293b;
+    --surface-alt: #0f172a;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted: #64748b;
+    --border: #334155;
+    --border-hover: #475569;
+    --primary-bg: rgba(37, 99, 235, 0.12);
+    --primary-bg-deep: rgba(37, 99, 235, 0.2);
   }
 
-  .question-hint {
-    color: #9ca3af;
+  .header-badge {
+    color: var(--primary-light);
+    background: rgba(37, 99, 235, 0.15);
+    border-color: rgba(37, 99, 235, 0.25);
   }
 
-  .radio-item,
-  .checkbox-item {
-    background: #1f2937;
-    border-color: #374151;
+  .question-number {
+    box-shadow: 0 0 12px rgba(37, 99, 235, 0.3);
   }
 
-  .radio-item:hover,
-  .checkbox-item:hover {
-    border-color: #3b82f6;
-    background: #1e3a8a;
-  }
-
-  .radio-item:has(:checked),
-  .checkbox-item:has(:checked) {
-    border-color: #3b82f6;
-    background: #1e3a8a;
-  }
-
-  .radio-label,
-  .checkbox-label {
-    color: #d1d5db;
+  .radio-item.is-selected .radio-label,
+  .checkbox-item.is-selected .checkbox-label {
+    color: var(--primary-light);
   }
 }
 
-/* Responsive adjustments */
+/* ─── Responsive ─── */
 @media (max-width: 768px) {
+  .nutril-roadmap-survey {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .survey-card {
+    padding: 1.25rem;
+  }
+
   .checkbox-grid {
     grid-template-columns: 1fr;
   }
@@ -426,27 +578,18 @@ const submitSurvey = () => {
 
   .question-hint {
     font-size: 12px;
+    margin-left: 36px;
   }
 }
 
 @media (min-width: 1024px) {
   .nutril-roadmap-survey {
-    padding: 2rem 2.5rem;
+    padding: 2.5rem 2.5rem;
   }
 }
 
-/* Smooth transitions for grid layout changes */
+/* ─── Smooth transitions ─── */
 .col-span-12 {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-:deep(.p-button) {
-  background-color: #2563eb;
-}
-
-:deep(.p-radiobutton-checked .p-radiobutton-box),
-:deep(.p-checkbox-checked .p-checkbox-box) {
-  background-color: #2563eb;
-  border-color: #2563eb;
 }
 </style>
