@@ -100,7 +100,7 @@
                     </p>
                     <Button
                       label="Chỉ với 30.000đ"
-                      class="bg-blue-800 hover:bg-blue-900 text-white font-bold text-base px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
+                      class="pdf-download-button bg-blue-800 hover:bg-blue-900 text-white font-bold text-base px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
                       @click="unlockFeature"
                     />
                   </div>
@@ -197,7 +197,7 @@
                   label="Tải kết quả PDF"
                   icon="pi pi-download"
                   @click="downloadPDF"
-                  class="bg-blue-800 hover:bg-blue-900 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
+                  class="pdf-download-button bg-blue-800 hover:bg-blue-900 text-white font-semibold px-6 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
                 />
               </div>
             </div>
@@ -747,6 +747,10 @@ const downloadPDF = async () => {
 
 :deep(canvas) {
   position: relative;
+}
+
+:deep(.p-button.pdf-download-button) {
+  background-color: #2563eb;
 }
 
 /* Smooth transitions for grid layout changes */

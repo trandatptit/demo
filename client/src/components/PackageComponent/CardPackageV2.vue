@@ -143,4 +143,8 @@ const handleSelectPackage = () => {
   padding: 0;
   padding-top: 1rem;
 }
+
+:deep(.p-button) {
+  background-color: #2563eb;
+}
 </style>

@@ -691,4 +691,8 @@ select:focus {
     font-size: 16px; /* Prevent zoom on mobile */
   }
 }
+
+:deep(.p-button) {
+  background-color: #2563eb;
+}
 </style>
