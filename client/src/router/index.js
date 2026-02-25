@@ -58,6 +58,14 @@ const routes = [
         ],
     },
     {
+        path: '/purchase',
+        name: 'Purchase',
+        component: () =>
+            import(
+                /* webpackChunkName: "Purchase" */ '../views/Purchase/PurchaseScreen.vue'
+            ),
+    },
+    {
         path: '/height-prediction',
         name: 'HeightPrediction',
         component: () =>
