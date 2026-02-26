@@ -1,21 +1,25 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+  <div class="manager-account-page">
     <Toast />
 
     <!-- Header -->
-    <div class="bg-white shadow-md">
+    <div class="page-header">
       <div class="container mx-auto px-4 lg:px-8 py-6">
         <div class="flex items-center justify-between">
           <div>
-            <h1 class="text-3xl font-bold text-blue-900">Quản Lý Tài Khoản</h1>
-            <p class="text-gray-600 mt-1">
+            <div class="header-accent"></div>
+            <span class="header-badge">
+              <i class="pi pi-users"></i> Quản Lý
+            </span>
+            <h1 class="header-title">Quản Lý Tài Khoản</h1>
+            <p class="header-subtitle">
               Quản lý toàn bộ tài khoản người dùng trong hệ thống
             </p>
           </div>
           <Button
             label="Thêm Tài Khoản"
             icon="pi pi-plus"
-            class="bg-blue-600 hover:bg-blue-700 text-white border-0"
+            class="add-btn"
             @click="openCreateDialog"
           />
         </div>
@@ -25,7 +29,7 @@
     <!-- Main Content -->
     <div class="container mx-auto px-4 lg:px-8 py-8">
       <!-- Filter & Search Bar -->
-      <Card class="mb-6 shadow-lg">
+      <Card class="filter-card mb-6">
         <template #content>
           <div class="grid grid-cols-12 gap-4 lg:gap-6">
             <!-- Search -->
@@ -83,7 +87,7 @@
       </Card>
 
       <!-- Data Table -->
-      <Card class="shadow-lg">
+      <Card class="table-card">
         <template #content>
           <DataTable
             v-model:selection="selectedUsers"
@@ -266,16 +270,14 @@
       :modal="true"
       :style="{ width: '600px', overflow: 'hidden' }"
       :closable="true"
-      class="p-fluid dialog_viewuser"
+      class="p-fluid dialog-styled"
     >
-      <div class="space-y-4 py-4">
-        <!-- Full Name -->
-        <div>
-          <label
-            for="name"
-            class="block text-sm font-semibold text-gray-700 mb-2"
-          >
-            Tên đăng nhập <span class="text-red-500">*</span>
+      <div class="dialog-form-body">
+        <!-- Username -->
+        <div class="form-group">
+          <label for="username" class="form-label">
+            <i class="pi pi-user form-label-icon"></i>
+            Tên đăng nhập <span class="required-mark">*</span>
           </label>
           <InputText
             id="username"
@@ -289,12 +291,10 @@
         </div>
 
         <!-- Full Name -->
-        <div>
-          <label
-            for="name"
-            class="block text-sm font-semibold text-gray-700 mb-2"
-          >
-            Họ và Tên <span class="text-red-500">*</span>
+        <div class="form-group">
+          <label for="name" class="form-label">
+            <i class="pi pi-id-card form-label-icon"></i>
+            Họ và Tên <span class="required-mark">*</span>
           </label>
           <InputText
             id="name"
@@ -308,12 +308,10 @@
         </div>
 
         <!-- Email -->
-        <div>
-          <label
-            for="email"
-            class="block text-sm font-semibold text-gray-700 mb-2"
-          >
-            Email <span class="text-red-500">*</span>
+        <div class="form-group">
+          <label for="email" class="form-label">
+            <i class="pi pi-envelope form-label-icon"></i>
+            Email <span class="required-mark">*</span>
           </label>
           <InputText
             id="email"
@@ -328,11 +326,9 @@
         </div>
 
         <!-- Phone -->
-        <div>
-          <label
-            for="phone"
-            class="block text-sm font-semibold text-gray-700 mb-2"
-          >
+        <div class="form-group">
+          <label for="phone" class="form-label">
+            <i class="pi pi-phone form-label-icon"></i>
             Số Điện Thoại
           </label>
           <InputText
@@ -343,12 +339,10 @@
         </div>
 
         <!-- Password (Only for Create) -->
-        <div v-if="dialogMode === 'create'">
-          <label
-            for="password"
-            class="block text-sm font-semibold text-gray-700 mb-2"
-          >
-            Mật Khẩu <span class="text-red-500">*</span>
+        <div v-if="dialogMode === 'create'" class="form-group">
+          <label for="password" class="form-label">
+            <i class="pi pi-lock form-label-icon"></i>
+            Mật Khẩu <span class="required-mark">*</span>
           </label>
           <Password
             id="password"
@@ -368,13 +362,13 @@
           label="Hủy"
           icon="pi pi-times"
           text
-          severity="secondary"
+          class="cancel-btn"
           @click="closeDialog"
         />
         <Button
           :label="dialogMode === 'create' ? 'Tạo Mới' : 'Cập Nhật'"
           icon="pi pi-check"
-          class="bg-blue-600 hover:bg-blue-700 text-white border-0"
+          class="save-btn"
           @click="saveUser"
         />
       </template>
@@ -387,10 +381,11 @@
       :modal="true"
       :style="{ width: '500px', overflow: 'hidden' }"
       :closable="true"
-      class="dialog_viewuser"
+      class="dialog-styled"
     >
-      <div v-if="selectedUser" class="space-y-4 py-4">
-        <div class="flex flex-col items-center mb-6">
+      <div v-if="selectedUser" class="dialog-view-body">
+        <!-- Avatar Hero Section -->
+        <div class="view-hero">
           <Avatar
             :label="selectedUser.fullName?.charAt(0)?.toUpperCase()"
             :style="{
@@ -399,42 +394,59 @@
             }"
             shape="circle"
             size="xlarge"
+            class="view-avatar"
           />
-          <h3 class="text-2xl font-bold text-gray-800 mt-4">
+          <h3 class="view-user-name">
             {{ selectedUser.fullName }}
           </h3>
-          <p class="text-gray-600">{{ selectedUser.email }}</p>
+          <p class="view-user-email">{{ selectedUser.email }}</p>
         </div>
 
-        <div class="grid grid-cols-12 gap-4">
+        <!-- Detail Cards -->
+        <div class="grid grid-cols-12 gap-3">
           <div class="col-span-12 lg:col-span-6">
-            <label class="block text-sm font-semibold text-gray-600 mb-1"
-              >ID</label
-            >
-            <p class="text-gray-800">#{{ selectedUser.id }}</p>
+            <div class="detail-card">
+              <i class="pi pi-hashtag detail-card-icon"></i>
+              <div>
+                <span class="detail-card-label">ID</span>
+                <span class="detail-card-value">#{{ selectedUser.id }}</span>
+              </div>
+            </div>
           </div>
           <div class="col-span-12 lg:col-span-6">
-            <label class="block text-sm font-semibold text-gray-600 mb-1"
-              >Số Điện Thoại</label
-            >
-            <p class="text-gray-800">{{ selectedUser.phoneNumber || "N/A" }}</p>
+            <div class="detail-card">
+              <i class="pi pi-phone detail-card-icon"></i>
+              <div>
+                <span class="detail-card-label">Số Điện Thoại</span>
+                <span class="detail-card-value">{{
+                  selectedUser.phoneNumber || "N/A"
+                }}</span>
+              </div>
+            </div>
           </div>
           <div class="col-span-12 lg:col-span-6">
-            <label class="block text-sm font-semibold text-gray-600 mb-1"
-              >Vai Trò</label
-            >
-            <Tag
-              :value="getRoleLabel(selectedUser.role)"
-              :severity="getRoleSeverity(selectedUser.role)"
-            />
+            <div class="detail-card">
+              <i class="pi pi-shield detail-card-icon"></i>
+              <div>
+                <span class="detail-card-label">Vai Trò</span>
+                <Tag
+                  :value="getRoleLabel(selectedUser.role)"
+                  :severity="getRoleSeverity(selectedUser.role)"
+                  class="mt-1"
+                />
+              </div>
+            </div>
           </div>
           <div class="col-span-12 lg:col-span-6">
-            <label class="block text-sm font-semibold text-gray-600 mb-1"
-              >Ngày Tạo</label
-            >
-            <p class="text-gray-800">
-              {{ formatDate(selectedUser.createdAt) }}
-            </p>
+            <div class="detail-card">
+              <i class="pi pi-calendar detail-card-icon"></i>
+              <div>
+                <span class="detail-card-label">Ngày Tạo</span>
+                <span class="detail-card-value">
+                  {{ formatDate(selectedUser.createdAt) }}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -444,6 +456,7 @@
           label="Đóng"
           icon="pi pi-times"
           text
+          class="cancel-btn"
           @click="viewDialog = false"
         />
       </template>
@@ -454,16 +467,18 @@
       v-model:visible="deleteDialog"
       header="Xác Nhận Xóa"
       :modal="true"
-      class="dialog_viewuser"
+      class="dialog-styled dialog-delete"
       :style="{ width: '450px', overflow: 'hidden' }"
     >
-      <div class="flex items-center gap-4">
-        <i class="pi pi-exclamation-triangle text-red-500 text-4xl"></i>
-        <span v-if="selectedUser">
-          Bạn có chắc chắn muốn xóa tài khoản
-          <strong>{{ selectedUser.name }}</strong
-          >? <br />Hành động này không thể hoàn tác.
-        </span>
+      <div class="delete-body">
+        <div class="delete-icon-wrap">
+          <i class="pi pi-exclamation-triangle"></i>
+        </div>
+        <div class="delete-text" v-if="selectedUser">
+          <p>Bạn có chắc chắn muốn xóa tài khoản</p>
+          <p class="delete-user-name">{{ selectedUser.name }}</p>
+          <p class="delete-warning">Hành động này không thể hoàn tác.</p>
+        </div>
       </div>
 
       <template #footer>
@@ -471,12 +486,13 @@
           label="Hủy"
           icon="pi pi-times"
           text
+          class="cancel-btn"
           @click="deleteDialog = false"
         />
         <Button
           label="Xóa"
           icon="pi pi-trash"
-          severity="danger"
+          class="delete-btn"
           @click="deleteUser"
         />
       </template>
@@ -901,59 +917,483 @@ onMounted(() => {
 </script>
 
 <style scoped>
-:deep(.p-datatable .p-datatable-thead > tr > th) {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  color: white;
+/* ─── Design Tokens ─── */
+.manager-account-page {
+  --primary: #2563eb;
+  --primary-light: #3b82f6;
+  --primary-dark: #1d4ed8;
+  --primary-bg: #eff6ff;
+  --primary-bg-deep: #dbeafe;
+  --primary-ring: rgba(37, 99, 235, 0.15);
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
+  --radius: 12px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--surface-alt) 0%, #eef2ff 100%);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+}
+
+/* ─── Page Header ─── */
+.page-header {
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-accent {
+  width: 48px;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  margin-bottom: 12px;
+}
+
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  font-size: 12px;
   font-weight: 600;
-  border: none;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: var(--primary-bg);
+  border: 1px solid var(--primary-bg-deep);
+  border-radius: 999px;
+  margin-bottom: 10px;
 }
 
-.delete_dialog {
+.header-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 4px;
+  line-height: 1.25;
+}
+
+.header-subtitle {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ─── Add / Save Buttons ─── */
+:deep(.add-btn.p-button),
+:deep(.save-btn.p-button) {
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--primary-light) 100%
+  );
+  border: none;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  transition: all 0.25s ease;
+  color: white;
+}
+
+:deep(.add-btn.p-button:hover),
+:deep(.save-btn.p-button:hover) {
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark) 0%,
+    var(--primary) 100%
+  );
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+  transform: translateY(-2px);
+}
+
+/* ─── Cards ─── */
+:deep(.filter-card.p-card),
+:deep(.table-card.p-card) {
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  background: var(--surface);
+  position: relative;
   overflow: hidden;
 }
 
-:deep(.p-datatable .p-datatable-tbody > tr:hover) {
-  background-color: #eff6ff;
-}
-
-.dialog_viewuser {
-  overflow: hidden;
-}
-
-:deep(.p-dialog .p-dialog-header) {
-  border: none;
-}
-
-:deep(.p-card) {
-  border-radius: 12px;
+:deep(.filter-card.p-card)::before,
+:deep(.table-card.p-card)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--primary),
+    var(--primary-light),
+    #818cf8
+  );
 }
 
 :deep(.p-card .p-card-content) {
   padding: 1.5rem;
 }
 
-:deep(.p-dialog .p-dialog-header) {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+/* ─── Data Table ─── */
+:deep(.p-datatable .p-datatable-thead > tr > th) {
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--primary-dark) 100%
+  );
   color: white;
-  border-radius: 12px 12px 0 0;
+  font-weight: 600;
+  border: none;
+  font-size: 0.85rem;
+  letter-spacing: 0.3px;
 }
 
+:deep(.p-datatable .p-datatable-tbody > tr) {
+  transition: background-color 0.2s ease;
+}
+
+:deep(.p-datatable .p-datatable-tbody > tr:hover) {
+  background-color: var(--primary-bg);
+}
+
+:deep(.p-datatable .p-datatable-tbody > tr > td) {
+  border-color: var(--border);
+}
+
+/* ─── Dialogs ─── */
+.dialog-styled {
+  overflow: hidden;
+}
+
+:deep(.p-dialog) {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+:deep(.p-dialog .p-dialog-header) {
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--primary-dark) 100%
+  );
+  color: white;
+  border: none;
+  border-radius: 16px 16px 0 0;
+  padding: 1.25rem 1.5rem;
+}
+
+:deep(.p-dialog .p-dialog-header .p-dialog-header-close) {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+:deep(.p-dialog .p-dialog-header .p-dialog-header-close:hover) {
+  color: white;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+:deep(.p-dialog .p-dialog-content) {
+  padding: 1.5rem;
+}
+
+:deep(.p-dialog .p-dialog-footer) {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+/* ─── Dialog Form Body ─── */
+.dialog-form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 8px 0;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.2px;
+}
+
+.form-label-icon {
+  font-size: 14px;
+  color: var(--primary-light);
+}
+
+.required-mark {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+/* ─── View User Dialog ─── */
+.dialog-view-body {
+  padding: 8px 0;
+}
+
+.view-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px;
+  margin: -8px -8px 20px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-bg) 0%,
+    var(--primary-bg-deep) 100%
+  );
+  border-radius: 12px;
+  border: 1px solid rgba(37, 99, 235, 0.1);
+}
+
+:deep(.view-avatar) {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  border: 3px solid white;
+}
+
+.view-user-name {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-top: 14px;
+  text-align: center;
+}
+
+.view-user-email {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.detail-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.detail-card:hover {
+  background: var(--primary-bg);
+  border-color: var(--primary-bg-deep);
+}
+
+.detail-card-icon {
+  font-size: 18px;
+  color: var(--primary-light);
+  flex-shrink: 0;
+}
+
+.detail-card-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
+.detail-card-value {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 2px;
+}
+
+/* ─── Delete Dialog ─── */
+.delete-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 12px 0;
+  gap: 16px;
+}
+
+.delete-icon-wrap {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fecaca;
+}
+
+.delete-icon-wrap .pi {
+  font-size: 28px;
+  color: #ef4444;
+}
+
+.delete-text {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.delete-user-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 4px 0;
+}
+
+.delete-warning {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ─── Cancel / Delete Buttons ─── */
+:deep(.cancel-btn.p-button) {
+  color: var(--text-secondary) !important;
+  font-weight: 600;
+}
+
+:deep(.cancel-btn.p-button:hover) {
+  color: var(--text-primary) !important;
+  background: var(--surface-alt) !important;
+}
+
+:deep(.delete-btn.p-button) {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+  transition: all 0.25s ease;
+  color: white;
+}
+
+:deep(.delete-btn.p-button:hover) {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.45);
+  transform: translateY(-2px);
+}
+
+/* ─── Tags ─── */
 :deep(.p-tag) {
   font-weight: 600;
   padding: 0.25rem 0.75rem;
+  border-radius: 8px;
 }
 
+/* ─── Form Inputs ─── */
 :deep(.p-inputtext),
 :deep(.p-select),
 :deep(.p-password input) {
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-family: inherit;
+  transition: all 0.2s ease;
 }
 
 :deep(.p-inputtext:focus),
 :deep(.p-select:focus),
 :deep(.p-password input:focus) {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px var(--primary-ring);
+}
+
+/* ─── Animations ─── */
+.page-header,
+.filter-card,
+.table-card {
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+.filter-card {
+  animation-delay: 0.05s;
+}
+
+.table-card {
+  animation-delay: 0.1s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Dark Mode ─── */
+@media (prefers-color-scheme: dark) {
+  .manager-account-page {
+    --surface: #1e293b;
+    --surface-alt: #0f172a;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted: #64748b;
+    --border: #334155;
+    --border-hover: #475569;
+    --primary-bg: rgba(37, 99, 235, 0.12);
+    --primary-bg-deep: rgba(37, 99, 235, 0.2);
+  }
+
+  .page-header {
+    background: #1e293b;
+    border-bottom-color: #334155;
+  }
+
+  .header-badge {
+    color: var(--primary-light);
+    background: rgba(37, 99, 235, 0.15);
+    border-color: rgba(37, 99, 235, 0.25);
+  }
+
+  :deep(.p-inputtext),
+  :deep(.p-select),
+  :deep(.p-password input) {
+    background: #374151;
+    border-color: #4b5563;
+    color: var(--text-primary);
+  }
+
+  :deep(.p-datatable .p-datatable-tbody > tr:hover) {
+    background-color: rgba(37, 99, 235, 0.08);
+  }
+
+  :deep(.p-dialog .p-dialog-content) {
+    background: var(--surface);
+  }
+
+  :deep(.p-dialog .p-dialog-footer) {
+    background: var(--surface);
+    border-top-color: #334155;
+  }
 }
 </style>

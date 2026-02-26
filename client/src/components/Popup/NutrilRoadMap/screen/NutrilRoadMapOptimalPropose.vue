@@ -1,66 +1,55 @@
 <template>
-  <section
-    class="nutril-roadmap-optimal mx-auto px-4 lg:px-8 py-8 lg:py-12 bg-white dark:bg-gray-900"
-  >
+  <section class="nutril-roadmap-optimal">
     <!-- Container 12 Grid Main -->
     <div class="grid grid-cols-12 gap-4 lg:gap-6">
-      <!-- Header Section - Full Width -->
-
-      <!-- Title Section - Full Width -->
-      <div class="col-span-12 text-center mb-2">
-        <h2
-          class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white"
-        >
-          {{ title }}
-        </h2>
-
-        <!-- Subtitle -->
-        <div class="subtitle mt-3">
-          <i class="pi pi-sparkles subtitle-icon"></i>
-          <span>{{ subtitle }}</span>
-        </div>
+      <!-- Header Section -->
+      <div class="col-span-12 survey-header">
+        <div class="header-accent"></div>
+        <span class="header-badge">
+          <i class="pi pi-sparkles"></i> AI Đề Xuất
+        </span>
+        <h2 class="header-title">{{ title }}</h2>
+        <p class="header-subtitle">{{ subtitle }}</p>
       </div>
 
-      <!-- Chart Section - Full Width -->
+      <!-- Chart Section -->
       <div class="col-span-12">
-        <div class="chart-section">
-          <div class="chart-description">
-            <span>Dựa trên phân tích, bạn có thể đạt </span>
-            <strong class="highlight-height">{{ targetHeight }}cm</strong>
-            <span> sau 12 tháng với lộ trình phù hợp.</span>
-          </div>
+        <div class="content-card">
+          <div class="card-inner">
+            <div class="chart-description">
+              <span>Dựa trên phân tích, bạn có thể đạt </span>
+              <strong class="highlight-height">{{ targetHeight }}cm</strong>
+              <span> sau 12 tháng với lộ trình phù hợp.</span>
+            </div>
 
-          <div class="chart-container">
-            <Chart
-              type="line"
-              :data="chartData"
-              :options="chartOptions"
-              class="h-[20rem]"
-            />
+            <div class="chart-container">
+              <Chart
+                type="line"
+                :data="chartData"
+                :options="chartOptions"
+                class="h-[20rem]"
+              />
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Action Section - Full Width -->
+      <!-- Action Section -->
       <div class="col-span-12 mt-4">
-        <div class="action-section">
+        <div class="action-section action-section--cta">
           <div class="action-header">
             <span class="action-title">{{ actionTitle }}</span>
           </div>
 
-          <p class="action-description">{{ actionDescription }}</p>
+          <div class="action-note">
+            <p class="action-description">{{ actionDescription }}</p>
+          </div>
 
           <Button
             :label="actionButtonLabel"
             icon="pi pi-shopping-cart"
             class="action-btn w-full"
             @click="handleAction"
-            :pt="{
-              root: {
-                class:
-                  'bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 dark:from-orange-600 dark:to-red-600 border-0 py-4 text-base md:text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200',
-              },
-            }"
           />
 
           <p class="action-footer">{{ actionFooter }}</p>
@@ -155,15 +144,15 @@ const setChartData = () => {
         label: "Chiều cao dự kiến",
         data: props.monthlyData,
         fill: true,
-        backgroundColor: "rgba(59, 130, 246, 0.1)",
-        borderColor: "#3b82f6",
+        backgroundColor: "rgba(37, 99, 235, 0.08)",
+        borderColor: "#2563eb",
         tension: 0.4,
         pointRadius: 5,
         pointHoverRadius: 7,
-        pointBackgroundColor: "#3b82f6",
+        pointBackgroundColor: "#2563eb",
         pointBorderColor: "#ffffff",
         pointBorderWidth: 2,
-        pointHoverBackgroundColor: "#3b82f6",
+        pointHoverBackgroundColor: "#2563eb",
         pointHoverBorderColor: "#ffffff",
         pointHoverBorderWidth: 3,
       },
@@ -246,73 +235,159 @@ const handleAction = () => {
 </script>
 
 <style scoped>
-/* Base Section Styles */
+/* ─── Design Tokens (matching NutrilRoadMapSchedule) ─── */
 .nutril-roadmap-optimal {
+  --primary: #2563eb;
+  --primary-light: #3b82f6;
+  --primary-dark: #1d4ed8;
+  --primary-bg: #eff6ff;
+  --primary-bg-deep: #dbeafe;
+  --primary-ring: rgba(37, 99, 235, 0.15);
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
+  --radius: 12px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+
   max-width: 1200px;
-  border-radius: 1.5rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
 }
 
-.subtitle {
-  display: flex;
+/* ─── Header ─── */
+.survey-header {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.header-accent {
+  width: 64px;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  margin: 0 auto 1rem;
+}
+
+.header-badge {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 6px;
-  color: #64748b;
-  font-size: 13px;
+  padding: 4px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: var(--primary-bg);
+  border: 1px solid var(--primary-bg-deep);
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.header-title {
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 6px;
+  line-height: 1.25;
+}
+
+.header-subtitle {
+  font-size: 0.95rem;
   font-weight: 500;
+  color: var(--text-secondary);
+  margin: 0;
 }
 
-.subtitle-icon {
-  font-size: 14px;
-  color: #3b82f6;
+/* ─── Content Cards ─── */
+.content-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  position: relative;
 }
 
-.chart-section {
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-  border-radius: 12px;
-  padding: 20px;
-  border: 2px solid #e2e8f0;
-  transition: all 0.3s ease;
+.content-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--primary),
+    var(--primary-light),
+    #818cf8
+  );
+  z-index: 1;
 }
 
-.chart-section:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+.card-inner {
+  padding: 1.5rem;
 }
 
+/* ─── Chart ─── */
 .chart-description {
   text-align: center;
-  font-size: 14px;
-  color: #475569;
-  margin-bottom: 16px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
   line-height: 1.6;
 }
 
 .highlight-height {
-  color: #3b82f6;
-  font-size: 18px;
+  color: var(--primary);
+  font-size: 1.1rem;
   font-weight: 700;
-  text-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
 }
 
 .chart-container {
-  background: white;
+  background: var(--surface-alt);
   border-radius: 10px;
-  padding: 20px 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  border: 1px solid var(--border);
 }
 
+/* ─── Action Section (CTA) ─── */
 .action-section {
-  background: linear-gradient(135deg, #fff5f5 0%, #ffe4e4 100%);
-  border-radius: 12px;
-  padding: 20px;
-  border: 2px solid #fecaca;
+  background: var(--primary-bg);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid var(--primary-bg-deep);
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--primary),
+    var(--primary-light),
+    #818cf8
+  );
 }
 
 .action-section:hover {
-  border-color: #fca5a5;
-  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.15);
+  border-color: var(--primary-light);
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.12);
 }
 
 .action-header {
@@ -323,137 +398,124 @@ const handleAction = () => {
 }
 
 .action-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #dc2626;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-dark);
   text-align: center;
+}
+
+.action-note {
+  background: rgba(37, 99, 235, 0.06);
+  padding: 12px 16px;
+  border-radius: 10px;
+  border-left: 3px solid var(--primary);
+  margin-bottom: 1rem;
 }
 
 .action-description {
-  font-size: 13px;
-  color: #64748b;
-  margin-bottom: 16px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
   line-height: 1.6;
   text-align: center;
-  background: rgba(59, 130, 246, 0.08);
-  padding: 12px 16px;
-  border-radius: 8px;
-  border-left: 3px solid #3b82f6;
+  margin: 0;
 }
 
 .action-footer {
-  font-size: 12px;
-  color: #64748b;
+  font-size: 0.75rem;
+  color: var(--text-muted);
   text-align: center;
   margin-top: 12px;
   font-style: italic;
 }
 
-.action-btn {
-  position: relative;
-  overflow: hidden;
+/* ─── Buttons ─── */
+:deep(.action-btn.p-button) {
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--primary-light) 100%
+  );
+  border: none;
+  padding: 14px 24px;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  transition: all 0.25s ease;
+  letter-spacing: 0.3px;
 }
 
-.action-btn::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
+:deep(.action-btn.p-button:hover) {
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark) 0%,
+    var(--primary) 100%
+  );
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+  transform: translateY(-1px);
 }
 
-.action-btn:hover::before {
-  width: 300px;
-  height: 300px;
+/* ─── Animations ─── */
+.survey-header,
+.content-card,
+.action-section {
+  animation: fadeInUp 0.4s ease-out both;
 }
 
-/* Dark mode adjustments */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Dark Mode ─── */
 @media (prefers-color-scheme: dark) {
-  .chart-section {
-    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-    border-color: #374151;
+  .nutril-roadmap-optimal {
+    --surface: #1e293b;
+    --surface-alt: #0f172a;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted: #64748b;
+    --border: #334155;
+    --border-hover: #475569;
+    --primary-bg: rgba(37, 99, 235, 0.12);
+    --primary-bg-deep: rgba(37, 99, 235, 0.2);
   }
 
-  .chart-container {
-    background: #1f2937;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  }
-
-  .chart-description {
-    color: #d1d5db;
-  }
-
-  .highlight-height {
-    color: #60a5fa;
-  }
-
-  .action-section {
-    background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
-    border-color: #dc2626;
+  .header-badge {
+    color: var(--primary-light);
+    background: rgba(37, 99, 235, 0.15);
+    border-color: rgba(37, 99, 235, 0.25);
   }
 
   .action-title {
-    color: #fca5a5;
+    color: var(--primary-light);
   }
 
-  .action-description {
-    color: #d1d5db;
-    background: rgba(59, 130, 246, 0.15);
-  }
-
-  .action-footer {
-    color: #9ca3af;
+  .action-note {
+    background: rgba(37, 99, 235, 0.1);
   }
 }
 
-/* Grid Responsive Adjustments */
-@media (min-width: 768px) {
-  .chart-section {
-    padding: 24px;
-  }
-
-  .chart-container {
-    padding: 24px 20px;
-  }
-
-  .chart-description {
-    font-size: 15px;
-  }
-
-  .highlight-height {
-    font-size: 20px;
-  }
-
-  .action-section {
-    padding: 24px;
-  }
-
-  .action-title {
-    font-size: 17px;
-  }
-
-  .action-description {
-    font-size: 14px;
-    padding: 14px 20px;
-  }
-
-  .action-footer {
-    font-size: 13px;
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .nutril-roadmap-optimal {
+    padding: 1.25rem 0.75rem;
   }
 }
 
 @media (min-width: 1024px) {
   .nutril-roadmap-optimal {
-    padding: 2rem 2.5rem;
+    padding: 2.5rem 2.5rem;
   }
 }
 
-/* Smooth transitions for grid layout changes */
+/* ─── Smooth transitions ─── */
 .col-span-12 {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }

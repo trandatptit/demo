@@ -1,21 +1,17 @@
 <template>
-  <section
-    class="exercise-roadmap-assess mx-auto px-4 lg:px-8 py-8 lg:py-12 bg-white dark:bg-gray-900"
-  >
+  <section class="exercise-roadmap-assess">
     <!-- Container 12 Grid Main -->
     <div class="grid grid-cols-12 gap-4 lg:gap-6">
       <!-- Header Section - Full Width -->
       <div class="col-span-12">
-        <div class="flex justify-between items-center mb-6">
+        <div class="flex justify-between items-center mb-4">
           <!-- Back Button -->
           <Button
             @click="$emit('back')"
             label="Quay Lại"
             icon="pi pi-arrow-left"
             text
-            severity="secondary"
-            size="small"
-            class="!p-0"
+            class="back-btn"
           />
 
           <!-- Close Button -->
@@ -24,24 +20,22 @@
             icon="pi pi-times"
             rounded
             text
-            severity="secondary"
-            size="small"
+            class="close-btn"
           />
         </div>
       </div>
 
       <!-- Title Section - Full Width -->
-      <div class="col-span-12 text-center mb-4">
-        <i class="pi pi-heart-fill text-5xl text-blue-600 mb-4"></i>
-        <h2
-          class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-white"
-        >
-          {{ title }}
-        </h2>
+      <div class="col-span-12 survey-header">
+        <div class="header-accent"></div>
+        <span class="header-badge">
+          <i class="pi pi-heart-fill"></i> Sở Thích
+        </span>
+        <h2 class="header-title">{{ title }}</h2>
       </div>
 
       <!-- BMI Info Section - Full Width -->
-      <div class="col-span-12 mb-4">
+      <div class="col-span-12">
         <div class="bmi-info">
           <span class="bmi-label">Chỉ số BMI của bạn: </span>
           <span class="bmi-value">{{ bmiValue }}</span>
@@ -50,7 +44,7 @@
       </div>
 
       <!-- Survey Title - Full Width -->
-      <div class="col-span-12 mb-2">
+      <div class="col-span-12">
         <h3 class="survey-title">{{ surveyTitle }}</h3>
       </div>
 
@@ -60,7 +54,7 @@
           <!-- Question: Các loại hình bài tập -->
           <div class="question-group">
             <label class="question-label">
-              <i class="pi pi-heart text-blue-600 mr-2"></i>
+              <i class="pi pi-heart label-icon"></i>
               {{ questionLabel }}
             </label>
             <div class="exercise-options">
@@ -86,18 +80,12 @@
       </div>
 
       <!-- Submit Button Section - Full Width -->
-      <div class="col-span-12 mt-6">
+      <div class="col-span-12 mt-4">
         <Button
           :label="submitButtonLabel"
-          class="setp2-button submit-btn w-full"
+          class="submit-btn w-full"
           :disabled="!isFormValid"
           @click="handleSubmit"
-          :pt="{
-            root: {
-              class:
-                'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-700 dark:to-blue-800 border-0 py-4 text-base md:text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed',
-            },
-          }"
         />
       </div>
     </div>
@@ -177,61 +165,166 @@ const handleSubmit = () => {
 </script>
 
 <style scoped>
-/* Base Section Styles */
+/* ─── Design Tokens (matching NutrilRoadMapSchedule) ─── */
 .exercise-roadmap-assess {
+  --primary: #2563eb;
+  --primary-light: #3b82f6;
+  --primary-dark: #1d4ed8;
+  --primary-bg: #eff6ff;
+  --primary-bg-deep: #dbeafe;
+  --primary-ring: rgba(37, 99, 235, 0.15);
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
+  --radius: 12px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --success: #059669;
+
   max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
   border-radius: 1.5rem;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  background: var(--surface);
 }
 
-/* BMI Info Styles */
-.bmi-info {
-  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-  border: 2px solid #93c5fd;
-  border-radius: 12px;
-  padding: 16px 20px;
+/* ─── Header ─── */
+.survey-header {
   text-align: center;
-  font-size: 16px;
+  margin-bottom: 0.5rem;
+}
+
+.header-accent {
+  width: 64px;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  margin: 0 auto 1rem;
+}
+
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: var(--primary-bg);
+  border: 1px solid var(--primary-bg-deep);
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.header-title {
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.25;
+}
+
+/* ─── Back/Close Buttons ─── */
+:deep(.back-btn) {
+  color: var(--text-secondary) !important;
+  font-weight: 600 !important;
+  padding: 0 !important;
+}
+
+:deep(.back-btn:hover) {
+  color: var(--primary) !important;
+}
+
+:deep(.close-btn) {
+  color: var(--text-muted) !important;
+}
+
+:deep(.close-btn:hover) {
+  color: var(--text-primary) !important;
+  background: var(--surface-alt) !important;
+}
+
+/* ─── BMI Info ─── */
+.bmi-info {
+  background: linear-gradient(
+    135deg,
+    var(--primary-bg) 0%,
+    var(--primary-bg-deep) 100%
+  );
+  border: 1.5px solid var(--primary-bg-deep);
+  border-radius: var(--radius);
+  padding: 14px 20px;
+  text-align: center;
+  font-size: 0.95rem;
   line-height: 1.6;
 }
 
 .bmi-label {
-  color: #475569;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
 .bmi-value {
-  color: #1e40af;
+  color: var(--primary-dark);
   font-weight: 700;
-  font-size: 20px;
+  font-size: 1.15rem;
   margin: 0 6px;
 }
 
 .bmi-status {
-  color: #059669;
+  color: var(--success);
   font-weight: 600;
 }
 
-/* Survey Title */
+/* ─── Survey Title ─── */
 .survey-title {
-  font-size: 18px;
+  font-size: 1rem;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--text-primary);
   text-align: center;
-  padding: 12px;
-  background: #f8fafc;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  padding: 10px 16px;
+  background: var(--surface-alt);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  margin: 0;
 }
 
-/* Form Container */
+/* ─── Form Container ─── */
 .form-container {
-  background: #ffffff;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
   padding: 24px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Question Group */
+.form-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--primary),
+    var(--primary-light),
+    #818cf8
+  );
+}
+
+/* ─── Question Group ─── */
 .question-group {
   margin-bottom: 0;
 }
@@ -239,13 +332,18 @@ const handleSubmit = () => {
 .question-label {
   display: flex;
   align-items: center;
-  font-size: 15px;
+  font-size: 0.9rem;
   font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 18px;
+  color: var(--text-primary);
+  margin-bottom: 16px;
 }
 
-/* Exercise Options */
+.label-icon {
+  color: var(--primary);
+  margin-right: 8px;
+}
+
+/* ─── Exercise Options ─── */
 .exercise-options {
   display: flex;
   flex-direction: column;
@@ -256,24 +354,28 @@ const handleSubmit = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
-  background: #f8fafc;
-  border: 2px solid #e2e8f0;
-  border-radius: 10px;
+  padding: 14px 18px;
+  background: var(--surface-alt);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .exercise-option-item:hover {
-  background: #eff6ff;
-  border-color: #93c5fd;
+  background: var(--primary-bg);
+  border-color: var(--primary-light);
   transform: translateX(4px);
 }
 
 .exercise-option-item:has(.p-checkbox-checked) {
-  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+  background: linear-gradient(
+    135deg,
+    var(--primary-bg) 0%,
+    var(--primary-bg-deep) 100%
+  );
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px var(--primary-ring);
 }
 
 .exercise-option-content {
@@ -283,24 +385,24 @@ const handleSubmit = () => {
 }
 
 .exercise-icon {
-  font-size: 24px;
-  color: #64748b;
+  font-size: 22px;
+  color: var(--text-muted);
   transition: all 0.2s ease;
 }
 
 .exercise-option-item:has(.p-checkbox-checked) .exercise-icon {
-  color: #3b82f6;
+  color: var(--primary-light);
   transform: scale(1.1);
 }
 
 .exercise-label {
-  font-size: 15px;
-  color: #334155;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
 .exercise-option-item:has(.p-checkbox-checked) .exercise-label {
-  color: #1e40af;
+  color: var(--primary-dark);
   font-weight: 600;
 }
 
@@ -308,25 +410,29 @@ const handleSubmit = () => {
   flex-shrink: 0;
 }
 
-/* Checkbox Styling */
+/* ─── PrimeVue Checkbox Override ─── */
 :deep(.p-checkbox .p-checkbox-box) {
   width: 22px;
   height: 22px;
   border-radius: 6px;
-  border: 2px solid #cbd5e1;
+  border: 2px solid var(--border-hover);
   transition: all 0.2s ease;
-  background: white;
+  background: var(--surface);
 }
 
 :deep(.p-checkbox .p-checkbox-box:hover) {
-  border-color: #3b82f6;
-  background: #eff6ff;
+  border-color: var(--primary-light);
+  background: var(--primary-bg);
 }
 
 :deep(.p-checkbox.p-checkbox-checked .p-checkbox-box) {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
-  border-color: #3b82f6 !important;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  background: linear-gradient(
+    135deg,
+    var(--primary-light) 0%,
+    var(--primary) 100%
+  ) !important;
+  border-color: var(--primary-light) !important;
+  box-shadow: 0 0 0 3px var(--primary-ring);
 }
 
 :deep(.p-checkbox .p-checkbox-box .p-checkbox-icon) {
@@ -334,81 +440,39 @@ const handleSubmit = () => {
   color: white;
 }
 
-/* Dark mode adjustments */
-@media (prefers-color-scheme: dark) {
-  .bmi-info {
-    background: linear-gradient(135deg, #1e3a8a 0%, #1e293b 100%);
-    border-color: #3b82f6;
-  }
-
-  .bmi-label,
-  .bmi-status {
-    color: #d1d5db;
-  }
-
-  .bmi-value {
-    color: #93c5fd;
-  }
-
-  .survey-title {
-    background: #1f2937;
-    color: #e5e7eb;
-    border-color: #374151;
-  }
-
-  .form-container {
-    background: #1f2937;
-    border-color: #374151;
-  }
-
-  .question-label {
-    color: #e5e7eb;
-  }
-
-  .exercise-option-item {
-    background: #374151;
-    border-color: #4b5563;
-  }
-
-  .exercise-option-item:hover {
-    background: #4b5563;
-  }
-
-  .exercise-icon {
-    color: #9ca3af;
-  }
-
-  .exercise-label {
-    color: #d1d5db;
-  }
-
-  :deep(.p-checkbox .p-checkbox-box) {
-    background: #374151;
-    border-color: #4b5563;
-  }
+/* ─── Submit Button ─── */
+:deep(.submit-btn.p-button) {
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--primary-light) 100%
+  );
+  border: none;
+  padding: 14px 24px;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  transition: all 0.25s ease;
+  letter-spacing: 0.3px;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .exercise-option-content {
-    gap: 12px;
-  }
-
-  .exercise-icon {
-    font-size: 20px;
-  }
-
-  .exercise-label {
-    font-size: 14px;
-  }
+:deep(.submit-btn.p-button:not(:disabled):hover) {
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark) 0%,
+    var(--primary) 100%
+  );
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+  transform: translateY(-1px);
 }
 
-/* Smooth transitions */
-.col-span-12 {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+:deep(.submit-btn.p-button:disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-/* Submit button animation */
+/* ─── Ripple ─── */
 .submit-btn {
   position: relative;
   overflow: hidden;
@@ -432,7 +496,77 @@ const handleSubmit = () => {
   height: 300px;
 }
 
-:deep(.setp2-button) {
-  background-color: #2563eb;
+/* ─── Animations ─── */
+.survey-header,
+.bmi-info,
+.form-container {
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Dark Mode ─── */
+@media (prefers-color-scheme: dark) {
+  .exercise-roadmap-assess {
+    --surface: #1e293b;
+    --surface-alt: #0f172a;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted: #64748b;
+    --border: #334155;
+    --border-hover: #475569;
+    --primary-bg: rgba(37, 99, 235, 0.12);
+    --primary-bg-deep: rgba(37, 99, 235, 0.2);
+  }
+
+  .header-badge {
+    color: var(--primary-light);
+    background: rgba(37, 99, 235, 0.15);
+    border-color: rgba(37, 99, 235, 0.25);
+  }
+
+  :deep(.p-checkbox .p-checkbox-box) {
+    background: #374151;
+    border-color: #4b5563;
+  }
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .exercise-roadmap-assess {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .exercise-option-content {
+    gap: 12px;
+  }
+
+  .exercise-icon {
+    font-size: 20px;
+  }
+
+  .exercise-label {
+    font-size: 0.85rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .exercise-roadmap-assess {
+    padding: 2rem 2.5rem;
+  }
+}
+
+/* ─── Smooth transitions ─── */
+.col-span-12 {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 </style>

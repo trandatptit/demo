@@ -1,72 +1,60 @@
 <template>
-  <div class="nutril-roadmap-schedule min-h-screen bg-gray-100 p-6">
+  <div class="nutril-roadmap-schedule">
     <!-- Header Section -->
     <div class="grid grid-cols-12 gap-4 mb-6">
-      <div class="col-span-12 flex flex-col items-center">
-        <!-- Logo -->
-        <div class="mb-4">
-          <img
-            src="https://www.vecteezy.com/free-vector/any-logo"
-            alt="Logo"
-            class="w-16 h-16 object-contain"
-            @error="onLogoError"
-          />
-        </div>
-
-        <!-- Title -->
-        <h1 class="text-2xl font-bold text-gray-800 text-center">
-          Lộ Trình Dinh Dưỡng Tối Ưu
-        </h1>
+      <div class="col-span-12 schedule-header">
+        <div class="header-accent"></div>
+        <span class="header-badge">
+          <i class="pi pi-calendar-clock"></i> Lộ Trình Tuần
+        </span>
+        <h1 class="header-title">Lộ Trình Dinh Dưỡng Tối Ưu</h1>
+        <p class="header-subtitle">Thực đơn được AI hoạch định riêng cho bạn</p>
       </div>
     </div>
 
     <!-- User Info Card -->
     <div class="grid grid-cols-12 gap-4 mb-6">
       <div class="col-span-12">
-        <Card
-          class="shadow-lg border-0 bg-linear-to-r from-blue-600 to-blue-500 text-white rounded-2xl"
-        >
+        <Card class="user-info-card">
           <template #content>
             <div class="grid grid-cols-12 gap-4 items-center">
               <!-- Avatar -->
               <div class="col-span-2 flex justify-center">
-                <div
-                  class="w-16 h-16 bg-white rounded-full flex items-center justify-center"
-                >
-                  <i class="pi pi-user text-blue-600 text-2xl"></i>
+                <div class="user-avatar">
+                  <i class="pi pi-user"></i>
                 </div>
               </div>
 
               <!-- User Name -->
               <div class="col-span-3">
-                <p class="text-sm opacity-90 mb-1">Bạn</p>
-                <p class="font-semibold text-lg">{{ userName }}</p>
-                <p class="text-xs opacity-80">
+                <p class="user-label">Bạn</p>
+                <p class="user-name">{{ userName }}</p>
+                <p class="user-detail">
                   Chiều cao hiện tại: {{ currentHeight }} cm
                 </p>
               </div>
 
               <!-- Target Height -->
               <div class="col-span-2 text-center">
-                <div class="bg-white bg-opacity-20 rounded-lg p-3">
-                  <p class="text-xs opacity-90 mb-1">MỤC TIÊU</p>
-                  <p class="text-2xl font-bold">{{ targetHeight }} cm</p>
+                <div class="stat-box">
+                  <p class="stat-label">MỤC TIÊU</p>
+                  <p class="stat-value">{{ targetHeight }} cm</p>
                 </div>
               </div>
 
               <!-- Duration -->
               <div class="col-span-2 text-center">
-                <div class="bg-white bg-opacity-20 rounded-lg p-3">
-                  <p class="text-xs opacity-90 mb-1">THỜI LƯỢNG</p>
-                  <p class="text-2xl font-bold">{{ duration }} tháng</p>
+                <div class="stat-box">
+                  <p class="stat-label">THỜI LƯỢNG</p>
+                  <p class="stat-value">{{ duration }} tháng</p>
                 </div>
               </div>
 
               <!-- Cost -->
               <div class="col-span-2 text-center">
-                <div class="bg-white bg-opacity-20 rounded-lg p-3">
-                  <p class="text-xs opacity-90 mb-1">CHI PHÍ TUẦN</p>
-                  <p class="text-xl font-bold">
+                <div class="stat-box">
+                  <p class="stat-label">CHI PHÍ TUẦN</p>
+                  <p class="stat-value-sm">
                     {{ formatCurrency(weeklyCost) }}
                   </p>
                 </div>
@@ -78,8 +66,7 @@
                   icon="pi pi-calendar"
                   rounded
                   text
-                  severity="secondary"
-                  class="bg-white bg-opacity-20 hover:bg-opacity-30"
+                  class="appt-btn"
                   @click="onAppointment"
                 />
               </div>
@@ -92,10 +79,8 @@
     <!-- Current Status Section -->
     <div class="grid grid-cols-12 gap-4 mb-4">
       <div class="col-span-12 text-center">
-        <h2 class="text-xl font-bold text-gray-800 mb-2">
-          Lộ Trình Dinh Dưỡng Tuần Này
-        </h2>
-        <p class="text-sm text-gray-500">
+        <h2 class="section-title">Lộ Trình Dinh Dưỡng Tuần Này</h2>
+        <p class="section-subtitle">
           Thực đơn được AI có nhiệm hoạch định riêng cho bạn.
         </p>
       </div>
@@ -104,14 +89,12 @@
     <!-- Chart Section -->
     <div class="grid grid-cols-12 gap-4">
       <div class="col-span-12">
-        <Card class="shadow-lg border-0 rounded-2xl">
+        <Card class="content-card">
           <template #content>
             <!-- Chart Header -->
             <div class="flex items-center justify-center mb-6">
-              <i class="pi pi-chart-bar text-gray-600 mr-2"></i>
-              <h3 class="text-lg font-semibold text-gray-700">
-                Tổng quan Canxi tuần
-              </h3>
+              <i class="pi pi-chart-bar section-icon mr-2"></i>
+              <h3 class="card-heading">Tổng quan Canxi tuần</h3>
             </div>
 
             <!-- Chart -->
@@ -126,11 +109,9 @@
 
             <!-- Legend -->
             <div class="flex justify-center mt-4">
-              <div class="flex items-center bg-blue-50 px-4 py-2 rounded-lg">
-                <div class="w-4 h-4 bg-blue-500 rounded mr-2"></div>
-                <span class="text-sm text-gray-700 font-medium"
-                  >Canxi kế hoạch</span
-                >
+              <div class="chart-legend">
+                <div class="legend-dot"></div>
+                <span class="legend-text">Canxi kế hoạch</span>
               </div>
             </div>
           </template>
@@ -141,7 +122,7 @@
     <!-- Meal Plan Section with Tabs -->
     <div class="grid grid-cols-12 gap-4 mt-6">
       <div class="col-span-12">
-        <Card class="shadow-lg border-0 rounded-2xl">
+        <Card class="content-card">
           <template #content>
             <!-- Day Tabs -->
             <Tabs v-model:value="activeDay" class="custom-tabview">
@@ -167,9 +148,7 @@
                       :key="meal.id"
                       class="col-span-12 md:col-span-6 lg:col-span-4"
                     >
-                      <Card
-                        class="meal-card shadow-md hover:shadow-xl transition-shadow duration-300 rounded-xl overflow-hidden"
-                      >
+                      <Card class="meal-card">
                         <template #header>
                           <div class="relative">
                             <img
@@ -178,9 +157,7 @@
                               class="w-full h-48 object-cover"
                               @error="onMealImageError"
                             />
-                            <div
-                              class="absolute top-3 left-3 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold"
-                            >
+                            <div class="meal-type-badge">
                               {{ meal.mealType }}
                             </div>
                           </div>
@@ -188,15 +165,13 @@
 
                         <template #content>
                           <!-- Meal Title -->
-                          <h4 class="text-lg font-bold text-gray-800 mb-2">
+                          <h4 class="meal-title">
                             {{ meal.title }}
                           </h4>
 
                           <!-- Ingredients -->
                           <div class="mb-4">
-                            <p class="text-xs text-gray-500 font-semibold mb-2">
-                              Nguyên liệu:
-                            </p>
+                            <p class="info-label">Nguyên liệu:</p>
                             <ul class="space-y-1">
                               <li
                                 v-for="(ingredient, idx) in meal.ingredients"
@@ -213,18 +188,14 @@
 
                           <!-- Nutrition Info -->
                           <div class="mb-4">
-                            <p class="text-xs text-gray-500 font-semibold mb-2">
-                              Chỉ báo:
-                            </p>
+                            <p class="info-label">Chỉ báo:</p>
                             <p class="text-sm text-gray-600">
                               {{ meal.nutritionNote }}
                             </p>
                           </div>
 
                           <!-- Nutrition Stats -->
-                          <div
-                            class="flex items-center justify-between mb-4 bg-gray-50 p-3 rounded-lg"
-                          >
+                          <div class="nutrition-stats">
                             <div class="flex items-center">
                               <i class="pi pi-bolt text-yellow-500 mr-2"></i>
                               <span class="text-sm font-semibold text-gray-700">
@@ -277,7 +248,7 @@
     <!-- Schedule Setting Section -->
     <div class="grid grid-cols-12 gap-4 mt-6">
       <div class="col-span-12">
-        <Card class="shadow-lg border-0 rounded-2xl bg-gray-50">
+        <Card class="content-card schedule-settings-card">
           <template #content>
             <!-- Initial State: Sleep Time and Complete Button -->
             <div class="flex items-center justify-between flex-wrap gap-4">
@@ -300,8 +271,7 @@
               <Button
                 label="Hoàn thành ngày hôm nay"
                 icon="pi pi-check-circle"
-                severity="success"
-                class="bg-blue-600 hover:bg-blue-700 border-0 rounded-lg px-6 py-2"
+                class="primary-action-btn"
                 @click="markTodayComplete"
               />
             </div>
@@ -372,7 +342,7 @@
         <Button
           label="Tải về Lộ Trình Tuần"
           icon="pi pi-download"
-          class="pdf-download-button bg-blue-600 hover:bg-blue-700 border-0 rounded-lg px-8 py-3 text-lg font-semibold"
+          class="download-btn"
           @click="downloadWeeklyPlan"
         />
       </div>
@@ -692,91 +662,300 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* ─── Design Tokens (matching NutrilRoadMapSurvey) ─── */
 .nutril-roadmap-schedule {
+  --primary: #2563eb;
+  --primary-light: #3b82f6;
+  --primary-dark: #1d4ed8;
+  --primary-bg: #eff6ff;
+  --primary-bg-deep: #dbeafe;
+  --primary-ring: rgba(37, 99, 235, 0.15);
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
+  --radius: 12px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
 }
 
-/* Custom card styling */
-:deep(.p-card) {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+/* ─── Header ─── */
+.schedule-header {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.header-accent {
+  width: 64px;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  margin: 0 auto 1rem;
+}
+
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: var(--primary-bg);
+  border: 1px solid var(--primary-bg-deep);
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.header-title {
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 6px;
+  line-height: 1.25;
+}
+
+.header-subtitle {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ─── Section Titles ─── */
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.section-icon {
+  color: var(--primary);
+  font-size: 1.1rem;
+}
+
+.card-heading {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ─── User Info Card ─── */
+:deep(.user-info-card) {
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--primary-light) 100%
+  );
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3);
+  color: #fff;
+}
+
+.user-avatar {
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-avatar i {
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+.user-label {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin-bottom: 2px;
+}
+
+.user-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.user-detail {
+  font-size: 0.75rem;
+  opacity: 0.75;
+  margin-top: 2px;
+}
+
+.stat-box {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 12px;
+  backdrop-filter: blur(4px);
+}
+
+.stat-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.85;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.stat-value {
+  font-size: 1.45rem;
+  font-weight: 800;
+}
+
+.stat-value-sm {
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+:deep(.appt-btn) {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+}
+
+:deep(.appt-btn:hover) {
+  background: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* ─── Content Cards ─── */
+:deep(.content-card) {
+  --p-card-background: var(--surface);
+  --p-card-border-radius: 16px;
+  --p-card-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+}
+
+:deep(.content-card)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--primary),
+    var(--primary-light),
+    #818cf8
+  );
+  z-index: 1;
 }
 
 :deep(.p-card-content) {
   padding: 1.5rem;
 }
 
-/* Chart container */
+/* ─── Chart ─── */
 .chart-container {
   position: relative;
   width: 100%;
   max-width: 100%;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .col-span-2,
-  .col-span-3 {
-    grid-column: span 12 / span 12;
-    text-align: center;
-  }
-
-  .col-span-1 {
-    grid-column: span 12 / span 12;
-  }
+.chart-legend {
+  display: flex;
+  align-items: center;
+  background: var(--primary-bg);
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--primary-bg-deep);
 }
 
-/* Smooth transitions */
-.p-button {
-  transition: all 0.3s ease;
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  background: var(--primary);
+  border-radius: 4px;
+  margin-right: 8px;
 }
 
-.p-button:hover {
-  transform: translateY(-2px);
+.legend-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
 }
 
-/* Custom TabView Styling */
-.custom-tabview :deep(.p-tabview-nav) {
+/* ─── Tabs ─── */
+.custom-tabview :deep(.p-tabs-nav),
+.custom-tabview :deep(.p-tablist-content) {
   background: transparent;
   border: none;
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
 }
 
-.custom-tabview :deep(.p-tabview-nav-link) {
-  background: white;
-  border: 2px solid #e5e7eb;
-  border-radius: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  color: #6b7280;
+.custom-tabview :deep(.p-tab) {
+  background: var(--surface-alt);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 0.6rem 1.2rem;
+  color: var(--text-secondary);
   font-weight: 600;
-  transition: all 0.3s ease;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
 }
 
-.custom-tabview :deep(.p-tabview-nav-link):hover {
-  background: #f3f4f6;
-  border-color: #3b82f6;
+.custom-tabview :deep(.p-tab:hover) {
+  border-color: var(--primary-light);
+  color: var(--primary);
+  background: var(--primary-bg);
 }
 
-.custom-tabview :deep(.p-highlight .p-tabview-nav-link) {
-  background: #3b82f6;
-  border-color: #3b82f6;
-  color: white;
+.custom-tabview :deep(.p-tab-active) {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
-.custom-tabview :deep(.p-tabview-panels) {
+.custom-tabview :deep(.p-tabpanels) {
   background: transparent;
   padding: 0;
 }
 
-/* Meal Card Styling */
+.custom-tabview :deep(.p-tablist-active-bar) {
+  display: none;
+}
+
+/* ─── Meal Cards ─── */
 .meal-card {
   height: 100%;
   display: flex;
   flex-direction: column;
+  border-radius: 14px !important;
+  overflow: hidden;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow-sm) !important;
+  transition: all 0.3s ease;
+}
+
+.meal-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg) !important;
 }
 
 .meal-card :deep(.p-card-body) {
@@ -792,12 +971,6 @@ onMounted(() => {
   padding: 1rem;
 }
 
-.meal-card:hover {
-  transform: translateY(-4px);
-  transition: all 0.3s ease;
-}
-
-/* Meal image hover effect */
 .meal-card img {
   transition: transform 0.3s ease;
 }
@@ -806,7 +979,122 @@ onMounted(() => {
   transform: scale(1.05);
 }
 
-/* Custom DatePicker Styling */
+.meal-type-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--primary);
+  color: #fff;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+}
+
+.meal-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.info-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.nutrition-stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  background: var(--surface-alt);
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+/* ─── Buttons ─── */
+:deep(.eye-button) {
+  color: var(--primary) !important;
+  border-color: var(--primary-bg-deep) !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+}
+
+:deep(.eye-button:hover) {
+  background: var(--primary-bg) !important;
+  border-color: var(--primary) !important;
+}
+
+:deep(.update-button) {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+}
+
+:deep(.update-button:hover) {
+  background: var(--primary-dark) !important;
+  border-color: var(--primary-dark) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+:deep(.primary-action-btn) {
+  background: var(--primary) !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 10px 24px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  transition: all 0.25s ease !important;
+}
+
+:deep(.primary-action-btn:hover) {
+  background: var(--primary-dark) !important;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
+  transform: translateY(-1px);
+}
+
+:deep(.download-btn) {
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--primary-light) 100%
+  ) !important;
+  border: none !important;
+  border-radius: var(--radius) !important;
+  padding: 14px 32px !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  transition: all 0.25s ease !important;
+  letter-spacing: 0.3px;
+}
+
+:deep(.download-btn:hover) {
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark) 0%,
+    var(--primary) 100%
+  ) !important;
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+  transform: translateY(-1px);
+}
+
+/* ─── Schedule Settings ─── */
+:deep(.schedule-settings-card) {
+  background: var(--surface-alt) !important;
+}
+
 .custom-datepicker :deep(.p-datepicker-input-icon-container) {
   display: flex;
   align-items: center;
@@ -814,44 +1102,84 @@ onMounted(() => {
 
 .custom-datepicker :deep(.p-datepicker-input) {
   padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
   font-weight: 600;
-  color: #1f2937;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
 }
 
 .custom-datepicker :deep(.p-datepicker-input:focus) {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 1px #3b82f6;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-ring);
 }
 
-/* Daily Report Content Styling */
+/* ─── Daily Report ─── */
 .daily-report-content {
-  animation: fadeIn 0.3s ease-in;
+  animation: fadeInUp 0.4s ease-out both;
 }
 
-:deep(.p-button.pdf-download-button) {
-  background-color: #2563eb;
-}
-
-:deep(.eye-button) {
-  color: #2563eb;
-  border-color: #aec3f0 !important;
-}
-
-:deep(.update-button) {
-  background-color: #2563eb;
-  border-color: #2563eb !important;
-}
-
-@keyframes fadeIn {
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(14px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ─── Dark Mode ─── */
+@media (prefers-color-scheme: dark) {
+  .nutril-roadmap-schedule {
+    --surface: #1e293b;
+    --surface-alt: #0f172a;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted: #64748b;
+    --border: #334155;
+    --border-hover: #475569;
+    --primary-bg: rgba(37, 99, 235, 0.12);
+    --primary-bg-deep: rgba(37, 99, 235, 0.2);
+  }
+
+  .header-badge {
+    color: var(--primary-light);
+    background: rgba(37, 99, 235, 0.15);
+    border-color: rgba(37, 99, 235, 0.25);
+  }
+
+  :deep(.user-info-card) {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .nutril-roadmap-schedule {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .col-span-2,
+  .col-span-3 {
+    grid-column: span 12 / span 12;
+    text-align: center;
+  }
+
+  .col-span-1 {
+    grid-column: span 12 / span 12;
+  }
+
+  .user-avatar {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nutril-roadmap-schedule {
+    padding: 2.5rem 2.5rem;
   }
 }
 </style>
